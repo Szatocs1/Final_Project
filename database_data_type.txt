@@ -19,7 +19,7 @@
 	-Kosár (A termékek ára külön külön van, majd a végén összesítve írja ki, fölötte a kívánt termékekkel és azok árával) VARCHAR + egyébb (még nem tudom, hogy képet meg ilyeneket, hogy kell adatbázisban tárolni)
 	-Ár INT
 
-3.Termékek: 
+3.Termékek tábla: 
 	-Kép(Media type: elérési útvonal a képnek)
 	-Megnevezés
 	-Ár
@@ -27,3 +27,4 @@
 	-Megjegyzés
 	-Kulcsszavak(Keresésnél kulcsszavak, az url-ben általában a search segítségével csinálják, nézz utána)
 	-Paraméterek(Ruha:(Méret; Márka; Férfi, Nő; stb.;), egyébb tárgyak:(Tolltartó; Lemeztartó; Bögre; Lemez; stb.;) )
+
