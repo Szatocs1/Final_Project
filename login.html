@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bejelentkezés </title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="module">
+    import { apiFetch, writeStatus, getMe } from './utils.js';
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const me = await getMe();
+      if (me) location.replace('./profile.html');
+
+      const form = document.getElementById('loginForm');
+      const out = document.getElementById('status');
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        writeStatus(out, 'Bejelentkezés...', '');
+        const formData = new FormData(form);
+        const payload = {
+          email: formData.get('email')?.trim(),
+          password: formData.get('password')
+        };
+        try {
+          await apiFetch('/api/auth/login', {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+          writeStatus(out, 'Sikeres bejelentkezés! Átirányítás...', 'ok');
+          setTimeout(() => (location.href = './profile.html'), 700);
+        } catch (e) {
+          writeStatus(out, e.message, 'err');
+        }
+      };
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="btn" href="./index.html">Kezdőlap</a>
+      <a class="btn" href="./register.html">Regisztráció</a>
+    </nav>
+    <h1>Bejelentkezés</h1>
+    <form id="loginForm">
+      <div>
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div>
+        <label for="password">Jelszó</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+      </div>
+      <button class="btn" type="submit">Belépés</button>
+    </form>
+    <div id="status" class="status"></div>
+  </div>
+</body>
+</html>

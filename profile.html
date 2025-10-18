@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profil </title>
+  <link rel="stylesheet" href="./style.css" />
+  <script type="module">
+    import { getMe, apiFetch, writeStatus } from './utils.js';
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const status = document.getElementById('status');
+      const me = await getMe();
+      if (!me) {
+        location.replace('./login.html');
+        return;
+      }
+      document.getElementById('userBox').innerHTML = `
+        <div class="code">
+          <strong>Felhasználó:</strong>
+          <pre>${JSON.stringify(me, null, 2)}</pre>
+        </div>
+      `;
+
+      document.getElementById('logoutBtn').onclick = async () => {
+        try {
+          await apiFetch('/api/auth/logout', { method: 'POST' });
+          location.href = './index.html';
+        } catch (e) {
+          writeStatus(status, e.message, 'err');
+        }
+      };
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <a class="btn" href="./index.html">Kezdőlap</a>
+      <button class="btn" id="logoutBtn">Kilépés</button>
+    </nav>
+    <h1>Profil</h1>
+    <p>Ez az oldal csak bejelentkezve érhető el.</p>
+    <div id="userBox"></div>
+    <div id="status" class="status"></div>
+  </div>
+</body>
+</html>
