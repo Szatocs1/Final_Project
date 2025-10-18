@@ -1,33 +1,42 @@
 1.Users tábla:
-	(A regisztrációnál a weblapon legyen megadva a jelszónak, meg minden olyan adatnak felétel, amely olyan pl.: legyen legalább 8 karakter hoszzú) 
+	(A regisztrációnál a weblapon legyen megadva a jelszónak, meg minden olyan adatnak felétel, 	amely olyan pl.: legyen legalább 8 karakter hoszzú) 
 	-ID INT AUTO-INCREMENT
-	-Vezetéknév VARCHAR 75
-	-Keresztnév VARCHAR 75
+	-Nev VARCHAR 75
 	-Jelszó VARCHAR 255 //(a fiókhoz, a weblaphoz írtam: jelszó újra regisztrálásnál)
 	-Email VARCHAR 255
-	-Szerep Enum: "vendeg", "admin"
-	-(Bankkártyát a strike és billingo segítségével csináljuk)
+	-Foglaltsag (Fogyasztó, Borbély, Admin)
 
 2.Rendelések tábla:
-	-ID INT AUTO-INCREMENT
-	-Vezetéknév VARCHAR 75
-	-Keresztnév VARCHAR 75
-	-Telefonszám INT 11
-	-Ország VARCHAR 255
-	-Irányítószám INT 4
-	-Település VARCHAR 255
-	-Szállítási cím VARCHAR 255
-	-Rendelés ideje DATE
-	-Kosár VARCHAR 255 //(A termékek neve lesz megjelenítve, ez a weboldalra vonatkozik, ha tetszik: A termékek ára külön külön van, majd a végén összesítve írja ki, fölötte a kívánt termékekkel és azok árával)
-	-Ár INT 255
+	-Id INT AUTO-INCREMENT
+	-vasarloNeve VARCHAR 75
+	-telefonszam INT 11
+	-iranyitoszam INT 4
+	-telepules VARCHAR 255
+	-szallitasiCim VARCHAR 255
+	-rendelesIdeje DATETTIME
+	-termekekNeve VARCHAR 255 //(A termékek neve lesz megjelenítve, ez a weboldalra vonatkozik, ha tetszik: A termékek ára külön külön van, majd a végén összesítve írja ki, fölötte a kívánt termékekkel és azok árával)
+	-ar INT 255
 
 3.Termékek tábla: 
-	-ID INT AUTO-INCREMENT
-	-Kép VARCHAR 255 //(Media type: imgae/jpeg; ImageLink(image/jpeg: Link); Image upload(image/jpeg: Upload); Bemenet átalakítás beállításai(elérési útvonala a képnek))
-	-Megnevezés VARCHAR 255
-	-Ár INT 255
-	-Megjegyzés VARCHAR 255
-	
-4.Kulcsszavak tábla:
-	-Termék(termék neve, azért, hogy a kulcsszavakat össze tudjam kötni a termékekkel) VARCHAR 255
-	-kulcsszavak VARCHAR 255
+	-Id INT AUTO-INCREMENT
+	-kep VARCHAR 255 //(Media type: imgae/jpeg; ImageLink(image/jpeg: Link); Image upload(image/jpeg: Upload); Bemenet átalakítás beállításai(elérési útvonala a képnek))
+	-megnevezes VARCHAR 255
+	-ar INT 255
+	-megjegyzes VARCHAR 255
+	(still in developmeant)
+
+4.Foglalas:
+	-vasarloEmail VARCHAR 255
+	-vasarloNeve VARCHAR 255
+	-idopont DATETIME
+	-borbely VARCHAR 75
+	-szolgalatas VARCHAR 255
+	-ar INT 10
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
