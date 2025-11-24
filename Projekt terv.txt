@@ -1,0 +1,25 @@
+
+
+
+
+
+
+Időszakok: 
+	Szeptember:
+		-Regisztráció, Bejelentkezés elkésztítése, Adatbázis users tábla elkészítése,
+		Adatbázis users eltárolni az adatot.
+	Október:
+		-Fiókok elkészítése (admin => borbély, felhasználók => vevők, vendég => guest),
+		maradék táblák az Adatbázisban elkészítése, a maradék táblákba való adatok rendezése.
+	November:
+		-Online időpont foglalás, szolgáltatások kiválasztása, borbély választás. Értesítések küldése emailben.
+	December:
+		-Szolgáltatások, barberek választása. Foglalás vissza igazolása emailben. Foglalás lemondása / módosítása.
+	Január:
+		-Admin felület barbereknek. A Webshopnak az alap kialakítása, termékkategóriák (check boxokkal lesz megoldva).
+		Termékoldal.
+	Február:
+		-Akciók, kedvezmények. Szállítási opciók a termékeknek. Kosár és pénztár funkciók. Fizetés megoldása.
+	Március:
+		-Finomítások, végső tesztek és végül leadás.
+Front: Rólunk oldal, Szolgáltatások lista, Termékek, Felhasználói fiók, Tippek, Kapcsolatok, 

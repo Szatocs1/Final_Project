@@ -1,1 +1,1 @@
-# Final_Project
+Végpontok kialakítása, database rendes elkészítése, 
