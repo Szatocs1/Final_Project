@@ -1,0 +1,58 @@
+1) Mappa létrehozása
+mkdir BARBERSHOP
+cd BARBERSHOP
+
+2) Node projekt inicializálás
+npm init -y
+
+3) Függőségek
+npm i bcrypt dotenv express express-session jsonwebtoken mariadb nodemon sequelize
+
+ 4) (opcionális) fejlesztői eszköz
+npm i -D nodemon
+
+5) Könyvtárak
+IMPORTANT: mkdir Backend - ez után lépj bele ebbe a mappába a: "cd Backend" paranccsal
+mkdir public
+mkdir config
+mkdir src
+mkdir src\contorllers
+mkdir src\models
+mkdir src\routes
+
+ 6) Fájlok létrehozása 
+notepad .env
+notepad .gtiignore
+notepad package.json
+notepad server.js
+notepad public\index.html
+notepad public\login.html
+notepad public\register.html
+notepad public\profile.html
+notepad public\style.css
+notepad public\utils.js
+notepad config\db.js
+notepad src\contorllers\adminController.js
+notepad src\contorllers\foglalasController.js
+notepad src\contorllers\kepekController.js
+notepad src\contorllers\rendelesekController.js
+notepad src\contorllers\termekController.js
+notepad src\contorllers\userController.js
+notepad src\models\foglalasModel.js
+notepad src\models\kepekModel.js
+notepad src\models\rendelesekModel.js
+notepad src\models\termekModel.js
+notepad src\models\userModel.js
+notepad src\routes\adminRoute.js
+notepad src\routes\foglalasRoute.js
+notepad src\routes\kepekRoute.js
+notepad src\routes\rendelesekRoute.js
+notepad src\routes\termekRoute.js
+notepad src\routes\userRoute.js
+
+
+7) nodemon-nal kényelmes:
+npx nodemon server.js
+ 
+vagy simán:
+node server.js

@@ -1,0 +1,46 @@
+1.users tábla:
+	(A regisztrációnál a weblapon legyen megadva a jelszónak, meg minden olyan adatnak felétel, 	amely olyan pl.: legyen legalább 8 karakter hoszzú) 
+	-ID INT AUTO-INCREMENT 255
+	-Nev VARCHAR 75
+	-Jelszó VARCHAR 255 //(a fiókhoz, a weblaphoz írtam: jelszó újra regisztrálásnál)
+	-Email VARCHAR 255
+	-Foglaltsag (Fogyasztó, Borbély)
+
+2.rendelesek tábla:
+	-Id INT AUTO-INCREMENT 255
+	-vasarloNeve VARCHAR 75
+	-telefonszam INT 11
+	-iranyitoszam INT 4
+	-telepules VARCHAR 255
+	-szallitasiCim VARCHAR 255
+	-rendelesIdeje DATETTIME
+	-termekekNeve VARCHAR 255 //(A termékek neve lesz megjelenítve, ez a weboldalra vonatkozik, ha tetszik: A termékek ára külön külön van, majd a végén összesítve írja ki, fölötte a kívánt termékekkel és azok árával)
+	-ar INT 255
+
+3.Termékek tábla: 
+	-Id INT AUTO-INCREMENT 255
+	-kepNeve VARCHAR 255
+	-ar INT 255
+	-megjegyzes VARCHAR 255
+	(still in developmeant)
+
+4.Foglalas:
+	-vasarloEmail VARCHAR 255
+	-vasarloNeve VARCHAR 255
+	-idopont DATETIME
+	-borbely VARCHAR 75
+	-szolgalatas VARCHAR 255
+	-ar INT 10
+
+5.Képek:
+	-Id INT AUTO-INCREMENT 255
+	-imgName VARCHAR 255
+	-imgPath VARCHAR 255
+	-imgMIME VARCHAR 255
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------

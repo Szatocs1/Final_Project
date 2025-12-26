@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables (secrets)
+.env
+
+# Public frontend files
+public/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Optional build output (if used later)
+dist/
+build/

@@ -1,0 +1,1 @@
+Végpontok kialakítása, database tesztelés és kapcsolatok
