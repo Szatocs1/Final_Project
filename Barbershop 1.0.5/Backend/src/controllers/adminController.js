@@ -2,7 +2,7 @@
 delete user
 modify user
 create user
-get user
+get user by id
 get user info
 ...
 -
