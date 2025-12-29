@@ -1,5 +1,6 @@
-termkékeknél a kategóriákat össze kell szedni. 
-
+Termkékeknél a kategóriákat össze kell szedni. 
+Modeleknél miért nem működik a tábla generálás.
+HHTP routok tesztelése, illetve a BASE_AUTH kipróbálása, hiszen akkor csak kettő helyen kell vele fogllkozni, nem 3 különböző fájlban.
 
 
 
