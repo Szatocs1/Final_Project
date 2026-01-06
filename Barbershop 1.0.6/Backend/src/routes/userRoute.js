@@ -9,11 +9,12 @@ const { findUserByEmail, createUser, findUserById, findUserRole, findUserByRole 
 
 const router = express.Router();
 
+const ADMIN_PASS = process.env.SERVER_ADMIN_PASSWORD;
+
 // Move routes here, e.g.:
-router.post('/auth/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
       const { name, email, password } = req.body || {};
-      const role = "";
   
       if (!name || !password || !email) {
         return res.status(400).json({ error: 'Név, jelszó és email mező kitöltése kötelező!' });
@@ -25,6 +26,11 @@ router.post('/auth/register', async (req, res) => {
         return res.status(409).json({ error: 'Ezzel az email címmel már létezik fiók!' });
       }
 
+      let role = "Fogyasztó";
+      if (password === ADMIN_PASS) {
+        role = "Admin";
+      }
+      
       const passwordHash = await bcrypt.hash(password, 12);
       const userId = await createUser(name, email, passwordHash, role); // <-- ADD await!
   
@@ -38,7 +44,7 @@ router.post('/auth/register', async (req, res) => {
     }
 });
 
-router.post('/auth/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
               const {email, password} = req.body;
   
@@ -75,7 +81,7 @@ router.post('/auth/login', async (req, res) => {
           }
 });
 
-router.post('/auth/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   if (!req.session){
         return res.json({message : "Már ki van jelentkezve."})
     }
@@ -90,7 +96,7 @@ router.post('/auth/logout', (req, res) => {
     })
 });
 
-router.get('/auth/me', async (req, res) => {
+router.get('/me', async (req, res) => {
   console.log('SESSION:', req.session);
     if(!req.session || !req.session.userId){
         return res.status(401).json({error : 'Nincs bejelentkezve.'});
