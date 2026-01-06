@@ -5,7 +5,7 @@ Teendők:
 
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { findUserByEmail, createUser, findUserById } = require('../controllers/userController');
+const { findUserByEmail, createUser, findUserById, findUserRole, findUserByRole } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -13,19 +13,20 @@ const router = express.Router();
 router.post('/auth/register', async (req, res) => {
   try {
       const { name, email, password } = req.body || {};
+      const role = "";
   
       if (!name || !password || !email) {
         return res.status(400).json({ error: 'Név, jelszó és email mező kitöltése kötelező!' });
       }
   
-      const existing = await findUserByEmail(email); // <-- ADD await!
+      const existingEmail = await findUserByEmail(email); // <-- ADD await!
   
-      if (existing) {
+      if (existingEmail) {
         return res.status(409).json({ error: 'Ezzel az email címmel már létezik fiók!' });
       }
-  
+
       const passwordHash = await bcrypt.hash(password, 12);
-      const userId = await createUser(name, email, passwordHash); // <-- ADD await!
+      const userId = await createUser(name, email, passwordHash, role); // <-- ADD await!
   
       req.session.userId = userId;
   
@@ -56,10 +57,18 @@ router.post('/auth/login', async (req, res) => {
               if(!ok){
                   return res.status(401).json({error : 'Hibás email vagy jelszó'});
               }
+
+              //Ellenőrzi, hogy admin-e, ha igen dobja be az admin felületre
+              const role = findUserByRole();
+              if(role = "admin"){
+                req.session.userId = user.id;
+                const safeUser = await findUserById(user.id);
+                return res.json({message : 'Sikeres admin bejelntkezés.', user : safeUser});
+              }
   
               req.session.userId = user.id;
               const safeUser = await findUserById(user.id);
-              return res.json({message : 'Sikeres bejelentkezés.', user : safeUser})
+              return res.json({message : 'Sikeres bejelentkezés.', user : safeUser});
           }catch(err){
               console.error('LOGIN ERROR: ', err)
               return res.status(500).json({error : 'Szerver hiba.'})

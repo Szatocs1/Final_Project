@@ -10,6 +10,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_SESSION = process.env.SECRET_SESSION || 'dev-secret';
 
+//Táblák generálását megcsinálni.
+const userModel = require("./src/models/userModel");
+const kepekModel = require("./src/models/kepekModel");
+const foglalasModel = require("./src/models/foglalasModel");
+const rendelesekModel = require("./src/models/rendelesekModel");
+const termekModel = require("./src/models/termekModel");
+
 const userRoutes = require('./src/routes/userRoute');
 
 app.use(express.json());

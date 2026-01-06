@@ -12,6 +12,19 @@ async function findUserByEmail(email) {
   }
 }
 
+async function findUserByRole() {
+  try{
+    const admin = await User.findOne({
+      where: { role: "admin" }
+    });
+    const foglaltsag = admin.get("foglaltsag");
+    return foglaltsag;
+  }catch (error){
+    console.error('Error in finding user by role: ', error);
+    throw error;
+  }
+};
+
 // Function to create a new user
 async function createUser(name, email, passwordHash) {
   try {
@@ -19,6 +32,7 @@ async function createUser(name, email, passwordHash) {
       nev: name,
       email,
       jelszo: passwordHash,
+      foglaltsag: role,
     });
     return user.id;
   } catch (error) {
@@ -41,5 +55,6 @@ async function findUserById(id) {
 module.exports = {
     findUserByEmail,
     createUser,
-    findUserById
+    findUserById,
+    findUserByRole
 }
