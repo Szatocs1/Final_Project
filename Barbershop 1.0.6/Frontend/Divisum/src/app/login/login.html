@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="logCard">
+        <div class="logImg">
+            <!-- <img src="./assets/images/logo.png" alt=""> -->
+        </div>
+        <div class="logText">
+            <h1>BEJELENTKEZÉS</h1>
+            <hr>
+            <div class="logForm">
+
+                <label>Email</label>
+                <input type="email" formControlName="email" />
+                <small *ngIf="submitted && f.email.errors">
+                Valós email-t adjon meg!
+                </small>
+
+                <label>Jelszó</label>
+                <input type="password" formControlName="password" />
+                <small *ngIf="submitted && f.password.errors">
+                Hejtelen jelszó!
+                </small>
+
+
+                <button type="submit">Bejelentkezés</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
