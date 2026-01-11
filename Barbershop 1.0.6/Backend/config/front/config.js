@@ -1,1 +1,0 @@
-export const AUTH_BASE_FRONT = "/api/auth";

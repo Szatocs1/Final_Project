@@ -12,18 +12,6 @@ async function findUserByEmail(email) {
   }
 }
 
-async function findUserRole() {
-  try{
-    const admin = await User.findOne({
-      where: { foglaltsag: "admin" }
-    });
-    const foglaltsag = admin.get("foglaltsag");
-    return foglaltsag;
-  }catch (error){
-    console.error('Error in finding user by role: ', error);
-    throw error;
-  }
-};
 
 // Function to create a new user
 async function createUser(name, email, passwordHash, role) {
@@ -55,6 +43,5 @@ async function findUserById(id) {
 module.exports = {
     findUserByEmail,
     createUser,
-    findUserById,
-    findUserRole
+    findUserById
 }

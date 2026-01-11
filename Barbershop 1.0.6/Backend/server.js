@@ -1,42 +1,26 @@
 require('dotenv').config();
 
 const express = require('express');
-const session = require('express-session');
 const path = require('path');
 
 const db = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SECRET_SESSION = process.env.SECRET_SESSION || 'dev-secret';
 
-//Táblák generálását megcsinálni.
-const userModel = require("./src/models/userModel");
-const kepekModel = require("./src/models/kepekModel");
-const foglalasModel = require("./src/models/foglalasModel");
-const rendelesekModel = require("./src/models/rendelesekModel");
-const termekModel = require("./src/models/termekModel");
+//Táblák generálása
+const userModel = require("./src/models/userModel")(db.sequelize);
+const kepekModel = require("./src/models/kepekModel")(db.sequelize);
+const foglalasModel = require("./src/models/foglalasModel")(db.sequelize);
+const rendelesekModel = require("./src/models/rendelesekModel")(db.sequelize);
+const termekModel = require("./src/models/termekModel")(db.sequelize);
 
+//Mount-ok
 const userRoutes = require('./src/routes/userRoute');
 
+//Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
-
-app.use(
-    session({
-        secret: SECRET_SESSION,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: false,
-            maxAge: 1000 * 60 * 60* 2
-        }
-    })
-);
-
-//jwttoken ...
 
 app.use(express.static(path.join(__dirname, 'public')));
 

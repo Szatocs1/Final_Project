@@ -5,15 +5,17 @@ Teendők:
 
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { findUserByEmail, createUser, findUserById, findUserRole, findUserByRole } = require('../controllers/userController');
+const { createAccesToken } = require('../utils/jwtoken');
+const { findUserByEmail, createUser, findUserById } = require('../controllers/userController');
+const { authMiddleware } = require('../middlewares/authMiddleware')
 
 const router = express.Router();
 
 const ADMIN_PASS = process.env.SERVER_ADMIN_PASSWORD;
 
-// Move routes here, e.g.:
 router.post('/register', async (req, res) => {
   try {
+      //itt lesz még egy password, amelyet össze kell hasonlítani a óz eredetivel, hogy sokkal jobban User friendly legyen.
       const { name, email, password } = req.body || {};
   
       if (!name || !password || !email) {
@@ -33,11 +35,18 @@ router.post('/register', async (req, res) => {
       
       const passwordHash = await bcrypt.hash(password, 12);
       const userId = await createUser(name, email, passwordHash, role); // <-- ADD await!
+
+      const createdUser = await findUserById(userId);
+
+      const safeUser = { id: createdUser.id, name: createdUser.nev, email: createdUser.email, role: createdUser.foglaltsag };
   
-      req.session.userId = userId;
+      const token = createAccesToken(safeUser);
   
-      const safeUser = await findUserById(userId); // <-- ADD await!
-      return res.status(201).json({ message: 'Sikeres regisztráció!', user: safeUser });
+      return res.status(201).json(
+        { message: 'Sikeres regisztráció!',
+          user: safeUser,
+          token
+        });
     } catch (err) {
       console.error('REG ERROR', err);
       return res.status(500).json({ error: 'Szerver hiba.' });
@@ -63,18 +72,15 @@ router.post('/login', async (req, res) => {
               if(!ok){
                   return res.status(401).json({error : 'Hibás email vagy jelszó'});
               }
-
-              //Ellenőrzi, hogy admin-e, ha igen dobja be az admin felületre
-              const role = findUserByRole();
-              if(role = "admin"){
-                req.session.userId = user.id;
-                const safeUser = await findUserById(user.id);
-                return res.json({message : 'Sikeres admin bejelntkezés.', user : safeUser});
-              }
   
-              req.session.userId = user.id;
-              const safeUser = await findUserById(user.id);
-              return res.json({message : 'Sikeres bejelentkezés.', user : safeUser});
+              const safeUser = { id: user.id, email: user.email, role: user.foglaltsag }
+              const token = createAccesToken(safeUser);
+
+              return res.status(200).json(
+                {message : 'Sikeres bejelentkezés.',
+                 user : safeUser,
+                 token
+                });
           }catch(err){
               console.error('LOGIN ERROR: ', err)
               return res.status(500).json({error : 'Szerver hiba.'})
@@ -96,14 +102,14 @@ router.post('/logout', (req, res) => {
     })
 });
 
-router.get('/me', async (req, res) => {
-  console.log('SESSION:', req.session);
-    if(!req.session || !req.session.userId){
-        return res.status(401).json({error : 'Nincs bejelentkezve.'});
-    }
-    const user = await findUserById(req.session.userId);
+router.get('/me', authMiddleware, async (req, res) => {
+    const user = await findUserById(req.user.id);
     console.log('USER:', user);
     return res.json({ user });
+});
+
+router.post('/refreshToken', authMiddleware, async (req, res) => {
+  //Itt fogom frissíteni a tokent.
 });
 
 module.exports = router;

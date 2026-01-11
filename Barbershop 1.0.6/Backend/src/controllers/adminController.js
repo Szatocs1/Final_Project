@@ -4,10 +4,12 @@ modify user
 create user
 get user by id
 get user info
+get rendelések
+get foglalások
+
 ...
 -
 .env:
-admin felhasználó név
 admin felhasználó jelszó
 ...
 */
