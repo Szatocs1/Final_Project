@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* A containernek ki kell töltenie a viewport magasságát is, 
+       hogy a logCard függőlegesen is középre kerüljön. */
+    min-height: 100vh; 
+}
+
+.logCard {
+    /* Eltávolítva a szükségtelenül nagy margin. 
+       A szélesség és magasság relatív vagy fix méretűre állítva. */
+    margin: 50px; /* Csak egy kis margó */
+    width: 1100px; /* Például egy fix, jól látható szélesség */
+    height: 600px; /* Például egy fix magasság */
+    
+    /* A flex/grid elemek megfelelő használatához állítsuk a méreteket. */
+    
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    
+    display: grid;
+    /* A kulcsfontosságú javítás: Két egyenlő méretű oszlop létrehozása. */
+    grid-template-columns: 1fr 1fr; 
+}
+
+/* ... (korábbi .container és .logCard CSS változatlan) ... */
+
+.logImg {
+    /* grid-column: 2 / 3; */
+    background: url("../../assets/images/logo.png");
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    
+    /* A sötétkék háttér szín, amit a logó fél oldala használ. */
+    background-color: #17202A; /* Példa sötétkék (Divisum kék) */
+    
+    width: 100%;
+    height: 100%;
+    
+    /* Hozzáadva: Kisebb képernyőknél biztosítja a kép tartalmának megőrzését */
+    overflow: hidden; 
+
+}
+
+/* A logisztrációs cím stílusa (logisztráció) */
+.logText h1 {
+    color: #17202A; /* Sötétkék, megegyezik a logó háttérszínével */
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 550;
+}
+.logText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.logText hr{
+    border: 1px solid #17202A;
+    width: 70%;
+}
+/* Az űrlap elemek egységesítése */
+.logForm {
+    /* ... (meglévő display: flex beállítások) ... */
+    width: 70%; /* Szélesség, hogy az inputok ne legyenek túl szélesek */
+}
+
+.logForm label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333; /* Sötétszürke szöveg */
+    width: 100%;
+    text-align: left; /* A címkék igazítása balra */
+}
+
+.logForm input[type="text"], 
+.logForm input[type="email"], 
+.logForm input[type="password"] {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Fontos, hogy a padding ne növelje a teljes szélességet */
+    font-size: 1em;
+}
+/* A gomb stílusa */
+.logForm button {
+    background-color: #17202A; /* Sötétkék háttér */
+    color: white; /* Fehér betűszín */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 25px;
+    transition: background-color 0.3s ease;
+    width: auto; /* A gomb ne legyen túl széles */
+}
+
+.logForm button:hover {
+    background-color: #333d47; /* Kicsit világosabb kék/szürke a hover hatáshoz */
+}

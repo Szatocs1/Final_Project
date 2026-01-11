@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* A containernek ki kell töltenie a viewport magasságát is, 
+       hogy a regCard függőlegesen is középre kerüljön. */
+    min-height: 100vh; 
+}
+.profCard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 50px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.profImg img{
+    width: 200px;
+    border-radius: 50%;
+    margin: 20px;
+}
+.profBtns button{
+    padding: 10px;
+    margin: 10px;
+    background-color: #132435;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+.profBtns button:hover{
+    background-color: #333d47; /* Kicsit világosabb kék/szürke a hover hatáshoz */
+
+}
