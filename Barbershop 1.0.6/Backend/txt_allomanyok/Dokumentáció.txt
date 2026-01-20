@@ -1,0 +1,93 @@
+Termkékeknél a kategóriákat össze kell szedni. 
+Modeleknél miért nem működik a tábla generálás.
+HHTP routok tesztelése, illetve a BASE_AUTH kipróbálása, hiszen akkor csak kettő helyen kell vele fogllkozni, nem 3 különböző fájlban.
+
+
+
+
+Időszakok: 
+	Szeptember:
+		-Regisztráció, Bejelentkezés elkésztítése, Adatbázis users tábla elkészítése,
+		Adatbázis users eltárolni az adatot.
+	Október:
+		-Fiókok elkészítése (admin => borbély, felhasználók => vevők, vendég => guest),
+		maradék táblák az Adatbázisban elkészítése, a maradék táblákba való adatok rendezése.
+	November:
+		-Online időpont foglalás, szolgáltatások kiválasztása, borbély választás. Értesítések küldése emailben.
+	December:
+		-Szolgáltatások, barberek választása. Foglalás vissza igazolása emailben. Foglalás lemondása / módosítása.
+	Január:
+		-Admin felület barbereknek. A Webshopnak az alap kialakítása, termékkategóriák (check boxokkal lesz megoldva).
+		Termékoldal.
+	Február:
+		-Akciók, kedvezmények. Szállítási opciók a termékeknek. Kosár és pénztár funkciók. Fizetés megoldása.
+	Március:
+		-Finomítások, végső tesztek és végül leadás.
+Front: Rólunk oldal, Szolgáltatások lista, Termékek, Felhasználói fiók, Tippek, Kapcsolatok, 
+
+
+A rendelesekController: 
+item avaliable, 
+
+
+
+Bibliográfia: 
+https://sequelize.org/
+
+https://expressjs.com/
+
+https://nodejs.org/en/docs/
+
+https://jwt.io/introduction/
+
+https://www.npmjs.com/package/bcrypt
+
+https://www.npmjs.com/package/jsonwebtoken
+
+https://mariadb.com/kb/en/
+
+https://www.mysql.com/
+
+https://www.npmjs.com/package/dotenv
+
+https://www.npmjs.com/package/express-session
+
+https://jasonwatmore.com/post/2020/09/08/nodejs-mysql-boilerplate-api-with-email-sign-up-authentication
+
+https://jasonwatmore.com/post/2020/08/18/nodejs-mysql-simple-api-for-authentication-registration-and-user-management
+
+https://www.bezkoder.com/node-js-express-login-example/
+
+https://www.bezkoder.com/node-js-jwt-authentication-mysql/
+
+https://www.bezkoder.com/react-express-authentication-jwt/
+
+https://www.bezkoder.com/node-express-vue-jwt-auth/
+
+https://www.corbado.com/blog/nodejs-express-mysql-jwt-authentication-roles
+
+https://www.djamware.com/post/6158fee27523f53fb5c1b2f4/authentication-role-permission-api-using-node-express-mysql
+
+https://github.com/indraarianggi/nodejs-sequelize-mysql-api
+
+https://github.com/bezkoder/node-js-jwt-auth
+
+https://github.com/jmw5598/node-express-jwt-example
+
+https://github.com/MarkKhramko/nodejs-express-jwt
+
+https://gist.github.com/ansthsys/53400202b0422d88f85011eda90a5ee4
+
+https://jwt.io/
+
+https://stackabuse.com/understanding-json-web-tokens-with-node-js/
+
+https://dev.to/azure/secure-your-nodejs-api-with-json-web-tokens-jwt-5a5g
+
+https://blog.logrocket.com/node-authentication-jwt-bcrypt/
+
+https://medium.com/@eminetto/authentication-in-nodejs-beyond-jwt-483fb6809f8c
+
+https://sequelize.org/master/manual/getting-started.html
+
+https://mariadb.com/resources/blog/getting-started-with-mariadb-and-nodejs/

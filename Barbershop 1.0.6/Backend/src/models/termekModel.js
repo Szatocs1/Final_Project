@@ -7,8 +7,16 @@ module.exports = (sequelize) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
+            termekNev: {
+                type: DataTypes.STRING(255),
+                allowNull: false,
+            },
             kepNeve: {
                 type: DataTypes.STRING(255),
+                allowNull: false,
+            },
+            kategoria: {
+                type:DataTypes.STRING(255),
                 allowNull: false,
             },
             ar: {
