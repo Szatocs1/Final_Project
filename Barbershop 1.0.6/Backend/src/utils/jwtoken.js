@@ -10,17 +10,6 @@ function createAccesToken(user){
     return token;
 }
 
-function refreshAccesToken(user){
-    const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.foglaltsag },
-        process.env.JWT_SECRET_REFRESH,
-        { expiresIn: process.env.JWT_EXPIRES || '2h' }
-    );
-    return token;
-}
-
-
 module.exports = {
-    createAccesToken,
-    refreshAccesToken
+    createAccesToken
 }
