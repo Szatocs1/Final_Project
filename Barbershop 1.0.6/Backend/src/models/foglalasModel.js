@@ -15,6 +15,10 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING(75),
                 allowNull: false,
             },
+            vasarloTelefonszam: {
+                type: DataTypes.TEXT(12),
+                allowNull: false,
+            },
             idopont:{
                 type: DataTypes.DATE,
                 allowNull: false,
@@ -22,7 +26,11 @@ module.exports = (sequelize) => {
             borbely: {
                 type: DataTypes.STRING(75),
                 allowNull: false,
-            }
+            },
+            szolgaltatas: {
+                type: DataTypes.STRING(255),
+                allowNull: false,
+            },
   }, {
     tableName: 'foglalasok',
     timestamps: false,

@@ -88,28 +88,13 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  if (!req.session){
-        return res.json({message : "Már ki van jelentkezve."})
-    }
-    req.session.destroy(err => {
-        if(err){
-            console.error('LOGOUT ERROR', err)
-            return res.status(500).json({error : 'Nem sikerült kijelentkezni.'})
-        }
-
-        res.clearCookie('connect.sid');
-        return res.json({message : 'Sikeres kijelentkezés.'});
-    })
+   return res.json({ message: "Logged out successfully. Please delete token on client." });
 });
 
 router.get('/me', authMiddleware, async (req, res) => {
     const user = await findUserById(req.user.id);
     console.log('USER:', user);
-    return res.json({ user });
-});
-
-router.post('/refreshToken', authMiddleware, async (req, res) => {
-  //Itt fogom frissíteni a tokent.
+    return res.json({ user, message: "You are authanticated!" });
 });
 
 module.exports = router;

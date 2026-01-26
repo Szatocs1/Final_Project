@@ -1,16 +1,28 @@
 /*
-minden rendelés lekérése
-egy rendelés lekérése
-egy fajtáú rendelés lekérése
 rendelés készítés, módosítás, törlés
 rendelés időpontjának rögzítése
-külön árak kiirása, illetve össz ár(számítás) kiírása
 */
 
 
+const { where } = require("sequelize");
 const { sequelize } = require("../../config/db.js");
 const rendeles = require("../models/rendelesekModel.js");
+const termekek = require("../models/termekModel.js")
 
-async function itemAvaliable(termekNeve) {
+async function itemAvaliableByName(termekNeve) {
+    try{
+        const termek = await termekek.findOne({ where: termekNeve })
+        return termek ? termek.toJSON() : null;
+    }catch(error){
+        console.error("Nem találjató ilyen névvel termék!", error);
+        throw error;
+    }
+}
+
+async function itemAvaliableByName(params) {
     
+}
+
+module.exports = {
+    itemAvaliableByName
 }
