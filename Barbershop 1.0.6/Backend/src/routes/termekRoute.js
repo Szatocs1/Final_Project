@@ -1,7 +1,8 @@
-const app = require("express");
+const express = require("express");
+const route = express.Router();
 const { searchProducts, searchName, searchCategory, deleteItem, createItem, modifyItem } = require("../controllers/termekController");
 
-app.get("/products", async (req, res) => {
+route.get("/products", async (req, res) => {
     const { name, category } = req.query;
 
     const filters = {};
@@ -22,7 +23,7 @@ app.get("/products", async (req, res) => {
     }
 });
 
-app.post("/products", async (req, res) => {
+route.post("/productsCreate", async (req, res) => {
     const { name, category, price, comment } = req.body || {};
     const { filename } = req.file || {};
 
@@ -40,7 +41,7 @@ app.post("/products", async (req, res) => {
     } 
 });
 
-app.put("/products/:id", async (req, res) => {
+route.put("/productsModify/:id", async (req, res) => {
     const { id } = req.params || {};
     const { name, category, price, comment } = req.body || {};
     const { filename } = req.file || {};
@@ -59,7 +60,7 @@ app.put("/products/:id", async (req, res) => {
     }
 });
 
-app.delete("/products/:id", async (req, res) => {
+route.delete("/productsDelete/:id", async (req, res) => {
     const { id } = req.params || {};
 
     if(!id){

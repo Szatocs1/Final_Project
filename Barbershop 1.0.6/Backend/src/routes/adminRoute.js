@@ -1,17 +1,19 @@
-const app = require("express");
+const express = require("express");
+const { pelda } = require("../controllers/adminController");
+const route = express.Router();
 
-app.delete("/userControll/delete", (req, res) => {
-
-});
-app.put("/usersController/modify", (req, res) =>{
-
-});
-app.post("/usersController/create", (req, res) => {
+route.delete("/userControll/delete", (req, res) => {
 
 });
-app.get("/usersController/getUser:id", (req, res) => {
+route.put("/usersController/modify", (req, res) =>{
 
 });
-app.get("/usersController/getUser", (req, res) => {
+route.post("/usersController/create", (req, res) => {
+
+});
+route.get("/usersController/getUser:id", (req, res) => {
+
+});
+route.get("/usersController/getUser", (req, res) => {
 
 });
