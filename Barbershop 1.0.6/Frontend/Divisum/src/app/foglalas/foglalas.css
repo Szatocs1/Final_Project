@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+/* ALAP BEÁLLÍTÁSOK */
+
+.booking-wrapper {
+  max-width: 950px;
+  margin: 40px auto;
+  padding: 0 20px 100px;
+  font-family: 'Montserrat', sans-serif;
+  color: #132435;
+}
+
+/* FEJLÉC */
+
+.header-section {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.gold-subtitle {
+  color: #c5a059;
+  letter-spacing: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.header-section h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #132435;
+  margin: 10px 0;
+}
+
+.gold-line.centered {
+  width: 60px;
+  height: 3px;
+  background: #c5a059;
+  margin: 15px auto;
+}
+
+.header-section p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* SZEKCIÓ CÍMEK */
+
+.section-title {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #132435;
+  border-left: 4px solid #c5a059;
+  padding-left: 15px;
+  margin: 40px 0 25px;
+}
+
+/* 1. SZAKEMBEREK */
+
+.barber-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.barber-card {
+  cursor: pointer;
+  text-align: center;
+  transition: 0.3s;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.barber-image-container {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 15px;
+  border: 4px solid #f0f0f0;
+  transition: 0.3s;
+}
+
+.barber-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.barber-role {
+  color: #c5a059;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.barber-card.selected .barber-image-container {
+  border-color: #c5a059;
+  box-shadow: 0 0 25px rgba(197, 160, 89, 0.3);
+}
+
+.barber-card.selected h3 {
+  font-weight: 800;
+  color: #132435;
+}
+
+/* 2. SZOLGÁLTATÁSOK */
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gold-icon {
+  color: #132435 !important;
+  transition: 0.2s;
+}
+
+.service-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.service-duration {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.service-price {
+  color: #132435;
+  font-weight: 700;
+  transition: 0.2s;
+  font-size: 1.1rem;
+}
+
+.service-item:hover {
+  border-color: #c5a059;
+}
+
+.service-item:hover .gold-icon {
+  color: #c5a059 !important;
+}
+
+.service-item.active {
+  background: #132435 !important;
+  border-color: #132435;
+  color: #fff !important;
+}
+
+.service-item.active .gold-icon,
+.service-item.active .service-price {
+  color: #c5a059 !important;
+}
+
+.service-item.active .service-duration {
+  color: #aaa;
+}
+
+/* 3. NAPTÁR + IDŐPONT */
+
+.datetime-container {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.calendar-card {
+  flex: 1.2;
+  min-width: 320px;
+  border: 1px solid #eee;
+  border-radius: 0;
+  box-shadow: none !important;
+}
+
+.time-picker {
+  flex: 0.8;
+  min-width: 280px;
+  background: white;
+  padding: 25px;
+  border: 1px solid #eee;
+}
+
+.time-picker-title {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.time-btn {
+  padding: 12px;
+  border: 1px solid #132435;
+  background: transparent;
+  color: #132435;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.time-btn:hover {
+  border-color: #c5a059;
+  color: #c5a059;
+}
+
+.time-btn.selected {
+  background: #c5a059;
+  color: white;
+  border-color: #c5a059;
+}
+
+/* 4. ELÉRHETŐSÉGI ŰRLAP */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: #fcfcfc;
+  padding: 25px;
+  border: 1px solid #eee;
+}
+
+.premium-input {
+  padding: 15px;
+  border: 1px solid #ddd;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.premium-input:focus {
+  border-color: #c5a059;
+  box-shadow: 0 0 8px rgba(197, 160, 89, 0.15);
+}
+
+.terms-container {
+  margin-top: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #c5a059;
+}
+
+.checkbox-text a {
+  color: #c5a059;
+  text-decoration: underline;
+}
+
+/* ÖSSZESÍTÉS + SUBMIT */
+
+.action-section {
+  margin-top: 40px;
+}
+
+.summary-box {
+  background: #132435;
+  padding: 25px;
+  text-align: center;
+  border-left: 5px solid #c5a059;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.gold-text {
+  color: #c5a059;
+  font-size: 1.8rem;
+  margin-left: 10px;
+  font-weight: 800;
+}
+
+.submit-btn-gold {
+  width: 100%;
+  background: linear-gradient(135deg, #c5a059 0%, #a68549 100%);
+  color: white;
+  padding: 22px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submit-btn-gold:hover:not(:disabled) {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.submit-btn-gold:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
+/* MODAL */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  backdrop-filter: blur(10px);
+}
+
+.premium-modal {
+  background: #fff;
+  width: 95%;
+  max-width: 420px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+  animation: modalScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal-dark-header {
+  background: #132435;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+
+.modal-dark-header h2 {
+  margin: 10px 0 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 1.4rem;
+}
+
+.check-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #c5a059;
+}
+
+.modal-close-x {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-content {
+  padding: 30px;
+}
+
+.details-grid {
+  margin-bottom: 25px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.detail-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  font-weight: 700;
+  color: #132435;
+}
+
+.detail-value.highlight {
+  color: #c5a059;
+}
+
+.modal-price-section {
+  background: #fcfaf5;
+  padding: 20px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 25px;
+  border: 1px dashed #c5a059;
+}
+
+.price-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.price-amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #132435;
+}
+
+.modal-confirm-btn {
+  width: 100%;
+  background: #132435;
+  color: #fff;
+  border: none;
+  padding: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-confirm-btn:hover {
+  background: #c5a059;
+}
+
+/* ANGULAR MATERIAL FELÜLÍRÁSOK + ZÁRT NAP */
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #c5a059 !important;
+}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #c5a059 !important;
+}
+
+.closed-notice {
+  color: #d32f2f;
+  text-align: center;
+  padding: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
