@@ -76,3 +76,5 @@ route.delete("/productsDelete/:id", async (req, res) => {
         throw error;
     }
 });
+
+module.exports = route;

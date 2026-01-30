@@ -3,7 +3,7 @@ const route = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
 const { createRendeles, modifyRendeles, deleteRendeles } = require("../controllers/rendelesekController");
 
-route.post("/rendeles/create", authMiddleware, async (req, res) =>{
+route.post("/rendelesCreate", authMiddleware, async (req, res) =>{
     try {
         const { termekek } = req.body;
 
@@ -53,7 +53,7 @@ route.post("/rendeles/create", authMiddleware, async (req, res) =>{
     }
 });
 
-route.put("/rendeles/modify/:id", async (req, res) =>{
+route.put("/rendelesModify/:id", async (req, res) =>{
     try {
         const { id } = req.params;
 
@@ -75,7 +75,7 @@ route.put("/rendeles/modify/:id", async (req, res) =>{
     }
 });
 
-route.delete("/rendeles/delete/:id", async (req, res) => {
+route.delete("/rendelesDelete/:id", async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -91,3 +91,5 @@ route.delete("/rendeles/delete/:id", async (req, res) => {
         throw error;
     }
 });
+
+module.exports = route;

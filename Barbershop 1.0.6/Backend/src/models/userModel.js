@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
+    telefonszam: {
+      type: DataTypes.STRING(12)
+    },
     foglaltsag: {
       type: DataTypes.ENUM('Fogyasztó', 'Borbély', 'Admin'),
       allowNull: false,
