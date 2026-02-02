@@ -1,27 +1,45 @@
 <div class="container">
     <div class="regCard">
         <div class="regText">
+            <span class="premium-label">Tagsági Program</span>
             <h1>REGISZTRÁCIÓ</h1>
-            <hr>
-            <div class="regForm">
+            <div class="divider"></div>
+            
+            <form class="regForm">
+                <div class="input-group">
+                    <label>Felhasználónév</label>
+                    <input type="text" placeholder="pl. barber_king" />
+                </div>
 
-                <label>Felhasználónév</label>
-                <input type="text" formControlName="username" />
+                <div class="input-group">
+                    <label>Email cím</label>
+                    <input type="email" placeholder="pelda@email.hu" />
+                </div>
 
-                <label>Email</label>
-                <input type="email" formControlName="email" />
+                <div class="grid-inputs">
+                    <div class="input-group">
+                        <label>Jelszó</label>
+                        <input type="password" placeholder="••••••••" />
+                    </div>
+                    <div class="input-group">
+                        <label>Jelszó újra</label>
+                        <input type="password" placeholder="••••••••" />
+                    </div>
+                </div>
 
-                <label>Jelszó</label>
-                <input type="password" formControlName="password" />
-
-                <label>Jelszó újra</label>
-                <input type="password" formControlName="confirmPassword" />
-
-                <button type="submit">Regisztrálok</button>
-            </div>
+                <button type="submit" class="submit-btn">FIÓK LÉTREHOZÁSA</button>
+                
+                <p class="auth-footer">Már van fiókja? <a routerLink="/login">Jelentkezzen be</a></p>
+            </form>
         </div>
+
         <div class="regImg">
-            <!-- <img src="./assets/images/logo.png" alt=""> -->
+            <div class="overlay">
+                <div class="logo-box">
+                    <h2 class="logo-text">DIVISUM</h2>
+                    <span class="logo-slogan">BARBERSHOP</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

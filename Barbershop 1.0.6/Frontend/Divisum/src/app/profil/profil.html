@@ -1,14 +1,37 @@
-<div class="container">
-    <div class="profCard">
-        <div class="profImg">
-        <img src="../../assets/images/ProfilPic.png" alt="">
-    </div>
-    <div class="profTxt">
-        <h4>Jelenkezzen be vagy regisztráljon!</h4>
-    </div>
-    <div class="profBtns">
-        <button (click)="goToLogin()">Bejelentkezés</button>
-        <button (click)="goToRegister()">Regisztráció</button>
-    </div>
-    </div>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-visual">
+            <div class="overlay">
+              <div class="logo-substitute">
+  <h1 class="logo-text">DIVISUM</h1>
+  <span class="logo-slogan">BARBERSHOP</span>
 </div>
+            </div>
+          </div>
+  
+      <div class="auth-form-side">
+        <div class="welcome-text">
+          <span class="premium-label">Tagsági Program</span>
+          <h2>Üdvözöljük a Divisum világában</h2>
+          <p>Csatlakozzon hozzánk, hogy elérje exkluzív kedvezményeinket, és nyomon követhesse foglalásait és rendeléseit.</p>
+        </div>
+  
+        <div class="auth-actions">
+          <button class="btn-primary" (click)="goToLogin()">
+            <span class="btn-text">Bejelentkezés</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          
+          <div class="divider-text"><span>vagy</span></div>
+          
+          <button class="btn-secondary" (click)="goToRegister()">
+            Létrehozok egy fiókot
+          </button>
+        </div>
+  
+        <div class="auth-footer">
+          <p>Belépésével elfogadja az <a routerLink="/aszf">ÁSZF</a>-et.</p>
+        </div>
+      </div>
+    </div>
+  </div>

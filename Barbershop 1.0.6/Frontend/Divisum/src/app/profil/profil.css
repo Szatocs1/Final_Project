@@ -1,33 +1,205 @@
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* A containernek ki kell töltenie a viewport magasságát is, 
-       hogy a regCard függőlegesen is középre kerüljön. */
-    min-height: 100vh; 
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
 }
-.profCard{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 50px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-}
-.profImg img{
-    width: 200px;
-    border-radius: 50%;
-    margin: 20px;
-}
-.profBtns button{
-    padding: 10px;
-    margin: 10px;
-    background-color: #132435;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-}
-.profBtns button:hover{
-    background-color: #333d47; /* Kicsit világosabb kék/szürke a hover hatáshoz */
 
+.auth-card {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  min-height: 550px;
+  border: 1px solid #f9f4ea;
+}
+
+/* Kép rész */
+.auth-visual {
+  flex: 1;
+  background: url('../../assets/images/Barbershop.png') no-repeat center center/cover;
+  position: relative;
+  display: none;
+  border-right: 4px solid #c5a059; 
+}
+
+@media (min-width: 768px) {
+  .auth-visual { display: block; }
+}
+
+.auth-visual .overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(19, 36, 53, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.auth-footer a {
+  color: #c5a059; 
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+  border-bottom: 1px solid transparent;
+}
+
+.auth-footer a:hover {
+  color: #132435;
+  border-bottom: 1px solid #c5a059;
+}
+
+/* Logó */
+.logo-substitute {
+  text-align: center;
+  color: white;
+  animation: fadeIn 1.2s ease-out;
+}
+
+.logo-text {
+  font-weight: 900;
+  font-size: 3.2rem;
+  letter-spacing: 12px;
+  margin: 0;
+  line-height: 1;
+  color: white; 
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.logo-slogan {
+  font-size: 0.85rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #c5a059;
+  opacity: 0.9;
+  display: block;
+  margin-top: 15px;
+  border-top: 1px solid #c5a059; 
+  padding-top: 10px;
+  display: inline-block;
+}
+
+/* Jobb oldali rész */
+.auth-form-side {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.premium-label {
+  color: #c5a059; 
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.welcome-text h2 {
+  color: #132435;
+  font-weight: 800;
+  margin: 10px 0 20px;
+  font-size: 1.8rem;
+}
+
+.welcome-text p {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Bejelentkezés gomb */
+.btn-primary {
+  background-color: #c5a059; 
+  color: #132435; 
+  border: 1px solid #c5a059;
+  padding: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1.5px;
+}
+
+.btn-primary:hover {
+  background-color: #132435;
+  color: #c5a059;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
+}
+
+.btn-primary .fas {
+  margin-left: 10px;
+}
+
+.divider-text {
+  text-align: center;
+  position: relative;
+  margin: 10px 0;
+}
+
+.divider-text::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 0; width: 100%; height: 1px;
+  background: #f2e6d0; 
+  z-index: 1;
+}
+
+.divider-text span {
+  background: white;
+  padding: 0 15px;
+  color: #999;
+  font-size: 0.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Regisztráció gomb */
+.btn-secondary {
+  background: transparent;
+  color: #132435;
+  border: 2px solid #132435;
+  padding: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #f9f4ea;
+  border-color: #c5a059;
+  color: #c5a059;
+}
+/* Footer */
+.auth-footer {
+  margin-top: 40px;
+  font-size: 0.75rem;
+  color: #999;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

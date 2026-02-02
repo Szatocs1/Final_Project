@@ -1,30 +1,36 @@
 <div class="container">
     <div class="logCard">
         <div class="logImg">
-            <!-- <img src="./assets/images/logo.png" alt=""> -->
-        </div>
-        <div class="logText">
-            <h1>BEJELENTKEZÉS</h1>
-            <hr>
-            <div class="logForm">
-
-                <label>Email</label>
-                <input type="email" formControlName="email" />
-                <small *ngIf="submitted && f.email.errors">
-                Valós email-t adjon meg!
-                </small>
-
-                <label>Jelszó</label>
-                <input type="password" formControlName="password" />
-                <small *ngIf="submitted && f.password.errors">
-                Hejtelen jelszó!
-                </small>
-
-
-                <button type="submit">Bejelentkezés</button>
+            <div class="overlay">
+                <div class="logo-box">
+                    <h2 class="logo-text">DIVISUM</h2>
+                    <span class="logo-slogan">BARBERSHOP</span>
+                </div>
             </div>
         </div>
-        
+
+        <div class="logText">
+            <span class="premium-label">Üdvözöljük újra</span>
+            <h1>BEJELENTKEZÉS</h1>
+            <div class="divider"></div>
+            
+            <form class="logForm">
+                <div class="input-group">
+                    <label>Email cím</label>
+                    <input type="email" placeholder="pelda@email.hu" />
+                    <small class="error-text" *ngIf="false">Valós email-t adjon meg!</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Jelszó</label>
+                    <input type="password" placeholder="••••••••" />
+                    <small class="error-text" *ngIf="false">Helytelen jelszó!</small>
+                </div>
+
+                <button type="submit" class="submit-btn">BEJELENTKEZÉS</button>
+                
+                <p class="auth-footer">Még nincs fiókja? <a routerLink="/register">Hozzon létre egyet</a></p>
+            </form>
+        </div>
     </div>
 </div>
-
