@@ -6,9 +6,8 @@ const db = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-//Táblák generálása
+//Táblák generálása és meghívása
 const userModel = require("./src/models/userModel")(db.sequelize);
-const kepekModel = require("./src/models/kepekModel")(db.sequelize);
 const foglalasModel = require("./src/models/foglalasModel")(db.sequelize);
 const rendelesekModel = require("./src/models/rendelesekModel")(db.sequelize);
 const termekModel = require("./src/models/termekModel")(db.sequelize);

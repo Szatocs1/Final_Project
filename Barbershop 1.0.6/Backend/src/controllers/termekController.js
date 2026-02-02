@@ -25,7 +25,7 @@ async function searchName(name) {
 async function searchCategory(category){
     try{
         const Category = await Termek.findAll({ where: { kategoria: category } });
-        return products.map(p => p.toJSON());
+        return Category.map(p => p.toJSON());
     }
     catch(error){
         console.error("Nem találta meg a kategóriát! ", error)
@@ -108,7 +108,7 @@ async function modifyItem(id, termekNev, kategoria, ar, megjegyzes, file){
 
 async function deleteItem(id) {
     try{
-        const deletedCount = await termekek.destroy({
+        const deletedCount = await Termek.destroy({
             where: { id }
         });
 
@@ -122,7 +122,17 @@ async function deleteItem(id) {
         throw error;
     }
 }
+async function getEveryItem() {
+    try{
+          const items = await Termek.findAll({ limit: 20 });
 
+          return items.map(item => item.toJSON());
+
+      }catch(error){
+        console.error("Nem található termék!", error)
+        throw error;
+      }
+}
 
 
 module.exports = {
@@ -131,5 +141,6 @@ module.exports = {
     searchCategory,
     createItem,
     modifyItem,
-    deleteItem
+    deleteItem,
+    getEveryItem
 };

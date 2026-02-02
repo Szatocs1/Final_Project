@@ -31,6 +31,10 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING(255),
                 allowNull: false,
             },
+            ar: {
+                type: DataTypes.INTEGER(255),
+                allowNull: false,
+            },
   }, {
     tableName: 'foglalasok',
     timestamps: false,

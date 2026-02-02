@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             telefonszam: {
-                type: DataTypes.INTEGER(11),
+                type: DataTypes.STRING(12),
                 allowNull: false,
             },
             iranyitoszam: {

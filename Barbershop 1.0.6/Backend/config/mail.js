@@ -10,13 +10,19 @@ const transport = nodemail.createTransport({
     }
 })
 
-const sendEmail = async ({ receipients, subject, message }) =>{
+const sendEmail = async ({ userData, subject, message }) =>{
     return await transport.sendMail({
         from: 'no-reply@example.com',
-        to: receipients,
+        to: userData,
         subject,
-        text: message,
-        html: message,
+        text:`
+            <p>${message}</p>
+            <a href="${link}">ide</a>
+        `,
+        html:`
+            <p>${message}</p>
+            <a href="${link}">ide</a>
+        `,
     });
 }
 

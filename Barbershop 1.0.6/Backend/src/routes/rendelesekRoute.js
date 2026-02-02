@@ -85,11 +85,22 @@ route.delete("/rendelesDelete/:id", async (req, res) => {
 
         const deletedRendeles = await deleteRendeles(id);
 
-        return res.status(200).json({ message: "Rendelés sikeresen törölve!", deleteRendeles });
+        return res.status(200).json({ message: "Rendelés sikeresen törölve!", deletedRendeles });
     }catch(error){
         console.error("Szerver hiba.");
         throw error;
     }
 });
+
+/*
+admin
+
+delete rendelés
+modify rendelés
+create rendel
+get rendelés by vasarloNeve
+get rendeles by vasarloEmail
+get every rendelés
+*/
 
 module.exports = route;

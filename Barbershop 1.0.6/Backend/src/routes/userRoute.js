@@ -6,14 +6,15 @@ Teendők:
 const express = require('express');
 const bcrypt = require('bcrypt');
 const { createAccesToken } = require('../utils/jwtoken');
-const { findUserByEmail, createUser, findUserById } = require('../controllers/userController');
-const { authMiddleware } = require('../middlewares/authMiddleware')
+const { findUserByEmail, createUser, findUserById, deleteUser, modifyUser, getEveryUser, getUserByName } = require('../controllers/userController');
+const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
+const { use } = require('react');
 
-const router = express.Router();
+const route = express.route();
 
 const ADMIN_PASS = process.env.SERVER_ADMIN_PASSWORD;
 
-router.post('/register', async (req, res) => {
+route.post('/register', async (req, res) => {
   try {
       //itt lesz még egy password, amelyet össze kell hasonlítani a óz eredetivel, hogy sokkal jobban User friendly legyen.
       const { name, email, password } = req.body || {};
@@ -53,7 +54,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+route.post('/login', async (req, res) => {
   try {
               const {email, password} = req.body;
   
@@ -87,14 +88,135 @@ router.post('/login', async (req, res) => {
           }
 });
 
-router.post('/logout', (req, res) => {
+route.post('/logout', (req, res) => {
    return res.json({ message: "Logged out successfully. Please delete token on client." });
 });
 
-router.get('/me', authMiddleware, async (req, res) => {
+route.get('/profile', authMiddleware, async (req, res) => {
     const user = await findUserById(req.user.id);
     console.log('USER:', user);
     return res.json({ user, message: "You are authanticated!" });
 });
+/*
+admin
+*/
+route.post('/admin/createUser', authMiddleware, isAdmin, async (res, req) => {
+    const admin = await findUserById(req.user.id);
 
-module.exports = router;
+    if(!admin){
+      return res.status(400).json({ message: "A felhasználó nem admin!" })
+    }
+
+    const { name, email, password } = req.body || {};
+
+    if(!name || !email || !password){
+      return res.status(400).json({ message: "Nincs megadva az egyik mező!" })
+    }
+
+    try{
+      const user = createUser(name, email, password)
+
+      return res.status(200).json({ message: "Felhasználó sikeresen létrehozva", user });
+    }catch(error){
+      return res.status(500).json({error: "Szerver hiba, nem sikerült felhasználót létre hozni!"});
+    }
+});
+
+route.put("/admin/modifyUser/:id", authMiddleware, isAdmin, async (req, res) => {
+    try{
+      const id = await findUserById(req.user.id);
+      const { name, email, password, phone, role } = req.body;
+
+      if(role !== "Admin" || "Fogyaszto" || "Borbely"){
+        return res.status(401).json({ message: "Nem létező foglaltságot adott meg!" })
+      }
+
+      const updateUser = await modifyUser(id, name, email, password, phone, role );
+
+      return res.status(200).json({ message: "Sikeresen módosítottuk a terméket!", updateUser})
+    }catch(error){
+        console.error("Hiba történt a felhasználó módosításakor!")
+        throw error;
+    }
+});
+
+route.delete("/admin/deleteUser/:id", authMiddleware, isAdmin, async (req, res) => {
+    const { id } = req.params || {};
+
+    if(!id){
+        return res.status(400).json({ message: "A felhasználó nem található meg!" });
+    }
+
+    try{
+        const deleteUser = await deleteUser(id);
+
+        return res.status(200).json({ message: "Termék sikeresen törölve!", deleteUser })
+    }catch(error){
+        console.error("Hiba a felhasználó törlésekor!", error);
+        throw error;
+    }
+});
+
+route.get("/admin/getUserById", authMiddleware, isAdmin, async (req, res) =>{
+    const id = req.body;
+
+    if(!id){
+      return res.status(400).json({ message: "Nincs kitötlve a mező!" })
+    }
+
+    try {
+      const user = await findUserById(id);
+
+      return res.statsu(200).json({ message: "Felhasználó sikeresen megtalálva!", user })
+    }catch(error){
+      res.status(500).json({ error: "Szerver hiba, nem található a felhasználó!", error })
+    }
+});
+
+route.get("/admin/getEveryUser", authMiddleware, isAdmin, async (req, res) => {
+    try{
+      const users = await getEveryUser();
+ 
+    if(!users){
+      return res.status(400).json({ message: "Nincs kitötlve a mező!" })
+    }
+
+      return res.status(200).json({ message: "Felhasználók sikeres lekérése!", users });
+    }catch(error){
+      return res.status(500).json({ error: "Szerver hiba, felhasználók nem találhatóak!", error });
+    }
+});
+
+route.get("/admin/getUserByName", authMiddleware, isAdmin, async (req, res) =>{
+    const name = req.body;
+
+    if(!name){
+      return res.status(400).json({ message: "Nincs kitötlve a mező!" })
+    }
+
+    try{
+      const user = await getUserByName(name);
+
+      return res.status(200).json({ message: "Felhasználó sikeresen lekérve!", user });
+    }catch(error){
+      return res.status(500).json({ error: "Szerver hiba, felhasználó nem található!", error });
+    }
+});
+
+route.get("/admin/getUserByEmail", authMiddleware, isAdmin, async (req, res) =>{
+    const email = req.body;
+
+    if(!email){
+      return res.status(400).json({ message: "Nincs kitötlve a mező!" })
+    }
+
+    try{
+      const user = await findUserByEmail(email);
+
+      return res.status(200).json({ message: "Felhasználó sikeresen lekérve!", user });
+    }catch(error){
+      return res.status(500).json({ error: "Szerver hiba, felhasználó nem található!", error });
+    }
+});
+
+module.exports = route;
