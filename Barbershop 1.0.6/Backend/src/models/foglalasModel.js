@@ -7,16 +7,16 @@ module.exports = (sequelize) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            vasarloEmail: {
-                type: DataTypes.STRING(255),
-                allowNull: false,
-            },
             vasarloNeve: {
                 type: DataTypes.STRING(75),
                 allowNull: false,
             },
+            vasarloEmail: {
+                type: DataTypes.STRING(255),
+                allowNull: false,
+            },
             vasarloTelefonszam: {
-                type: DataTypes.TEXT(12),
+                type: DataTypes.STRING(12),
                 allowNull: false,
             },
             idopont:{

@@ -6,7 +6,7 @@ cd BARBERSHOP
 npm init -y
 
 3) Függőségek
-npm i bcrypt dotenv express express-session jsonwebtoken mariadb nodemon sequelize multer
+npm i bcrypt dotenv express express-session jsonwebtoken mariadb nodemon sequelize multer nodemailer
 
  4) (opcionális) fejlesztői eszköz
 npm i -D nodemon

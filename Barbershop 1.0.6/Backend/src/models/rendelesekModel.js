@@ -11,6 +11,10 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING(75),
                 allowNull: false,
             },
+            vasarloEmail: {
+                type: DataTypes.STRING(75),
+                allowNull: false,
+            },
             telefonszam: {
                 type: DataTypes.INTEGER(11),
                 allowNull: false,
@@ -31,8 +35,8 @@ module.exports = (sequelize) => {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
-            termekNeve: {
-                type: DataTypes.STRING(255),
+            termekek: {
+                type: DataTypes.JSON,
                 allowNull: false,
             },
             ar: {
