@@ -1,7 +1,7 @@
 const express = require("express");
 const route = express.Router();
-const authMiddleware = require("../middlewares/authMiddleware");
-const { createRendeles, modifyRendeles, deleteRendeles } = require("../controllers/rendelesekController");
+const {authMiddleware, isAdmin} = require("../middlewares/authMiddleware");
+const { createRendeles, modifyRendeles, deleteRendeles, getEveryRendeles, getRendelesByName, getRendelesByEmail } = require("../controllers/rendelesekController");
 
 route.post("/rendelesCreate", authMiddleware, async (req, res) =>{
     try {
@@ -57,7 +57,7 @@ route.put("/rendelesModify/:id", async (req, res) =>{
     try {
         const { id } = req.params;
 
-        const updates = req.body;
+        const { updates } = req.body;
 
         if (!updates || Object.keys(updates).length === 0) {
             return res.status(400).json({ message: "Nincs módosítandó adat!" });
@@ -94,13 +94,82 @@ route.delete("/rendelesDelete/:id", async (req, res) => {
 
 /*
 admin
-
-delete rendelés
-modify rendelés
-create rendel
-get rendelés by vasarloNeve
-get rendeles by vasarloEmail
-get every rendelés
 */
+
+route.post('/admin/modifyRendeles', authMiddleware, isAdmin, async (req, res) => {
+    const { vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, rendelesIdeje, termekek } = req.body;
+
+    const final_ar = 0;
+
+    for(const item of termekek){
+        final_ar += item.ar;
+    }
+
+    try{
+        const rendeles = await modifyRendeles(vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, rendelesIdeje, termekek, final_ar);
+
+        return res.status(200).json({ message: "Rendelés sikeresen módosítva!", rendeles });
+    }catch(error){
+        return res.status(500).json({ error: "Szerver hiba, nem sikerült módosítani a rendelésen!", error })
+    }
+});
+
+route.delete('/admin/deleteRendeles', authMiddleware, isAdmin, async (req, res) =>{
+    const { id } = req.params;
+
+    if(!id){
+        return res.status(400).json({ message: "A termék nem található!" });
+    }
+
+    try{
+        const deletedRendeles = await deleteRendeles(id);
+
+        return res.status(200).json({ message: "Termék sikeresen törölve!", deletedRendeles });
+    }catch(error){
+        return res.status(500).json({ error: "Szerver hiba, a termék nem került törlésre!", error })
+    }
+});
+
+route.get('/admin/getRendelesByName', authMiddleware, isAdmin, async (req, res) =>{
+    const { name } = req.body;
+
+    if(!name){
+        return res.status(400).json({ message: "A mező nincs kitöltve!" });
+    }
+
+    try{
+        const rendeles = await getRendelesByName(name);
+
+        if(!rendeles){
+            return res.status(400).json({ message: "Rendelés nem található!" });
+        }
+
+        return res.status(200).json({ message: "Rendelés sikeresen megtalálva név által!", rendeles });
+    }catch(error){
+        return res.status(500).json({ error: "Szerver hiba, a rendelés nem került lekérésre!", error });
+    }
+});
+
+route.get('/admin/getEveryRendeles', authMiddleware, isAdmin, async (req, res) =>{
+    try{
+        const rendelesek = await getEveryRendeles();
+
+        return res.status(200).json({ message: "Minden rendelés sikeresen lekérve!", rendelesek })
+    }catch(error){
+        return res.status(500).json({ error: "Szerver hiba, nem sikerült lekérni a rendeléseket!", error });
+    }
+});
+
+route.get('/admin/getRendelesByEmail', authMiddleware, isAdmin, async (req, res) => {
+    const { email } = req.body;
+    
+    try{
+        const rendeles = await getRendelesByEmail(email);
+
+        return res.status(200).json({ message: "Sikeres rendelés lekérés email által!", rendeles });
+    }catch(error){
+        return res.status(500).json({ error: "Szerver hiba, nem sikerült lekérni a rendeléseket" })
+    }
+});
 
 module.exports = route;

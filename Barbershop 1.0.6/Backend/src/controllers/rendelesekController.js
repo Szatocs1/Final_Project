@@ -79,12 +79,43 @@ async function deleteRendeles(id) {
 
     const rendelesDeleted = await rendeles.destroy();
 
-    return rendelesDeleted.toJSON();
+    return rendelesDeleted ? rendelesDeleted.toJSON() : null;
+}
+
+async function getRendelesByName(nev) {
+    const rendeles = await Rendelesek.findOne({ where: nev });
+
+    return rendeles ? rendeles.toJSON() : null;
+}
+
+async function getEveryRendeles() {
+      try{
+          const rendelesek = await Rendelesek.findAll({ limit: 20 });
+
+          return rendelesek.map(rendeles => rendeles.toJSON());
+
+      }catch(error){
+        console.error("Nem talál rendelést!", error)
+        throw error;
+      }
+}
+
+async function getRendelesByEmail(email) {
+    const rendeles = await Rendelesek.findAll({ where: email });
+
+    if(rendeles.length > 1){
+        return rendeles.map(rend => rend.toJSON());
+    }
+
+    return rendeles ? rendeles.toJSON : null;
 }
 
 module.exports = {
     createRendeles,
     modifyRendeles,
-    deleteRendeles
+    deleteRendeles,
+    getRendelesByName,
+    getEveryRendeles,
+    getRendelesByEmail
 };
 

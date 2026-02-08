@@ -4,6 +4,7 @@ foglalások módosítása, foglalások létrehozása, foglalások törlése
 foglalás keresés név és gmail által
 minden foglalás mutatása a borbélynak
 */
+const { where } = require("sequelize");
 const Foglalasok = require("../models/foglalasModel");
 
 async function findFoglalasById(id) {
@@ -79,9 +80,45 @@ async function foglalasDelete(id) {
     }
 }
 
+async function getFoglalasByName(nev) {
+    try{
+        const foglalas = await Foglalasok.findOne({ where: nev });
+
+        return foglalas ? foglalas.toJSON() : null;
+    }catch(error){
+        console.error("Nem sikerült lekérni a foglalást név által!", error)
+    }
+}
+
+async function getEveryFoglalas() {
+    try{
+          const foglalasok = await Foglalasok.findAll({ limit: 20 });
+
+          return foglalasok.map(foglalas => foglalas.toJSON());
+
+      }catch(error){
+        console.error("Nem talál foglalást!", error)
+        throw error;
+      }
+}
+
+async function getFoglalasByEmail(email) {
+    try{
+        const foglalas = await Foglalasok.findOne({ where: email });
+
+        return foglalas ? foglalas.toJSON() : null;
+    }catch(error){
+        console.error("Nem talál foglalást email áltl!", error)
+        throw error;
+    }
+}
+
 module.exports = {
     findFoglalasById,
     foglalasModify,
     foglalasDelete,
-    createFoglalas
+    createFoglalas,
+    getFoglalasByName,
+    getEveryFoglalas,
+    getFoglalasByEmail
 }
