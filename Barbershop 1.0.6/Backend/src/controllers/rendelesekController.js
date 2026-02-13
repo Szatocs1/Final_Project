@@ -1,16 +1,11 @@
-/*
-rendelés készítés, módosítás, törlés
-rendelés időpontjának rögzítése !!!
-*/
-const { sequelize } = require("../config/db.js");
+const { sequelize } = require("../../config/db.js");
 const Rendelesek = require("../models/rendelesekModel.js")(sequelize);
 const Termek = require("../models/termekModel.js")(sequelize);
 
 async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, termekek, ar }) {
     const productsWithInfo = [];
-    let totalPrice;
 
-    for (const item of Termek) {
+    for (const item of termekek) {
         const product = await Termek.findByPk(item.termekId);
         if (!product) throw new Error(`Termék ${item.termekId} nem található!`);
 
@@ -21,7 +16,6 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
             ar: product.ar
         };
 
-        totalPrice += product.ar * item.mennyiseg;
         productsWithInfo.push(snapshot);
     }
 
@@ -34,7 +28,7 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
         szallitasiCim,
         rendelesIdeje: new Date(),
         termekek: productsWithInfo,
-        totalPrice
+        ar
     });
 
     return newRendeles.toJSON();
@@ -83,7 +77,7 @@ async function deleteRendeles(id) {
 }
 
 async function getRendelesByName(nev) {
-    const rendeles = await Rendelesek.findOne({ where: nev });
+    const rendeles = await Rendelesek.findOne({ where: { vasarloNeve: nev } });
 
     return rendeles ? rendeles.toJSON() : null;
 }
@@ -101,13 +95,13 @@ async function getEveryRendeles() {
 }
 
 async function getRendelesByEmail(email) {
-    const rendeles = await Rendelesek.findAll({ where: email });
+    const rendeles = await Rendelesek.findAll({ where: { vasarloEmail: email } });
 
     if(rendeles.length > 1){
         return rendeles.map(rend => rend.toJSON());
     }
 
-    return rendeles ? rendeles.toJSON : null;
+    return rendeles.map(rend => rend.toJSON());
 }
 
 module.exports = {

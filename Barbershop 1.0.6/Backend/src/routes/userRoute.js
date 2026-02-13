@@ -8,22 +8,24 @@ const bcrypt = require('bcrypt');
 const { createAccesToken } = require('../utils/jwtoken');
 const { findUserByEmail, createUser, findUserById, deleteUser, modifyUser, getEveryUser, getUserByName } = require('../controllers/userController');
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
-const { use } = require('react');
 
-const route = express.route();
+const route = express.Router();
 
 const ADMIN_PASS = process.env.SERVER_ADMIN_PASSWORD;
 
 route.post('/register', async (req, res) => {
   try {
-      //itt lesz még egy password, amelyet össze kell hasonlítani a óz eredetivel, hogy sokkal jobban User friendly legyen.
-      const { name, email, password } = req.body || {};
+      const { name, email, password, password_again } = req.body || {};
   
-      if (!name || !password || !email) {
+      if (!name || !password || !email || !password_again) {
         return res.status(400).json({ error: 'Név, jelszó és email mező kitöltése kötelező!' });
       }
+
+      if(password !== password_again){
+        return res.status(400).json({ error: 'A jelszó nem egyezik!' });
+      }
   
-      const existingEmail = await findUserByEmail(email); // <-- ADD await!
+      const existingEmail = await findUserByEmail(email);
   
       if (existingEmail) {
         return res.status(409).json({ error: 'Ezzel az email címmel már létezik fiók!' });
@@ -97,24 +99,26 @@ route.get('/profile', authMiddleware, async (req, res) => {
     console.log('USER:', user);
     return res.json({ user, message: "You are authanticated!" });
 });
+
 /*
 admin
 */
-route.post('/admin/createUser', authMiddleware, isAdmin, async (res, req) => {
+
+route.post('/admin/createUser', authMiddleware, isAdmin, async (req, res) => {
     const admin = await findUserById(req.user.id);
 
     if(!admin){
       return res.status(400).json({ message: "A felhasználó nem admin!" })
     }
 
-    const { name, email, password } = req.body || {};
+    const { name, email, password, role } = req.body || {};
 
-    if(!name || !email || !password){
+    if(!name || !email || !password || !role){
       return res.status(400).json({ message: "Nincs megadva az egyik mező!" })
     }
 
     try{
-      const user = createUser(name, email, password)
+      const user = createUser(name, email, password, role)
 
       return res.status(200).json({ message: "Felhasználó sikeresen létrehozva", user });
     }catch(error){
@@ -127,7 +131,7 @@ route.put("/admin/modifyUser/:id", authMiddleware, isAdmin, async (req, res) => 
       const id = await findUserById(req.user.id);
       const { name, email, password, phone, role } = req.body;
 
-      if(role !== "Admin" || "Fogyaszto" || "Borbely"){
+      if(role !== "Admin" && role !== "Fogyasztó" && role !== "Borbély"){
         return res.status(401).json({ message: "Nem létező foglaltságot adott meg!" })
       }
 
@@ -150,7 +154,7 @@ route.delete("/admin/deleteUser/:id", authMiddleware, isAdmin, async (req, res) 
     try{
         const deleteUser = await deleteUser(id);
 
-        return res.status(200).json({ message: "Termék sikeresen törölve!", deleteUser })
+        return res.status(200).json({ message: "Felhasználó sikeresen törölve!", deleteUser })
     }catch(error){
         console.error("Hiba a felhasználó törlésekor!", error);
         throw error;
@@ -158,7 +162,7 @@ route.delete("/admin/deleteUser/:id", authMiddleware, isAdmin, async (req, res) 
 });
 
 route.get("/admin/getUserById", authMiddleware, isAdmin, async (req, res) =>{
-    const id = req.body;
+    const { id } = req.query;
 
     if(!id){
       return res.status(400).json({ message: "Nincs kitötlve a mező!" })
@@ -167,7 +171,7 @@ route.get("/admin/getUserById", authMiddleware, isAdmin, async (req, res) =>{
     try {
       const user = await findUserById(id);
 
-      return res.statsu(200).json({ message: "Felhasználó sikeresen megtalálva!", user })
+      return res.status(200).json({ message: "Felhasználó sikeresen megtalálva!", user })
     }catch(error){
       res.status(500).json({ error: "Szerver hiba, nem található a felhasználó!", error })
     }
@@ -188,7 +192,7 @@ route.get("/admin/getEveryUser", authMiddleware, isAdmin, async (req, res) => {
 });
 
 route.get("/admin/getUserByName", authMiddleware, isAdmin, async (req, res) =>{
-    const name = req.body;
+    const { name } = req.query;
 
     if(!name){
       return res.status(400).json({ message: "Nincs kitötlve a mező!" })
@@ -204,7 +208,7 @@ route.get("/admin/getUserByName", authMiddleware, isAdmin, async (req, res) =>{
 });
 
 route.get("/admin/getUserByEmail", authMiddleware, isAdmin, async (req, res) =>{
-    const email = req.body;
+    const { email } = req.query;
 
     if(!email){
       return res.status(400).json({ message: "Nincs kitötlve a mező!" })

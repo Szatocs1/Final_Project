@@ -38,7 +38,7 @@ async function searchProduct(filters = {}) {
         const where = {};
 
         if (filters.name){
-            where.termekNev = { [Op.like]: `%${filters.name}` }
+            where.termekNev = { [Op.like]: `%${filters.name}%` }
         }
         if (filters.category){
             where.kategoria = filters.category;
@@ -47,7 +47,7 @@ async function searchProduct(filters = {}) {
         const products = await Termek.findAll({ where });
         return products.map(p => p.toJSON());
     }catch(error){
-        console.log("Nem találta a terméket vagy kategóriát!", error);
+        console.error("Nem találta a terméket vagy kategóriát!", error);
         throw error;
     }   
 }
@@ -92,7 +92,7 @@ async function modifyItem(id, termekNev, kategoria, ar, megjegyzes, file){
         const updates = {};
         if (termekNev) updates.termekNev = termekNev;
         if (kategoria) updates.kategoria = kategoria;
-        if (ar) updates.ar = ar;
+        if (ar !== 0) updates.ar = ar;
         if (megjegyzes) updates.megjegyzes = megjegyzes;
         if (file) updates.kepNeve = file.filename;
 
@@ -142,5 +142,6 @@ module.exports = {
     createItem,
     modifyItem,
     deleteItem,
-    getEveryItem
+    getEveryItem,
+    upload
 };

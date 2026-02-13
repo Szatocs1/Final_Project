@@ -7,18 +7,18 @@ const transport = nodemail.createTransport({
     auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASSWORD,
-    }
+    },
+    tls: {
+    rejectUnauthorized: false,
+  },
 })
 
 const sendEmail = async ({ userData, subject, message }) =>{
     return await transport.sendMail({
-        from: 'no-reply@example.com',
+        from: `Your App Name <${process.env.MAIL_USER}>`,
         to: userData,
         subject,
-        text:`
-            <p>${message}</p>
-            <a href="${link}">ide</a>
-        `,
+        text: `${message}\n\n${link}`,
         html:`
             <p>${message}</p>
             <a href="${link}">ide</a>

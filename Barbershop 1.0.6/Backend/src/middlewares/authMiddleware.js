@@ -42,7 +42,8 @@ const isAdmin = (req, res, next) =>{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         if(decoded.foglaltsag === "Admin"){
-            return true;
+            req.user = decoded;
+            next();
         }
     }catch(error){
         return res.status(401).json({error: "Érvénytelen token!"});

@@ -1,11 +1,12 @@
+const { sequelize } = require("../../config/db");
+
 /*
 ha a foglalás felhasználva, vagy nem jelenik meg a vevő: törölje a foglalást
 foglalások módosítása, foglalások létrehozása, foglalások törlése
 foglalás keresés név és gmail által
 minden foglalás mutatása a borbélynak
 */
-const { where } = require("sequelize");
-const Foglalasok = require("../models/foglalasModel");
+const Foglalasok = require("../models/foglalasModel")(sequelize);
 
 async function findFoglalasById(id) {
     try{
@@ -29,7 +30,7 @@ async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgal
             ar
         });
 
-        return createdFoglalas ? createdFoglalas.toJSON : null;
+        return createdFoglalas ? createdFoglalas.toJSON() : null;
     }catch(error){
         console.error("Nem sikerült létre hozni a foglalást: ", error);
         throw error;
@@ -37,7 +38,7 @@ async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgal
 }
 
 async function foglalasModify(id, data) {
-    const foglalas = await Foglalasok.findFoglalasById(id);
+    const foglalas = await findFoglalasById(id);
     if (!foglalas) {
         throw new Error("Foglalás nem található!");
     }
@@ -68,7 +69,7 @@ async function foglalasModify(id, data) {
 
 async function foglalasDelete(id) {
     try{
-        const foglalas = await Foglalasok.findFoglalasById(id);
+        const foglalas = await findFoglalasById(id);
 
         const deletedFoglalas = await foglalas.destroy();
 
@@ -82,7 +83,7 @@ async function foglalasDelete(id) {
 
 async function getFoglalasByName(nev) {
     try{
-        const foglalas = await Foglalasok.findOne({ where: nev });
+        const foglalas = await Foglalasok.findOne({ where: { vasarloNeve: nev } });
 
         return foglalas ? foglalas.toJSON() : null;
     }catch(error){
@@ -104,7 +105,7 @@ async function getEveryFoglalas() {
 
 async function getFoglalasByEmail(email) {
     try{
-        const foglalas = await Foglalasok.findOne({ where: email });
+        const foglalas = await Foglalasok.findOne({ where: {vasarloEmail: email} });
 
         return foglalas ? foglalas.toJSON() : null;
     }catch(error){

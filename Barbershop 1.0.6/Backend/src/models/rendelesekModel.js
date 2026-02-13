@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             iranyitoszam: {
-                type: DataTypes.INTEGER(4),
+                type: DataTypes.STRING(4),
                 allowNull: false,
             },
             telepules: {

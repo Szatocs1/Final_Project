@@ -40,15 +40,16 @@ async function findUserById(id) {
   }
 }
 
-async function modifyUser(user, nev, email, jelszo, foglaltsag){
+async function modifyUser(userId, nev, email, jelszo, telefonszam, foglaltsag){
     try {
-        const product = await User.findByPk(user);
+        const product = await User.findByPk(userId);
         if (!product) throw new Error('Felhasználó nem található!');
 
         const updates = {};
         if (nev) updates.nev = nev;
         if (email) updates.email = email;
         if (jelszo) updates.jelszo = jelszo;
+        if (telefonszam) updates.telefonszam = telefonszam;
         if (foglaltsag) updates.foglaltsag = foglaltsag;
 
         await product.update(updates);
@@ -56,7 +57,7 @@ async function modifyUser(user, nev, email, jelszo, foglaltsag){
         return product ? product.toJSON() : null;
     }
     catch(error){
-        console.error("Nem sikerült módosítani a terméket!", error);
+        console.error("Nem sikerült módosítani a felhasználót!", error);
         throw error;
     }
 }
@@ -92,7 +93,7 @@ async function getEveryUser() {
 
 async function getUserByName(nev) {
       try{
-        const user = await User.findOne({ where: nev })
+        const user = await User.findOne({ where: { nev } })
 
         return user ? user : null;
       }catch(error){

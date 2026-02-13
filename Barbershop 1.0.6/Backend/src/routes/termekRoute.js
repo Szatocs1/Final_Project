@@ -30,14 +30,14 @@ admin
 
 route.post("/admin/productsCreate", authMiddleware, isAdmin, async (req, res) => {
     const { name, category, price, comment } = req.body || {};
-    const { filename } = req.file || {};
+    const { file } = req.file || {};
 
-    if (!name || !filename || !category || !price || !comment){
+    if (!name || !file || !category || !price || !comment){
         res.status(401).json({ message: "Hiányzik valamelyik mező!" });
     }
 
     try{
-        const createdProduct = await createItem(name, category, price, comment, filename);
+        const createdProduct = await createItem(name, category, price, comment, file);
 
         return res.status(200).json({ message: "Sikeresen létrejött a termék!", createdProduct })
     }catch(error){
@@ -49,14 +49,14 @@ route.post("/admin/productsCreate", authMiddleware, isAdmin, async (req, res) =>
 route.put("/admin/productsModify/:id", authMiddleware, isAdmin, async (req, res) => {
     const { id } = req.params || {};
     const { name, category, price, comment } = req.body || {};
-    const { filename } = req.file || {};
+    const { file } = req.file || {};
     
     if(!id){
         return res.status(400).json({ message: "A termék nem található!" })
     }
 
     try{
-        const updateProduct = await modifyItem(id ,name, category, price, comment, filename);
+        const updateProduct = await modifyItem(id ,name, category, price, comment, file);
 
         return res.status(200).json({ message: "Sikeresen módosítottuk a terméket!", updateProduct})
     }catch(error){
@@ -82,7 +82,7 @@ route.delete("/admin/productsDelete/:id", authMiddleware, isAdmin, async (req, r
     }
 });
 
-route.get("/admin/getUserByCategory", authMiddleware, isAdmin, async (req, res) =>{
+route.get("/admin/getItemByCategory", authMiddleware, isAdmin, async (req, res) =>{
     const category = req.body;
 
     if(!category){
