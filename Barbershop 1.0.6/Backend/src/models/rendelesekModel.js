@@ -43,6 +43,16 @@ module.exports = (sequelize) => {
                 type: DataTypes.INTEGER(255),
                 allowNull: false,
             },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE'
+            },
   }, {
     tableName: 'rendelesek',
     timestamps: false,

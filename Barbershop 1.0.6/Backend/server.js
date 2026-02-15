@@ -5,6 +5,7 @@ const path = require('path');
 const db = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 
 
 const whitelist = [
@@ -36,6 +37,7 @@ const userModel = require("./src/models/userModel")(db.sequelize);
 const foglalasModel = require("./src/models/foglalasModel")(db.sequelize);
 const rendelesekModel = require("./src/models/rendelesekModel")(db.sequelize);
 const termekModel = require("./src/models/termekModel")(db.sequelize);
+const rendelesTermekek = require("./src/models/rendelesTermekekModel")(db.sequelize);
 
 //Mount-ok
 const userRoutes = require('./src/routes/userRoute');
