@@ -1,12 +1,15 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { KosarService } from './services/kosar.services';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './app.html',
-  standalone: false,
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Divisum');
+  constructor(public kosarService: KosarService) {}
 }
-

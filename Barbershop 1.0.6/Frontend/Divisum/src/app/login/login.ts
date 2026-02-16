@@ -11,5 +11,4 @@ import { RouterModule } from '@angular/router';
 })
 export class Login {
   submitted = false;
-  // Itt jöhet majd a FormBuilder és a bejelentkezési logika
 }

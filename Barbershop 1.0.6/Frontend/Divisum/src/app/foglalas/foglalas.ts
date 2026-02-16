@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,11 +10,18 @@ import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-foglalas',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, FormsModule],
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    MatCardModule, 
+    MatDatepickerModule, 
+    MatNativeDateModule, 
+    FormsModule
+  ],
   templateUrl: './foglalas.html',
   styleUrl: './foglalas.css'
 })
-export class Foglalas {
+export class Foglalas implements OnInit {
   selectedBarber: string | null = null;
   selectedService: any = null;
   selectedDate: Date | null = null;
@@ -29,13 +37,28 @@ export class Foglalas {
   ];
 
   services = [
-    { name: 'Hajvágás', price: 6500, duration: 45, icon: 'content_cut' },
-    { name: 'Szakáll igazítás', price: 4500, duration: 30, icon: 'face' },
-    { name: 'Hajfestés', price: 8500, duration: 90, icon: 'colorize' },
-    { name: 'Haj + Szakáll', price: 9500, duration: 75, icon: 'face_retouching_natural' },
-    { name: 'Melirozás', price: 10500, duration: 120, icon: 'brush' },
-    { name: 'Apa + Gyerek kedvezmény', price: 10000, duration: 90, icon: 'groups' }
+    { name: 'Hajvágás', price: 6490, duration: 45, icon: 'content_cut' },
+    { name: 'Szakáll igazítás', price: 4490, duration: 30, icon: 'face' },
+    { name: 'Hajfestés', price: 24990, duration: 90, icon: 'colorize' },
+    { name: 'Haj + Szakáll', price: 9990, duration: 75, icon: 'face_retouching_natural' },
+    { name: 'Melirozás', price: 14990, duration: 120, icon: 'brush' },
+    { name: 'Melír + Hajvágás', price: 19990, duration: 150, icon: 'content_cut' },
+    { name: 'Melír + Haj + Szakáll', price: 29990, duration: 180, icon: 'face_retouching_natural' },
+    { name: 'Apa + Gyerek kedvezmény', price: 8490, duration: 90, icon: 'groups' }
   ];
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
+
+    this.route.queryParams.subscribe(params => {
+      const barberFromUrl = params['barber'];
+      if (barberFromUrl) {
+        this.selectedBarber = barberFromUrl;
+      }
+    });
+  }
 
   selectBarber(name: string) {
     this.selectedBarber = name;
@@ -154,4 +177,5 @@ export class Foglalas {
     this.userData = { name: '', email: '', phone: '' };
     this.termsAccepted = false;
   }
+  
 }

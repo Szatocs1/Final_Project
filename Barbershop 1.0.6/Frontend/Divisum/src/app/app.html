@@ -1,21 +1,78 @@
-<header>
-    <div id="navbar">
-        <div class="navLogo">
-            <img src="/assets/images/transparentLogo2.png" alt="">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<header id="navbar">
+    <div class="navLogo">
+        <img src="/assets/images/transparentLogo2.png" 
+            alt="Divisum" 
+            routerLink="/home">
+    </div>
+
+    <div class="navLinks">
+        <ul>
+            <li><a routerLink="/home" routerLinkActive="active">Főoldal</a></li>
+            <li><a routerLink="/termekek" routerLinkActive="active">TERMÉKEK</a></li>
+            <li><a routerLink="/foglalas" routerLinkActive="active" class="booking-btn">IDŐPONTFOGLALÁS</a></li>
+        </ul>
+    </div>
+
+    <div class="navIcons">
+        <div class="cart-container" routerLink="/kosar" routerLinkActive="active-icon">
+            <span class="material-icons">shopping_bag</span>
+            <span class="badge" *ngIf="kosarService.cartCount() > 0">
+                {{ kosarService.cartCount() }}
+            </span>
         </div>
-        <div class="navLinks">
-            <ul>
-                <li><a routerLink="/home" routerLinkActive="active">Főoldal</a></li>
-            </ul>
-        </div>
-        <div class="navProfil">
-            <ul>
-                <li><a routerLink="/kosar" routerLinkActive="active"><mat-icon>shopping_cart</mat-icon></a></li>
-                <li><a routerLink="/profil" routerLinkActive="active"><mat-icon>person</mat-icon></a></li>
-            </ul>
-        </div>
-        
+        <a routerLink="/profil" routerLinkActive="active-icon">
+            <span class="material-icons">account_circle</span>
+        </a>
     </div>
 </header>
 
+<main class="main-content">
+    
 <router-outlet></router-outlet>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-section about">
+            <img src="/assets/images/transparentLogo2.png" alt="Divisum Logo" class="footer-logo">
+            <p>A stílus és a precizitás otthona. Prémium barber szolgáltatások és minőségi termékek egy helyen.</p>
+        </div>
+
+        <div class="footer-section links">
+            <h3>NAVIGÁCIÓ</h3>
+            <ul>
+                <li><a routerLink="/home">Főoldal</a></li>
+                <li><a routerLink="/termekek">Termékek</a></li>
+                <li><a routerLink="/foglalas">Időpontfoglalás</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section schedule">
+            <h3>NYITVATARTÁS</h3>
+            <p>Hétfő - Péntek: 09:00 - 22:00</p>
+            <p>Szombat: 09:00 - 18:00</p>
+            <p>Vasárnap: Zárva</p>
+        </div>
+
+        <div class="footer-section contact">
+            <h3>KAPCSOLAT</h3>
+            <p>3980 Sátoraljaújhely</p>
+            <p>+36 30 123 4567</p>
+            <p>info@divisum.hu</p>
+        </div>
+
+        <div class="footer-section links">
+            <h3>INFORMÁCIÓK</h3>
+            <ul>
+                <li><a routerLink="/aszf">ÁSZF</a></li>
+                <li><a routerLink="/adatvedelem">Adatvédelem</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 DIVISUM. Minden jog fenntartva.</p>
+    </div>
+</footer>

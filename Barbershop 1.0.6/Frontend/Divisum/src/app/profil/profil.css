@@ -1,4 +1,8 @@
-.auth-container {
+/* ==========================================================================
+  1. AUTH KONTÉNER ÉS KÁRTYA STRUKTÚRA
+  ========================================================================== */
+
+  .auth-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,7 +23,10 @@
   border: 1px solid #f9f4ea;
 }
 
-/* Kép rész */
+/* ==========================================================================
+    2. BAL OLDAL: VIZUÁLIS ELEMEK
+    ========================================================================== */
+
 .auth-visual {
   flex: 1;
   background: url('../../assets/images/Barbershop.png') no-repeat center center/cover;
@@ -42,21 +49,6 @@
   z-index: 2;
 }
 
-.auth-footer a {
-  color: #c5a059; 
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: 0.3s;
-  border-bottom: 1px solid transparent;
-}
-
-.auth-footer a:hover {
-  color: #132435;
-  border-bottom: 1px solid #c5a059;
-}
-
-/* Logó */
 .logo-substitute {
   text-align: center;
   color: white;
@@ -79,14 +71,16 @@
   text-transform: uppercase;
   color: #c5a059;
   opacity: 0.9;
-  display: block;
+  display: inline-block;
   margin-top: 15px;
   border-top: 1px solid #c5a059; 
   padding-top: 10px;
-  display: inline-block;
 }
 
-/* Jobb oldali rész */
+/* ==========================================================================
+    3. JOBB OLDAL: FORMA ÉS SZÖVEGEK
+    ========================================================================== */
+
 .auth-form-side {
   flex: 1;
   padding: 60px;
@@ -118,13 +112,16 @@
   margin-bottom: 40px;
 }
 
+/* ==========================================================================
+    4. AKCIÓ GOMBOK
+    ========================================================================== */
+
 .auth-actions {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Bejelentkezés gomb */
 .btn-primary {
   background-color: #c5a059; 
   color: #132435; 
@@ -174,7 +171,6 @@
   z-index: 2;
 }
 
-/* Regisztráció gomb */
 .btn-secondary {
   background: transparent;
   color: #132435;
@@ -191,12 +187,30 @@
   border-color: #c5a059;
   color: #c5a059;
 }
-/* Footer */
+
+/* ==========================================================================
+    5. LÁBLÉC ÉS ANIMÁCIÓK
+    ========================================================================== */
+
 .auth-footer {
   margin-top: 40px;
   font-size: 0.75rem;
   color: #999;
   text-align: center;
+}
+
+.auth-footer a {
+  color: #c5a059; 
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+  border-bottom: 1px solid transparent;
+}
+
+.auth-footer a:hover {
+  color: #132435;
+  border-bottom: 1px solid #c5a059;
 }
 
 @keyframes fadeIn {

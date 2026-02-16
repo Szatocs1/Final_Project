@@ -1,55 +1,220 @@
-#navbar{
-    background-color: #132435;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.navLinks a{
-    color: rgb(233, 233, 233);
-    text-decoration: none;
-    padding: 10px;
-}
-.navLinks a:hover{
-    color: rgb(160, 160, 160);
-}
-.navLinks a.active{
-    background-color: #203c58;
-    border-radius: 10px;
-    transition: ease-in-out 0.2s;
+/* ==========================================================================
+1. GLOBÁLIS ALAPOK ÉS BETŰTÍPUS
+========================================================================== */
 
-}
-.navLinks ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    margin-top: 16px;
-}
-.navLinks ul li{
-    margin: 20px;
-}
-.navProfil a{
-    color: rgb(233, 233, 233);
-}
-.navProfil a:hover{
-    color: rgb(160, 160, 160);
-}
-.navProfil ul{
-    display: flex;
-    flex-direction: row;
-    justify-content:center;
-    align-items: center;
-    margin: 20px;
-    list-style: none;
-}
-.navProfil li{
-    padding: 20px;
-}
-.navLogo img{
-    width: 220px;
-    padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+body {
+margin: 0;
+padding: 0;
+font-family: 'Montserrat', sans-serif;
 }
 
+/* ==========================================================================
+2. NAVBAR
+========================================================================== */
 
+#navbar {
+background-color: #132435; 
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 0 50px;
+height: 85px;
+position: sticky;
+top: 0;
+z-index: 1000;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navLogo img {
+width: 200px;
+height: auto;
+cursor: pointer;
+}
+
+.navLinks ul {
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+list-style: none;
+margin: 0;
+padding: 0;
+gap: 30px;
+}
+
+.navLinks a {
+color: #e9e9e9;
+text-decoration: none;
+font-weight: 600;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+padding: 10px 15px;
+transition: all 0.3s ease;
+border-bottom: 2px solid transparent;
+}
+
+.navLinks a:hover {
+color: #ffffff;
+}
+
+.navLinks a.active {
+border-bottom: 2px solid #ffffff;
+color: #ffffff;
+background-color: transparent;
+}
+
+/* ==========================================================================
+3. NAVIGÁCIÓS IKONOK ÉS KOSÁR
+========================================================================== */
+
+.navIcons {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+.navIcons a, 
+.cart-container {
+text-decoration: none;
+color: white;
+display: flex;
+align-items: center;
+position: relative;
+cursor: pointer;
+transition: transform 0.2s ease;
+}
+
+.navIcons a:hover, 
+.cart-container:hover {
+transform: scale(1.1);
+}
+
+.active-icon {
+border-bottom: 2px solid #ffffff;
+padding-bottom: 5px;
+}
+
+.cart-btn {
+position: relative;
+display: inline-flex;
+}
+
+.badge {
+position: absolute;
+top: -10px;
+right: -10px;
+background-color: #b08d57;
+color: white;
+border-radius: 50%;
+width: 20px;
+height: 20px;
+font-size: 11px;
+font-weight: bold;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 2px solid #132435;
+}
+
+.material-icons { font-size: 28px; }
+mat-icon { font-size: 24px; }
+
+/* ==========================================================================
+4. MAIN FOOTER
+========================================================================== */
+
+.main-footer {
+background-color: #132435;
+color: #ffffff;
+padding: 80px 0 20px;
+}
+
+.footer-container {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+padding: 0 20px;
+gap: 40px;
+}
+
+.footer-section {
+flex: 1;
+min-width: 200px;
+}
+
+.footer-logo {
+max-width: 180px;
+margin-bottom: 20px;
+}
+
+.footer-section h3 {
+font-size: 1.1rem;
+font-weight: 800;
+margin-bottom: 25px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: #ffffff;
+}
+
+.footer-section p, 
+.footer-section ul li a {
+font-size: 0.9rem;
+line-height: 1.6;
+color: #cbd5e0;
+}
+
+.footer-section ul {
+list-style: none;
+padding: 0;
+}
+
+.footer-section ul li {
+margin-bottom: 12px;
+}
+
+.footer-section ul li a {
+text-decoration: none;
+transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+color: #ffffff;
+}
+
+.footer-bottom {
+margin-top: 60px;
+padding-top: 20px;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+text-align: center;
+font-size: 0.8rem;
+color: #718096;
+}
+
+/* ==========================================================================
+5. RESPONSIVE
+========================================================================== */
+
+@media (max-width: 768px) {
+#navbar {
+padding: 0 20px;
+}
+
+.navLinks {
+display: none;
+}
+
+.footer-container {
+flex-direction: column;
+text-align: center;
+}
+
+.footer-logo {
+margin: 0 auto 20px;
+}
+}

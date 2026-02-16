@@ -1,0 +1,33 @@
+.legal-hero {
+    background-color: #132435; 
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .legal-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .legal-wrapper {
+    background-color: #ffffff;
+    padding: 60px 0;
+  .legal-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 15px;
+    color: #444;
+  }
+  
+  .legal-list li::before {
+    content: "•";
+    color: #132435;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+  }

@@ -1,0 +1,401 @@
+/* ==========================================================================
+  1. HERO SZEKCIÓ (A TERMÉKEK OLDAL STÍLUSA ALAPJÁN)
+  ========================================================================== */
+
+.cart-hero {
+  height: 350px;
+  background: linear-gradient(rgba(19, 36, 53, 0.85), rgba(19, 36, 53, 0.85)), 
+              url('../../assets/images/HeroSection2.png') center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  border-bottom: 4px solid #c5a059;
+}
+
+.cart-hero .hero-subtitle,
+.premium-label { 
+  color: #c5a059; 
+  letter-spacing: 4px; 
+  font-size: 0.85rem; 
+  font-weight: 300; 
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.cart-hero h1 { 
+  font-size: 2.8rem; 
+  margin: 0; 
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.header-line { 
+  width: 50px; 
+  height: 2px; 
+  background: #c5a059; 
+  margin: 20px auto 0; 
+}
+
+/* ==========================================================================
+    2. LAYOUT ÉS KONTÉNER
+    ========================================================================== */
+
+.cart-container {
+  max-width: 1300px;
+  margin: -60px auto 100px;
+  padding: 0 20px;
+}
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+}
+
+/* ==========================================================================
+    3. KOSÁR ELEMEK LISTÁJA 
+    ========================================================================== */
+
+.cart-items-list {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  border-top: 1px solid #f9f4ea;
+}
+
+.cart-header-labels {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f4f4f4;
+  color: #c5a059;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 30px 0;
+  border-bottom: 1px solid #f4f4f4;
+  transition: 0.3s;
+}
+
+.cart-item:hover {
+  background-color: #fafafa;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.img-wrapper {
+  width: 150px;
+  height: 110px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.img-wrapper img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+
+.item-info h3 {
+  color: #132435;
+  margin: 5px 0;
+  font-weight: 900;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.item-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #c5a059;
+}
+
+.item-size {
+  font-size: 0.85rem;
+  margin: 4px 0;
+  color: #132435;
+}
+
+.item-size strong {
+  color: #c5a059;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.item-size span {
+  background: #f9f4ea;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 5px;
+  font-weight: 700;
+  border: 1px solid #c5a059;
+}
+
+/* ==========================================================================
+    4. MENNYISÉG ÉS KEZELŐSZERVEK
+    ========================================================================== */
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  background: #f4f4f4;
+  width: fit-content;
+  border-radius: 30px;
+  padding: 5px;
+  border: 1px solid #eee;
+}
+
+.qty-btn {
+  background: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.qty-btn:hover { 
+  background: #c5a059; 
+  color: #132435; 
+}
+
+.qty-num { 
+  margin: 0 15px; 
+  font-weight: 800; 
+  color: #132435; 
+}
+
+.price-and-delete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-total-price {
+  font-weight: 900;
+  color: #132435;
+  font-size: 1.1rem;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ff4757;
+  cursor: pointer;
+  transition: 0.2s;
+  opacity: 0.6;
+}
+
+.delete-btn:hover { 
+  transform: scale(1.2); 
+  opacity: 1;
+}
+
+/* ==========================================================================
+    5. ÖSSZEGZÉS OLDALSÁV
+    ========================================================================== */
+
+.summary-card {
+  background: #132435; 
+  color: white;
+  padding: 40px;
+  border-radius: 12px;
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+  border-bottom: 5px solid #c5a059;
+}
+
+.summary-title {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  padding-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.promo-section {
+  margin: 30px 0;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.promo-input-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.promo-input-group input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 12px;
+  color: white;
+  border-radius: 4px;
+}
+
+.promo-input-group button {
+  background: #c5a059;
+  color: #132435;
+  border: none;
+  padding: 0 20px;
+  font-weight: 800;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.promo-input-group button:hover {
+  background: white;
+}
+
+.promo-success-msg {
+  color: #c5a059;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.total-section {
+  margin-top: 40px;
+}
+
+.final-price {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #c5a059;
+}
+
+.checkout-button {
+  width: 100%;
+  background: #c5a059;
+  color: #132435;
+  border: none;
+  padding: 20px;
+  font-weight: 900;
+  font-size: 1rem;
+  border-radius: 4px;
+  margin-top: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-button:hover {
+  background: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.continue-shopping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 25px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.continue-shopping:hover {
+  color: #c5a059;
+}
+
+/* ==========================================================================
+    6. ÜRES KOSÁR ÁLLAPOT
+    ========================================================================== */
+
+.empty-basket-container {
+  text-align: center;
+  padding: 100px 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, 
+              rgba(0, 0, 0, 0.12) 0px -12px 30px, 
+              rgba(0, 0, 0, 0.12) 0px 4px 6px, 
+              rgba(0, 0, 0, 0.17) 0px 12px 13px, 
+              rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.empty-icon-circle {
+  width: 100px;
+  height: 100px;
+  background: #f9f4ea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  border: 2px solid #c5a059;
+}
+
+.empty-icon-circle mat-icon { 
+  font-size: 50px; 
+  width: 50px; 
+  height: 50px; 
+  color: #c5a059; 
+}
+
+.browse-btn {
+  background-color: #132435; 
+  color: #c5a059;
+  border: 1px solid #c5a059;
+  width: 25%;
+  min-width: 200px;
+  padding: 15px 0;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.browse-btn:hover {
+  background-color: #c5a059;
+  color: #132435;
+}

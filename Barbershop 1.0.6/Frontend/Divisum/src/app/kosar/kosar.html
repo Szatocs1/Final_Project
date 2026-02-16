@@ -1,1 +1,106 @@
-<p>kosar works!</p>
+<section class="cart-hero">
+  <div class="hero-overlay">
+    <span class="premium-label">Rendelés áttekintése</span>
+    <h1>KOSÁR</h1>
+    <div class="header-line"></div>
+  </div>
+</section>
+
+<div class="cart-container">
+  <div class="cart-layout" *ngIf="cartItems.length > 0; else emptyCart">
+    
+    <div class="cart-items-list">
+      <div class="cart-header-labels">
+        <span>TERMÉK</span>
+        <span>MENNYISÉG</span>
+        <span>ÖSSZESEN</span>
+      </div>
+
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="item-main">
+          <div class="img-wrapper">
+            <img [src]="item.image" [alt]="item.name">
+          </div>
+          <div class="item-info">
+            <span class="item-category">{{item.category}}</span>
+            <h3>{{item.name}}</h3>
+            
+            <p class="item-size" *ngIf="item.size">
+              <strong>Méret:</strong> <span>{{item.size}}</span>
+            </p>
+          
+            <p class="unit-price">{{item.price}} Ft / db</p>
+          </div>
+        </div>
+
+        <div class="qty-control">
+          <button (click)="changeQty(item, -1)" class="qty-btn"><mat-icon>remove</mat-icon></button>
+          <span class="qty-num">{{item.quantity}}</span>
+          <button (click)="changeQty(item, 1)" class="qty-btn"><mat-icon>add</mat-icon></button>
+        </div>
+
+        <div class="price-and-delete">
+          <p class="item-total-price">{{item.price * item.quantity}} Ft</p>
+          <button class="delete-btn" (click)="removeItem(item)" title="Eltávolítás">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-sidebar">
+      <div class="summary-card">
+        <h2 class="summary-title">ÖSSZEGZÉS</h2>
+        
+        <div class="summary-details">
+          <div class="summary-line">
+            <span>Részösszeg</span>
+            <span>{{subtotal}} Ft</span>
+          </div>
+          
+          <div class="promo-section">
+            <p class="promo-label">Promóciós kód</p>
+            <div class="promo-input-group">
+              <input type="text" placeholder="Kód megadása" [(ngModel)]="promoCode" [disabled]="isPromoApplied">
+              <button (click)="applyPromo()" [class.applied]="isPromoApplied">
+                {{ isPromoApplied ? '✓' : 'BEVÁLTÁS' }}
+              </button>
+            </div>
+            <p class="promo-success-msg" *ngIf="isPromoApplied">
+              <mat-icon>verified</mat-icon> 10% kedvezmény levonva!
+            </p>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="total-line">
+            <span>Fizetendő:</span>
+            <span class="final-price">{{total}} Ft</span>
+          </div>
+          <p class="tax-info">Az árak az ÁFA-t tartalmazzák.</p>
+        </div>
+
+        <button class="checkout-button">
+          FIZETÉSRE TOVÁBB
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+
+        <a routerLink="/termekek" class="continue-shopping">
+          <mat-icon>keyboard_backspace</mat-icon>
+          Vásárlás folytatása
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-basket-container">
+      <div class="empty-icon-circle">
+        <mat-icon>shopping_bag</mat-icon>
+      </div>
+      <h2>A kosarad jelenleg üres</h2>
+      <p>Nézz körül legújabb kollekciónkban és találd meg a hozzád illő darabokat!</p>
+      <button routerLink="/termekek" class="browse-btn">TERMÉKEK BÖNGÉSZÉSE</button>
+    </div>
+  </ng-template>
+</div>

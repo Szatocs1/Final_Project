@@ -1,178 +1,367 @@
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-    font-family: 'Montserrat', sans-serif;
+/* ==========================================================================
+1. HERO SZEKCIÓ (FEJLÉC VIZUÁL)
+========================================================================== */
+
+.cart-hero {
+height: 350px;
+background: linear-gradient(rgba(19, 36, 53, 0.85), rgba(19, 36, 53, 0.85)), 
+            url('../../assets/images/HeroSection2.png') center/cover;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+color: white;
+border-bottom: 4px solid #c5a059;
 }
 
-.logCard {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    width: 1000px;
-    min-height: 600px;
-    height: auto;
-    background: white;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 40px 0;
-    border: 1px solid #f2e6d0;
+.cart-hero .hero-subtitle,
+.premium-label { 
+color: #c5a059; 
+letter-spacing: 4px; 
+font-size: 0.85rem; 
+font-weight: 300; 
+text-transform: uppercase;
+display: block;
+margin-bottom: 10px;
 }
 
-/* Kép rész */
-.logImg {
-    background: url("../../assets/images/Barbershop.png") center/cover no-repeat;
-    background-color: #132435;
-    position: relative;
-    min-height: 100%;
-    border-right: 5px solid #c5a059;
+.cart-hero h1 { 
+font-size: 2.8rem; 
+margin: 0; 
+letter-spacing: 2px;
+font-weight: 400;
 }
 
-.overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(19, 36, 53, 0.88);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.header-line { 
+width: 50px; 
+height: 2px; 
+background: #c5a059; 
+margin: 20px auto 0; 
 }
 
-.logo-text {
-    color: #ffff;
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: 10px;
-    margin: 0;
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.4);
+/* ==========================================================================
+    2. ELRENDEZÉS ÉS STRUKTÚRA
+    ========================================================================== */
+
+.cart-container {
+max-width: 1300px;
+margin: -60px auto 100px;
+padding: 0 20px;
 }
 
-.logo-slogan {
-    color: #c5a059;
-    letter-spacing: 5px;
-    font-size: 0.8rem;
-    border-top: 1px solid #c5a059;
-    margin-top: 15px;
-    padding-top: 8px;
-    text-transform: uppercase;
+.cart-layout {
+display: grid;
+grid-template-columns: 1fr 400px;
+gap: 30px;
 }
 
-/* Jobb oldali rész  */
-.logText {
-    padding: 60px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch; 
+/* ==========================================================================
+    3. TERMÉKEK LISTÁJA
+    ========================================================================== */
+
+.cart-items-list {
+background: white;
+border-radius: 12px;
+padding: 40px;
+box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+border-top: 1px solid #f9f4ea;
 }
 
-.premium-label {
-    color: #c5a059;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
+.cart-header-labels {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+padding-bottom: 20px;
+border-bottom: 2px solid #f4f4f4;
+color: #c5a059;
+font-size: 0.8rem;
+letter-spacing: 2px;
+font-weight: 700;
+text-transform: uppercase;
 }
 
-.logText h1 {
-    color: #132435;
-    font-size: 2.2rem;
-    font-weight: 900;
-    margin: 10px 0;
+.cart-item {
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+align-items: center;
+padding: 30px 0;
+border-bottom: 1px solid #f4f4f4;
+transition: 0.3s;
 }
 
-.divider {
-    width: 60px;
-    height: 4px;
-    background: #c5a059;
-    margin-bottom: 40px;
+.cart-item:hover {
+background-color: #fafafa;
 }
 
-/* Input rész */
-.input-group {
-    margin-bottom: 25px;
-    display: flex;
-    flex-direction: column;
-    width: 100%; 
+.item-main {
+display: flex;
+align-items: center;
+gap: 25px;
 }
 
-.input-group label {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #132435;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-align: left;
+.img-wrapper {
+width: 150px;
+height: 110px;
+border-radius: 8px;
+overflow: hidden;
+background: #f9f9f9;
+border: 1px solid #eee;
+box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
-.input-group input {
-    width: 100%; 
-    box-sizing: border-box; 
-    padding: 14px 18px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    font-size: 0.95rem;
-    background: #fafafa;
-    font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s ease;
+.img-wrapper img {
+width: 100%; height: 100%; object-fit: cover;
 }
 
-.input-group input:focus {
-    border-color: #c5a059;
-    background: white;
-    outline: none;
-    box-shadow: 0 4px 12px rgba(197, 160, 89, 0.15);
+.item-info h3 {
+color: #132435;
+margin: 5px 0;
+font-weight: 900;
+font-family: 'Montserrat', sans-serif;
 }
 
-/* Gomb */
-.submit-btn {
-    background: #132435;
-    color: #c5a059;
-    border: 1px solid #c5a059;
-    padding: 18px;
-    width: 100%;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+.item-category {
+font-size: 0.7rem;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+color: #c5a059;
 }
 
-.submit-btn:hover {
-    background: #c5a059;
-    color: #132435;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+.item-size {
+font-size: 0.85rem;
+margin: 4px 0;
+color: #132435;
 }
 
-.error-text {
-    color: #ff4d4d;
-    font-size: 0.75rem;
-    margin-top: 5px;
-    font-weight: 600;
-    min-height: 1rem;
+.item-size strong {
+color: #c5a059;
+text-transform: uppercase;
+font-size: 0.75rem;
+letter-spacing: 1px;
 }
 
-/* Footer rész */
-.auth-footer {
-    text-align: center;
-    margin-top: 35px;
-    font-size: 0.85rem;
-    color: #888;
+.item-size span {
+background: #f9f4ea;
+padding: 2px 8px;
+border-radius: 4px;
+margin-left: 5px;
+font-weight: 700;
+border: 1px solid #c5a059;
 }
 
-.auth-footer a {
-    color: #c5a059;
-    font-weight: 800;
-    text-decoration: none;
-    transition: 0.3s;
-    border-bottom: 1px solid transparent;
+/* ==========================================================================
+    4. INTERAKTÍV ELEMEK
+    ========================================================================== */
+
+.qty-control {
+display: flex;
+align-items: center;
+background: #f4f4f4;
+width: fit-content;
+border-radius: 30px;
+padding: 5px;
+border: 1px solid #eee;
 }
 
-.auth-footer a:hover {
-    border-bottom: 1px solid #c5a059;
+.qty-btn {
+background: white;
+border: none;
+width: 32px;
+height: 32px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: 0.2s;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.qty-btn:hover { 
+background: #c5a059; 
+color: #132435; 
+}
+
+.qty-num { margin: 0 15px; font-weight: 800; color: #132435; }
+
+.price-and-delete {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.item-total-price {
+font-weight: 900;
+color: #132435;
+font-size: 1.1rem;
+}
+
+.delete-btn {
+background: none;
+border: none;
+color: #ff4757;
+cursor: pointer;
+transition: 0.2s;
+opacity: 0.6;
+}
+
+.delete-btn:hover { 
+transform: scale(1.2); opacity: 1;
+}
+
+/* ==========================================================================
+    5. ÖSSZESÍTŐ OLDALSÁV
+    ========================================================================== */
+
+.summary-card {
+background: #132435; 
+color: white;
+padding: 40px;
+border-radius: 12px;
+position: sticky;
+top: 100px;
+box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+border-bottom: 5px solid #c5a059;
+}
+
+.summary-title {
+font-size: 1.6rem;
+letter-spacing: 2px;
+margin-bottom: 30px;
+border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+padding-bottom: 15px;
+text-transform: uppercase;
+font-weight: 800;
+}
+
+.summary-line {
+display: flex;
+justify-content: space-between;
+margin-bottom: 20px;
+font-weight: 500;
+}
+
+.promo-section {
+margin: 30px 0;
+padding: 20px 0;
+border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.promo-input-group {
+display: flex;
+gap: 10px;
+margin-top: 10px;
+}
+
+.promo-input-group input {
+flex: 1;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(197, 160, 89, 0.3);
+padding: 12px;
+color: white;
+border-radius: 4px;
+}
+
+.promo-input-group button {
+background: #c5a059;
+color: #132435;
+border: none;
+padding: 0 20px;
+font-weight: 800;
+border-radius: 4px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.total-section {
+margin-top: 40px;
+}
+
+.final-price {
+font-size: 2rem;
+font-weight: 900;
+color: #c5a059;
+}
+
+.checkout-button {
+width: 100%;
+background: #c5a059;
+color: #132435;
+border: none;
+padding: 20px;
+font-weight: 900;
+font-size: 1rem;
+border-radius: 4px;
+margin-top: 30px;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+transition: 0.3s;
+text-transform: uppercase;
+}
+
+.checkout-button:hover {
+background: #ffffff;
+transform: translateY(-3px);
+box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.continue-shopping {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+margin-top: 25px;
+color: rgba(255,255,255,0.6);
+text-decoration: none;
+font-size: 0.9rem;
+transition: 0.3s;
+}
+
+/* ==========================================================================
+    6. ÜRES ÁLLAPOT
+    ========================================================================== */
+
+.empty-basket-container {
+text-align: center;
+padding: 100px 0;
+background: white;
+border-radius: 12px;
+box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+}
+
+.empty-icon-circle {
+width: 100px;
+height: 100px;
+background: #f9f4ea;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 30px;
+border: 2px solid #c5a059;
+}
+
+.empty-icon-circle mat-icon { 
+font-size: 50px; width: 50px; height: 50px; color: #c5a059; 
+}
+
+.browse-btn {
+background-color: #132435; 
+color: #c5a059;
+border: 1px solid #c5a059;
+min-width: 200px;
+padding: 15px 40px;
+border-radius: 4px;
+font-weight: 700;
+text-transform: uppercase;
+cursor: pointer;
+transition: 0.3s ease;
+}
+
+.browse-btn:hover {
+background-color: #c5a059;
+color: #132435;
 }

@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+/* ==========================================================================
+1. ALAP BEÁLLÍTÁSOK ÉS BETŰTÍPUSOK
+========================================================================== */
 
-/* ALAP BEÁLLÍTÁSOK */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
 .booking-wrapper {
   max-width: 950px;
@@ -10,7 +12,9 @@
   color: #132435;
 }
 
-/* FEJLÉC */
+/* ==========================================================================
+  2. FEJLÉC ÉS SZEKCIÓ CÍMEK
+  ========================================================================== */
 
 .header-section {
   text-align: center;
@@ -45,8 +49,6 @@
   font-size: 1rem;
 }
 
-/* SZEKCIÓ CÍMEK */
-
 .section-title {
   font-size: 1.1rem;
   text-transform: uppercase;
@@ -57,7 +59,9 @@
   margin: 40px 0 25px;
 }
 
-/* 1. SZAKEMBEREK */
+/* ==========================================================================
+  3. SZAKEMBEREK
+  ========================================================================== */
 
 .barber-grid {
   display: flex;
@@ -98,7 +102,7 @@
 }
 
 .barber-card.selected .barber-image-container {
-  border-color: #c5a059;
+  border-color: #132435;
   box-shadow: 0 0 25px rgba(197, 160, 89, 0.3);
 }
 
@@ -107,7 +111,9 @@
   color: #132435;
 }
 
-/* 2. SZOLGÁLTATÁSOK */
+/* ==========================================================================
+  4. SZOLGÁLTATÁSOK LISTÁJA
+  ========================================================================== */
 
 .service-list {
   display: flex;
@@ -126,19 +132,21 @@
   transition: all 0.2s ease;
 }
 
-.gold-icon {
-  color: #132435 !important;
-  transition: 0.2s;
+.service-text {
+  display: flex;
+  align-items: baseline;  
 }
 
 .service-name {
   font-weight: 700;
   font-size: 1rem;
+  margin-right: 10px; 
 }
 
 .service-duration {
   font-size: 0.85rem;
-  color: #777;
+  color: #888;
+  font-weight: 400;
 }
 
 .service-price {
@@ -146,6 +154,11 @@
   font-weight: 700;
   transition: 0.2s;
   font-size: 1.1rem;
+}
+
+.gold-icon {
+  color: #132435 !important;
+  transition: 0.2s;
 }
 
 .service-item:hover {
@@ -171,7 +184,9 @@
   color: #aaa;
 }
 
-/* 3. NAPTÁR + IDŐPONT */
+/* ==========================================================================
+  5. NAPTÁR ÉS IDŐPONT VÁLASZTÓ
+  ========================================================================== */
 
 .datetime-container {
   display: flex;
@@ -230,7 +245,9 @@
   border-color: #c5a059;
 }
 
-/* 4. ELÉRHETŐSÉGI ŰRLAP */
+/* ==========================================================================
+  6. KAPCSOLATI ÚRLAP
+  ========================================================================== */
 
 .contact-form {
   display: flex;
@@ -279,7 +296,9 @@
   text-decoration: underline;
 }
 
-/* ÖSSZESÍTÉS + SUBMIT */
+/* ==========================================================================
+  7. ÖSSZESÍTÉS ÉS FOGLALÁS GOMB
+  ========================================================================== */
 
 .action-section {
   margin-top: 40px;
@@ -326,14 +345,14 @@
   filter: grayscale(1);
 }
 
-/* MODAL */
+/* ==========================================================================
+  8. SIKERES FOGLALÁS MODAL
+  ========================================================================== */
 
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
@@ -374,15 +393,13 @@
 
 .check-icon {
   font-size: 40px;
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   color: #c5a059;
 }
 
 .modal-close-x {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 15px; right: 15px;
   background: none;
   border: none;
   color: #666;
@@ -457,7 +474,9 @@
   background: #c5a059;
 }
 
-/* ANGULAR MATERIAL FELÜLÍRÁSOK + ZÁRT NAP */
+/* ==========================================================================
+  9. MATERIAL FELÜLÍRÁSOK ÉS SPECIÁLIS ÁLLAPOTOK
+  ========================================================================== */
 
 ::ng-deep .mat-calendar-body-selected {
   background-color: #c5a059 !important;

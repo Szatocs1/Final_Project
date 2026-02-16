@@ -1,2 +1,238 @@
+<section class="hero">
+  <div class="hero-content">
+      <span class="premium-label animated-element">PRÉMIUM BARBERSHOP</span>
+      
+      <h1 class="hero-title animated-element">PRECÍZIÓ. GEOMETRIA. <span class="gold-text">DIVISUM.</span></h1>
+      
+      <div class="header-line animated-element"></div>
 
-<p>asdasd</p>
+      <p class="hero-description fade-in-text">
+        Vidal Sassoon alapú precizitás, hűséges csapat, 
+        kompromisszummentes stílus az ország egyik legjobb szalonjában.
+      </p>
+
+      <button class="foglalok-btn animated-element" routerLink="/foglalas">
+        <i class="calendar-icon"></i>
+        <span>IDŐPONTOT FOGLALOK</span>
+      </button>
+  </div>
+</section>
+  
+<section class="homeHeader">
+  <div class="header-content">
+    <div class="header-logo">
+      <img src="../../assets/images/logo.png" alt="Divisum Logo" class="floating-logo">
+    </div>
+    
+    <div class="header-intro">
+      <h3 class="intro-headline">PRÉMIUM BARBERSHOP</h3>
+      <h2 class="intro-tagline">AHOL A STÍLUS <span class="gold-text">TALÁLKOZIK A PRECIZITÁSSAL.</span></h2>
+      
+      <div class="intro-description">
+        A Divisum Barbershop az ország egyik meghatározó stílusműhelye, ahol a <strong>Vidal Sassoon-i geometriai hajvágás</strong> biztosít mértani pontosságot. Erős, hűséges csapatunkkal az Ön magabiztossága a mi küldetésünk.
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <section class="barbers-section">
+      <div class="barbers-header">
+          <span class="premium-label">Szakértő kezek</span>
+          <h2 class="section-title">VÁLASSZ PROFI CSAPATUNKBÓL</h2>
+      </div>
+  
+      <div class="barbers-container">
+        <div class="barber-card">
+          <div class="barber-image-wrapper">
+              <img src="../../assets/images/Aron.png" alt="Áron">
+          </div>
+          <button class="barber-book-btn" [routerLink]="['/foglalas']" [queryParams]="{ barber: 'Áron' }">
+              Hozzá foglalok
+          </button>
+        </div>
+        
+        <div class="barber-card">
+          <div class="barber-image-wrapper">
+              <img src="../../assets/images/Mate.png" alt="Máté">
+          </div>
+          <button class="barber-book-btn" [routerLink]="['/foglalas']" [queryParams]="{ barber: 'Máté' }">
+              Hozzá foglalok
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+  
+<section class="slider-section">
+  <div class="slider-header">
+    <span class="premium-label">Exkluzív Választék</span>
+    <h2 class="section-title">Kiemelt Termékeink</h2>
+    <div class="header-divider"></div>
+  </div>
+
+  <div class="slider-container">
+    <swiper-container 
+      slides-per-view="1" 
+      space-between="20" 
+      navigation="true" 
+      pagination="true"
+      breakpoints='{"768": {"slidesPerView": 2}, "1100": {"slidesPerView": 3}}'>
+      
+      <swiper-slide *ngFor="let product of products">
+        <div class="product-card">
+          <div class="card-image-box">
+            <div class="image-wrapper">
+              <img [src]="product.img" [alt]="product.name">
+            </div>
+            <div class="hover-overlay">
+              <button class="view-btn" (click)="openDetails(product)">MEGTEKINTÉS</button>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="category">{{ product.category }}</span>
+            <h3 class="name">{{ product.name }}</h3>
+            <div class="price-row">
+              <span class="price">{{ product.price | number:'1.0-0' }} Ft</span>
+              <button class="cart-minimal-btn" (click)="addToCart(product)">
+                <span class="material-icons">shopping_bag</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</section>
+
+<div class="product-modal-overlay" *ngIf="showModal" (click)="closeModal()">
+  <div class="product-modal-content" (click)="$event.stopPropagation()">
+    
+    <button class="close-modal-btn" (click)="closeModal()">&times;</button>
+
+    <div class="modal-body">
+      <div class="modal-image-column">
+        <div class="image-bg-accent">
+          <img [src]="selectedProduct?.img" [alt]="selectedProduct?.name">
+        </div>
+      </div>
+
+      <div class="modal-info-column">
+        <div class="info-scroll-wrapper">
+          <span class="modal-category">{{ selectedProduct?.category }}</span>
+          <h2 class="modal-title">{{ selectedProduct?.name }}</h2>
+          
+          <p class="modal-description">{{ selectedProduct?.description }}</p>
+
+<div class="modal-size-section" *ngIf="selectedProduct?.category === 'Ruházat'">
+    <div class="size-header-row">
+        <span class="size-label">MÉRET VÁLASZTÁSA</span>
+        <button class="size-guide-btn" (click)="toggleSizeChart()">
+            <span class="material-icons">straighten</span> Mérettáblázat
+        </button>
+    </div>
+    
+    <div class="size-options-grid">
+        <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
+            class="size-box"
+            [class.active]="selectedSize === size"
+            (click)="selectedSize = size">
+            {{ size }}
+        </div>
+    </div>
+
+    <div class="inner-size-chart" *ngIf="showSizeChart" (click)="toggleSizeChart()">
+        <div class="chart-card" (click)="$event.stopPropagation()">
+            <h4>MÉRETEK (CM)</h4>
+            <table>
+                <tr><th>Méret</th><th>Váll</th><th>Mell</th><th>Hossz</th></tr>
+                <tr><td>S</td><td>44</td><td>100</td><td>70</td></tr>
+                <tr><td>M</td><td>46</td><td>106</td><td>72</td></tr>
+                <tr><td>L</td><td>48</td><td>112</td><td>74</td></tr>
+                <tr><td>XL</td><td>50</td><td>118</td><td>76</td></tr>
+            </table>
+            <button class="close-chart-btn" (click)="toggleSizeChart()">RENDBEN</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-price">{{ selectedProduct?.price | number:'1.0-0' }} Ft</div>
+
+          <button class="modal-add-to-cart-btn" (click)="addToCart(selectedProduct)">
+            Kosárba helyezés
+          </button>
+
+          <div class="modal-divider"></div>
+
+          <div class="reviews-section">
+            <h3 class="reviews-title">Vásárlói vélemények</h3>
+            
+            <div class="review-item" *ngFor="let review of selectedProduct?.reviews">
+              <div class="review-header">
+                <div class="review-user-info">
+                    <span class="reviewer-name">{{ review.user }}</span>
+                    <span class="review-stars">
+                      {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
+                    </span>
+                </div>
+              </div>
+              <p class="review-text">"{{ review.comment }}"</p>
+              <span class="verified-tag">✓ Igazolt vásárló</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="promo-section">
+  <div class="promo-container">
+    <mat-accordion class="premium-accordion">
+      <mat-expansion-panel 
+        (opened)="panelOpenState.set(true)" 
+        (closed)="panelOpenState.set(false)"
+        hideToggle="true">
+        
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="material-icons promo-icon">local_offer</span>
+            PROMÓCIÓS KÓD
+          </mat-panel-title>
+          <mat-panel-description>
+            {{panelOpenState() ? 'Kattintson az elrejtéshez' : 'Kattintson a feloldáshoz'}}
+            <span class="material-icons expand-arrow">{{panelOpenState() ? 'expand_less' : 'expand_more'}}</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="promo-content">
+          <p>Használja az alábbi kódot a 10%-os kedvezmény érvényesítéséhez:</p>
+          <div class="promo-code-wrapper" (click)="copyToClipboard('DIV26')">
+            <span class="code">DIV26</span>
+            <span class="copy-badge">MÁSOLÁS</span>
+          </div>
+          <small>A kód visszavonásig érvényes webshopunkban.</small>
+        </div>
+        
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</section>
+
+<section class="about-us-section">
+  <div class="about-container">
+      <div class="about-image">
+          <div class="image-placeholder">
+              <img src="../../assets/images/Szalon.png" alt="A Divisum csapata">
+              <div class="image-overlay"></div>
+          </div>
+      </div>
+
+      <div class="about-text">
+          <span class="premium-label">Ismerj meg minket</span>
+          <h2 class="about-title">KIK VAGYUNK?</h2>
+          <div class="about-divider"></div>
+          <p class="about-description">
+            A Divisum Barbershop nem csupán egy üzlet, hanem az ország egyik meghatározó stílusműhelye, ahol a klasszikus borbély hagyományokat a modern trendekkel ötvözzük. Szakmai hitvallásunk alapja a Vidal Sassoon-i geometriai hajvágás, amely mértani pontosságot és tartós struktúrát biztosít minden frizurának. Rendkívül erős, egymáshoz és a vendégekhez is hűséges csapatunk számára az Ön megjelenése a legfontosabb küldetés: nálunk az egyedi stílus és a magabiztosság garantált. Lépjen be hozzánk, és tapasztalja meg, miért tartozunk az ország legjobb üzletei közé!          </p>
+      </div>
+  </div>
+</section>
