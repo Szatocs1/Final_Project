@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             telefonszam: {
-                type: DataTypes.INTEGER(11),
+                type: DataTypes.STRING(12),
                 allowNull: false,
             },
             iranyitoszam: {
-                type: DataTypes.INTEGER(4),
+                type: DataTypes.STRING(4),
                 allowNull: false,
             },
             telepules: {
@@ -42,6 +42,16 @@ module.exports = (sequelize) => {
             ar: {
                 type: DataTypes.INTEGER(255),
                 allowNull: false,
+            },
+            userId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'users',
+                    key: 'id'
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE'
             },
   }, {
     tableName: 'rendelesek',

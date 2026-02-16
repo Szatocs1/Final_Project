@@ -32,14 +32,6 @@
 	-szolgalatas VARCHAR 255
 	-ar INT 10
 
-5.Képek:
-	-Id INT AUTO-INCREMENT 255
-	-imgName VARCHAR 255
-	-imgPath VARCHAR 255
-	-imgMIME VARCHAR 255
-
-
-
 
 
 
