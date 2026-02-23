@@ -107,7 +107,7 @@ export class Termekek implements OnInit {
   addToCart(product: any) {
     const p = { 
       ...product, 
-      img: product.kepNeves[0],
+      img: product.kepNeve[0],
       size: product.kategoria === 'Ruházat' ? this.selectedSize : null 
     };
     
