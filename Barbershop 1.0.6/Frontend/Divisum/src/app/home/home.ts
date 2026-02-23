@@ -24,8 +24,13 @@ export class Home {
   
   isMenuOpen = false;
 
+  // Modális ablak állapota (Részletes nézet)
   showModal = false;
   selectedProduct: any = null;
+
+  // Gyors méretválasztó állapota (Pólóknál a főoldalon)
+  showQuickSizeSelect = false;
+  tempProduct: any = null;
 
   selectedSize: string = 'M';
   showSizeChart: boolean = false;
@@ -69,15 +74,52 @@ export class Home {
 
   constructor(public kosarService: KosarService) {}
 
+  /**
+   * Kosárba helyezés logika
+   */
   addToCart(product: any) {
-    if (product) {
-      const productToAdd = { 
-        ...product, 
-        size: product.category === 'Ruházat' ? this.selectedSize : null 
-      };
-      
-      this.kosarService.addToCart(productToAdd);
+    if (!product) return;
+
+    // Ha Ruházat és még nincs kiválasztva méret (vagy nem a nagy modálból hívjuk)
+    // Megnyitjuk a gyors választót
+    if (product.category === 'Ruházat' && !this.showModal && !this.showQuickSizeSelect) {
+      this.tempProduct = product;
+      this.showQuickSizeSelect = true;
+      document.body.style.overflow = 'hidden';
+      return;
     }
+
+    // Termék összeállítása mérettel
+    const productToAdd = { 
+      ...product, 
+      size: product.category === 'Ruházat' ? this.selectedSize : null 
+    };
+    
+    this.kosarService.addToCart(productToAdd);
+
+    // Folyamat lezárása és takarítás
+    this.closeQuickSelect();
+    console.log('Termék hozzáadva:', productToAdd);
+  }
+
+  /**
+   * Gyors választóban rányomnak egy méretre
+   */
+  confirmQuickSize(size: string) {
+    this.selectedSize = size;
+    if (this.tempProduct) {
+      this.addToCart(this.tempProduct);
+    }
+  }
+
+  /**
+   * Gyors választó bezárása
+   */
+  closeQuickSelect() {
+    this.showQuickSizeSelect = false;
+    this.tempProduct = null;
+    this.selectedSize = 'M'; // Alapértelmezett visszaállítása
+    if (!this.showModal) document.body.style.overflow = 'auto';
   }
 
   openDetails(product: any) {
@@ -92,7 +134,7 @@ export class Home {
     this.showModal = false;
     this.selectedProduct = null;
     this.showSizeChart = false;
-    document.body.style.overflow = 'auto'; 
+    if (!this.showQuickSizeSelect) document.body.style.overflow = 'auto'; 
   }
 
   toggleSizeChart() {
@@ -101,7 +143,6 @@ export class Home {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-
       alert('A kedvezménykód másolva a vágólapra: ' + text); 
     });
   }

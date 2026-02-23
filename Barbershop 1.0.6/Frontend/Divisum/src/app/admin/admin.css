@@ -1,0 +1,237 @@
+/* ==========================================================================
+    1. KONTÉNER ÉS ALAPOK
+    ========================================================================== */
+
+.auth-container {
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+background-color: #f4f4f4;
+padding: 40px 20px;
+font-family: 'Montserrat', sans-serif;
+}
+
+.auth-logCard {
+display: flex;
+width: 100%;
+max-width: 1000px;
+background: white;
+min-height: 600px;
+box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+border-radius: 4px;
+overflow: hidden;
+border: 1px solid #f2e6d0;
+margin: 40px auto;
+}
+
+/* ==========================================================================
+    2. BAL OLDAL
+    ========================================================================== */
+
+.logImg {
+flex: 0 0 350px;
+background: #132435 !important;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+border-right: 4px solid #c5a059;
+}
+
+@media (max-width: 850px) {
+.logImg { display: none; } 
+}
+
+.logImg .overlay {
+padding: 40px;
+text-align: center;
+}
+
+.logo-text {
+font-weight: 900;
+font-size: 2.2rem;
+letter-spacing: 8px;
+color: #ffffff;
+margin: 0;
+}
+
+.logo-slogan {
+font-size: 0.7rem;
+letter-spacing: 4px;
+text-transform: uppercase;
+color: #c5a059;
+display: block;
+margin-top: 15px;
+border-top: 1px solid rgba(197, 160, 89, 0.4);
+padding-top: 10px;
+}
+
+/* ==========================================================================
+    3. JOBB OLDAL
+    ========================================================================== */
+
+.logText {
+flex: 1;
+padding: 50px;
+background: #ffffff;
+}
+
+.premium-label {
+color: #c5a059;
+text-transform: uppercase;
+letter-spacing: 3px;
+font-size: 0.75rem;
+font-weight: 700;
+display: block;
+}
+
+h1 {
+color: #132435;
+font-weight: 800;
+font-size: 2rem;
+margin: 10px 0 15px 0;
+}
+
+.divider {
+width: 60px;
+height: 4px;
+background: #c5a059;
+margin-bottom: 35px;
+}
+
+/* ==========================================================================
+    4. KERESŐ FUNKCIÓ
+    ========================================================================== */
+/* 4.  */
+.search-box {
+display: flex;
+margin-bottom: 35px;
+background: #f9f9f9;
+padding: 5px;
+border-radius: 4px;
+border: 1px solid #f2e6d0;
+}
+
+.search-input {
+flex: 1;
+border: none;
+background: transparent;
+padding: 15px;
+font-family: 'Montserrat', sans-serif;
+font-size: 1rem;
+outline: none;
+}
+
+/* ==========================================================================
+    5. INPUTOK ÉS KATEGÓRIA
+    ========================================================================== */
+
+.admin-input {
+width: 100%;
+padding: 15px 0;
+border: none;
+border-bottom: 2px solid #f2e6d0;
+font-family: 'Montserrat', sans-serif;
+font-weight: 600;
+margin-bottom: 25px;
+transition: 0.3s;
+background-color: transparent;
+}
+
+.admin-input:focus {
+border-bottom-color: #c5a059;
+outline: none;
+}
+
+select.admin-input {
+appearance: none;
+-webkit-appearance: none;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c5a059' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+background-repeat: no-repeat;
+background-position: right 10px center;
+padding-right: 30px;
+cursor: pointer;
+}
+
+/* ==========================================================================
+    6. TERMÉK FOTÓ
+    ========================================================================== */
+
+.file-input {
+position: absolute;
+width: 0.1px;
+height: 0.1px;
+opacity: 0;
+overflow: hidden;
+z-index: -1;
+}
+
+.file-upload-wrapper {
+position: relative;
+margin-top: 15px;
+margin-bottom: 30px;
+display: flex;
+justify-content: flex-start;
+}
+
+.file-label {
+display: inline-block; 
+margin-left: 20px; 
+padding: 15px 30px;
+background: #fdfaf4;
+color: #132435;
+border: 2px dashed #c5a059;
+border-radius: 4px;
+text-align: center;
+cursor: pointer;
+font-weight: 800;
+font-size: 0.8rem;
+text-transform: uppercase;
+letter-spacing: 1.5px;
+transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+.file-label {
+    margin-left: 0;
+    width: 100%;
+}
+}
+
+
+.file-label:hover {
+background: #c5a059;
+color: white;
+}
+
+/* ==========================================================================
+    7. GOMBOK
+    ========================================================================== */
+.submit-btn {
+width: 100%;
+background: #c5a059;
+color: #132435;
+border: none;
+padding: 18px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 2px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.submit-btn:hover {
+background: #132435;
+color: #c5a059;
+transform: translateY(-2px);
+box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.info-text {
+margin-top: 20px;
+font-size: 0.75rem;
+color: #999;
+text-align: center;
+font-style: italic;
+}

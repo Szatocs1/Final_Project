@@ -1,0 +1,154 @@
+/* ==========================================================================
+1. KONTÉNER ÉS KÁRTYA
+========================================================================== */
+
+.auth-container {
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+background-color: #f4f4f4;
+padding: 20px;
+font-family: 'Montserrat', sans-serif;
+}
+
+.auth-logCard {
+display: flex;
+width: 100%;
+max-width: 900px;
+background: white;
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+overflow: hidden;
+min-height: 550px;
+border-radius: 4px;
+border: 1px solid #f9f4ea;
+}
+
+/* ==========================================================================
+    2. BAL OLDAL
+    ========================================================================== */
+
+.logImg {
+flex: 1;
+background: url('../../assets/images/profil_photo.png') no-repeat center center/cover;
+position: relative;
+display: none;
+border-right: 4px solid #c5a059;
+}
+
+@media (min-width: 768px) {
+.logImg { display: block; }
+}
+
+.logImg .overlay {
+position: absolute;
+inset: 0;
+background: rgba(19, 36, 53, 0.85);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* ==========================================================================
+    3. JOBB OLDAL
+    ========================================================================== */
+
+.logText {
+flex: 1;
+padding: 50px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+background: #ffffff;
+}
+
+.premium-label {
+color: #c5a059;
+text-transform: uppercase;
+letter-spacing: 3px;
+font-size: 0.7rem;
+font-weight: 700;
+margin-bottom: 5px;
+}
+
+h1 {
+color: #132435;
+font-weight: 800;
+margin: 0;
+font-size: 2.2rem;
+text-transform: uppercase;
+}
+
+.divider {
+width: 50px;
+height: 3px;
+background: #c5a059;
+margin: 15px 0 35px 0;
+}
+
+.profile-info {
+margin-bottom: 30px;
+}
+
+.input-group {
+display: flex; 
+align-items: center; 
+padding: 12px 0;
+border-bottom: 1px solid #f2e6d0;
+gap: 10px;
+}
+
+.input-group label {
+color: #c5a059;
+font-size: 0.65rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1px;
+min-width: 110px;
+margin: 0;
+}
+
+.input-group p {
+color: #132435;
+font-size: 0.95rem;
+font-weight: 600;
+margin: 0;
+flex: 1;
+line-height: 1; 
+}
+
+/* ==========================================================================
+    4. GOMB ÉS LÁBLÉC
+    ========================================================================== */
+
+.submit-btn {
+width: 100%;
+background-color: #c5a059;
+color: #132435;
+border: 1px solid #c5a059;
+padding: 16px;
+font-weight: 800;
+text-transform: uppercase;
+cursor: pointer;
+transition: 0.3s ease;
+letter-spacing: 1.5px;
+margin-top: 10px;
+}
+
+.submit-btn:hover {
+background-color: #132435;
+color: #c5a059;
+}
+
+.auth-footer {
+margin-top: 25px;
+font-size: 0.75rem;
+color: #999;
+text-align: center;
+}
+
+.auth-footer a {
+color: #c5a059;
+font-weight: 700;
+text-decoration: none;
+}

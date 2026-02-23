@@ -16,6 +16,35 @@
   .legal-wrapper {
     background-color: #ffffff;
     padding: 60px 0;
+  }
+  
+  .legal-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .legal-section h2 {
+    color: #132435;
+    font-size: 1.8rem;
+    font-weight: 800;
+    padding-left: 20px;
+    border-left: 4px solid #132435; 
+    margin-bottom: 25px;
+  }
+  
+  .legal-section p {
+    color: #333;
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .legal-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  
   .legal-list li {
     position: relative;
     padding-left: 25px;
