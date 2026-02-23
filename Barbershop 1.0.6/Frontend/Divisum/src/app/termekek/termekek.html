@@ -87,6 +87,7 @@
               
               <div class="size-selector">
                 <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
+
                       class="size-option"
                       [class.selected]="selectedSize === size"
                       (click)="selectedSize = size">

@@ -30,8 +30,8 @@ export class Termekek implements OnInit {
   selectedSize: string = 'M'; 
   showSizeChart: boolean = false;
   isLoading: boolean = false;
-
   allProducts : Product[] = [];
+
 
   filteredProducts : Product[] = [];
 

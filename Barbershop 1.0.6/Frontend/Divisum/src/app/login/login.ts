@@ -35,5 +35,4 @@ export class Login {
         console.error("Hiba a bejelntkezés közben: ", error);
       }
     })
-  }
-}
+}}
