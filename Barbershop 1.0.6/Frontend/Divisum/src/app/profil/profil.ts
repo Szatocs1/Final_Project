@@ -1,21 +1,28 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [RouterModule],
+  imports: [],
   templateUrl: './profil.html',
   styleUrl: './profil.css',
 })
-export class Profil {
-  constructor(private router: Router) {}
+export class Profil implements OnInit {
+  constructor(private http: HttpClient) {}
+    ngOnInit(){   
+      const token = localStorage.getItem('token');
+
+      if(token){
+        window.location.href = '/logged-profil'
+      }
+    }
 
   goToLogin() {
-    this.router.navigate(['/login']);
+    window.location.href = '/login'
   }
 
   goToRegister() {
-    this.router.navigate(['/register']);
+    window.location.href = '/register'
   }
 }

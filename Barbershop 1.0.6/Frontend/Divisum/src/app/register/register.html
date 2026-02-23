@@ -5,29 +5,36 @@
             <h1>REGISZTRÁCIÓ</h1>
             <div class="divider"></div>
             
-            <form class="regForm">
-                <div class="input-group">
+            <form class="regForm" #registrationForm="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="input-group">
                     <label>Felhasználónév</label>
-                    <input type="text" placeholder="pl. barber_king" />
+                    <input type="text" name="username" [(ngModel)]="username" placeholder="pl. barber_king" />
                 </div>
 
                 <div class="input-group">
                     <label>Email cím</label>
-                    <input type="email" placeholder="pelda@email.hu" />
+                    <input type="email" name="email" [(ngModel)]="email" placeholder="pelda@email.hu" />
+                </div>
+
+                <div class="input-group">
+                    <label>Telefonszám</label>
+                    <input type="tel" name="phone_number" [(ngModel)]="phone_number" placeholder="+36 30 123 4567" />
                 </div>
 
                 <div class="grid-inputs">
                     <div class="input-group">
                         <label>Jelszó</label>
-                        <input type="password" placeholder="••••••••" />
+                        <input type="password" name="password" [(ngModel)]="password" placeholder="••••••••" />
                     </div>
                     <div class="input-group">
                         <label>Jelszó újra</label>
-                        <input type="password" placeholder="••••••••" />
+                        <input type="password" name="password_again" [(ngModel)]="password_again" placeholder="••••••••" />
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn">FIÓK LÉTREHOZÁSA</button>
+                <button type="submit" class="submit-btn" [disabled]="!registrationForm.form.valid">
+                    FIÓK LÉTREHOZÁSA
+                </button>
                 
                 <p class="auth-footer">Már van fiókja? <a routerLink="/login">Jelentkezzen be</a></p>
             </form>

@@ -1,13 +1,14 @@
 const { sequelize } = require("../../config/db.js");
 const Rendelesek = require("../models/rendelesekModel.js")(sequelize);
 const Termek = require("../models/termekModel.js")(sequelize);
+const RendelesTermekek = require("../models/rendelesTermekekModel.js")(sequelize);
 
 async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, termekek, ar }) {
     const productsWithInfo = [];
 
     for (const item of termekek) {
-        const product = await Termek.findByPk(item.termekId);
-        if (!product) throw new Error(`Termék ${item.termekId} nem található!`);
+        const product = await Termek.findByPk(item.id);
+        if (!product) throw new Error(`Termék ${item.name} nem található!`);
 
         const snapshot = {
             termekId: product.id,
@@ -30,6 +31,20 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
         termekek: productsWithInfo,
         ar
     });
+
+    const rendelesId = newRendeles.id;
+
+    for (const item of termekek){
+        const product = await Termek.findByPk(item.id);
+        if (!product) throw new Error(`Termék ${item.name} nem található!`);
+            
+        const newRendelesTermekekHelper = await RendelesTermekek.create({
+            rendelesId,
+            termekId: product.id,
+            mennyiseg: product.mennyiseg,
+            ar: product.ar * product.mennyiseg,
+        })
+    }
 
     return newRendeles.toJSON();
 }

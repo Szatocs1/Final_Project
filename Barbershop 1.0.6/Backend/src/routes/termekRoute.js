@@ -1,5 +1,6 @@
 const express = require("express");
 const route = express.Router();
+const upload = require('../middlewares/uploads');
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
 const { searchProduct, searchName, searchCategory, deleteItem, createItem, modifyItem, getEveryItem } = require("../controllers/termekController");
 
@@ -28,12 +29,22 @@ route.get("/products", async (req, res) => {
 admin
 */
 
-route.post("/admin/productsCreate", authMiddleware, isAdmin, async (req, res) => {
-    const { name, category, price, comment } = req.body || {};
-    const { file } = req.file || {};
+route.post("/admin/productsCreate", upload.single('file'), async (req, res) => {
+    const { name, category, price, comment } = req.body;
+    const file = req.file
 
-    if (!name || !file || !category || !price || !comment){
-        res.status(401).json({ message: "Hiányzik valamelyik mező!" });
+    console.log(file);
+    console.log(name);
+    console.log(price);
+    console.log(comment);
+    console.log(category);
+
+    if(!file){
+        return res.status(401).json({ message: "Nem küldte el a képet!" })
+    }
+
+    if (!name || !category || !price){
+        return res.status(401).json({ message: "Hiányzik valamelyik mező!" });
     }
 
     try{

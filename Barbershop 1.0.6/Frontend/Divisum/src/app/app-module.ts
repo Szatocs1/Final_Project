@@ -1,11 +1,17 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms'; 
+import { provideHttpClient } from '@angular/common/http';
+
+// Material modulok
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';     
 import { MatCardModule } from '@angular/material/card';           
+
+// Saját komponensek és modulok
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Home } from './home/home';
@@ -17,30 +23,46 @@ import { Foglalas } from './foglalas/foglalas';
 import { Aszf } from './aszf/aszf';
 import { Adatvedelem } from './adatvedelem/adatvedelem';
 import { Termekek } from './termekek/termekek';
+import { LoggedProfil } from './logged-profil/logged-profil';
+import { Admin } from './admin/admin';
+import { AdminLogin } from './admin-login/admin-login';
 
 @NgModule({
   declarations: [
-    
+    // Standalone komponensek ide nem kellenek
+  
   ],
   imports: [
-    App,
     BrowserModule,
     AppRoutingModule,
     RouterModule,
+    ReactiveFormsModule, // Fontos a regisztrációs formhoz
+    
+    // Standalone komponensek
+    App,
     Home,
     Register,
     Login,
     Profil,
     Kosar,
     Foglalas,
-    MatButtonModule,
-    MatIconModule,
     Aszf,
     Adatvedelem,
     Termekek,
+    LoggedProfil,
+    Admin,
+    AdminLogin,
+
+
+    // Material modulok
+    MatButtonModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCardModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideHttpClient() // Ezzel váltjuk ki a HttpClientModule-t
   ],
   bootstrap: []
 })

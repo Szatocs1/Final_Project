@@ -18,7 +18,7 @@ route.post("/foglalasCreate", async (req, res) =>{
         const userData = {nev, email};
         const targy = "Sikeres foglalás!"
         const message = `Köszönjük foglalását! ${borbely} a választott borbély, ${idopont} a választott időpont!
-        Ha módosítani vagy törölni szeretné foglalását, akkor kattintson !` //a kattintson után egy link van, melyet a sendEmail-en belül adok meg.
+        Ha módosítani vagy törölni szeretné foglalását, akkor kattintson a linkre!` //a kattintson után egy link van, melyet a sendEmail-en belül adok meg.
 
         const emailKuldes = await sendEmail({ userData, targy, message });
 
@@ -53,7 +53,7 @@ route.put("/foglalasModify/:id", async (req, res) =>{
 
         const targy = "Foglalás modosítása sikeresen megtörtént!"
         const message = `Köszönjük foglalásának módosítását! ${borbely} a választott borbély, ${idopont} a választott időpont!
-        Ha módosítani vagy törölni szeretné foglalását, akkor kattintson !` //a kattintson után egy link van, melyet a sendEmail-en belül adok meg.
+        Ha módosítani vagy törölni szeretné foglalását, akkor kattintson a linkre!!` //a kattintson után egy link van, melyet a sendEmail-en belül adok meg.
         const emailKuldes = await sendEmail(userData, targy, message);
 
         return res.status(200).json("Foglalás módosítva, egy új email lett elküldve a módosított adatokkal.", updatedFoglalas, emailKuldes)

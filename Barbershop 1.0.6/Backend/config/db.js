@@ -16,7 +16,7 @@ async function syncDatabase() {
   try {
     await sequelize.authenticate();
     console.log('Database connection established.');
-    await sequelize.sync({ alter: true }); // Create tables if they do not exist
+    await sequelize.sync(); // Create tables if they do not exist, only add {alter: true} if you change the models.
     console.log('Database synced.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);

@@ -1,4 +1,3 @@
-// models/rendeles_termekek.js
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {

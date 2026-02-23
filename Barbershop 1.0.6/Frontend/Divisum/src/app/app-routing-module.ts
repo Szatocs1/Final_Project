@@ -9,18 +9,24 @@ import { Foglalas } from './foglalas/foglalas';
 import { Aszf } from './aszf/aszf';
 import { Adatvedelem } from './adatvedelem/adatvedelem';
 import { Termekek } from './termekek/termekek';
+import { LoggedProfil } from './logged-profil/logged-profil';
+import { AdminLogin } from './admin-login/admin-login';
+import { Admin } from './admin/admin';
 
 const routes: Routes = [
     { path: 'home', component: Home },
     { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'profil', component: Profil },
-  { path: 'kosar', component: Kosar },
-  { path: 'foglalas', component: Foglalas },
-  { path: 'aszf', component: Aszf },
-  { path: 'adatvedelem', component: Adatvedelem },
-  { path: 'termekek', component: Termekek }
+    { path: 'logged-profil', component: LoggedProfil },
+    { path: 'register', component: Register },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'profil', component: Profil },
+    { path: 'kosar', component: Kosar },
+    { path: 'foglalas', component: Foglalas },
+    { path: 'aszf', component: Aszf },
+    { path: 'adatvedelem', component: Adatvedelem },
+    { path: 'termekek', component: Termekek },
+    { path: 'admin-login', component: AdminLogin },
+    { path: 'admin', component: Admin },
 ];
 
 @NgModule({

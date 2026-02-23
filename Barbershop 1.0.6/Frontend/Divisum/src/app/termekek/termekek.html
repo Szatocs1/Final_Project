@@ -3,10 +3,9 @@
     <mat-icon>check_circle</mat-icon>
     <div class="toast-text">
       <strong>Sikeresen hozzáadva! <br></strong>
-      <span>{{ lastAddedProductName }}</span>
+      <span>{{ lastAddedProducttermekNev }}</span>
     </div>
   </div>
-  
 
   <div class="hero-section">
     <div class="hero-content">
@@ -24,26 +23,32 @@
     </div>
 
     <div class="filter-bar">
-      <button *ngFor="let cat of ['Összes', 'Ruházat', 'Hajápolás', 'Eszközök']"
-              [class.active]="currentCategory === cat"
-              (click)="filterByCategory(cat)">
-        {{ cat }}
+      <button *ngFor="let categories of ['Összes', 'Ruházat', 'Hajápolás', 'Eszközök']"
+              [class.active]="currentkategoria === categories"
+              (click)="filterBykategoria(categories)">
+        {{ categories }}
       </button>
     </div>
   </div>
 
-  <div class="product-grid">
+  <!-- Loading spinner -->
+  <div class="loading-container" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Termékek betöltése...</p>
+  </div>
+
+  <div class="product-grid" *ngIf="!isLoading">
     <div class="product-card" *ngFor="let product of filteredProducts" (click)="openProductDetails(product)">
       <div class="card-img-wrapper">
-        <img [src]="product.images[0]" [alt]="product.name">
+        <img [src]="product.kepNeve" [alt]="product.termekNev">
         <div class="hover-overlay">
           <span>MEGTEKINTÉS</span>
         </div>
       </div>
       <div class="card-content">
-        <span class="category-label">{{ product.category }}</span>
-        <h3>{{ product.name }}</h3>
-        <p class="price-tag">{{ product.price | number:'1.0-0' }} Ft</p>
+        <span class="category-label">{{ product.kategoria }}</span>
+        <h3>{{ product.termekNev }}</h3>
+        <p class="price-tag">{{ product.ar | number:'1.0-0' }} Ft</p>
       </div>
     </div>
   </div>
@@ -61,78 +66,71 @@
 
       <div class="modal-layout">
         <div class="modal-media">
-          <img [src]="selectedProduct?.images[0]" alt="Product">
+          <img [src]="selectedProduct?.kepNeve" [alt]="selectedProduct?.termekNev">
         </div>
 
         <div class="modal-details">
           <div class="details-inner">
-            <span class="gold-tag">{{ selectedProduct?.category }}</span>
-            <h2 class="title-main">{{ selectedProduct?.name }}</h2>
+            <span class="gold-tag">{{ selectedProduct?.kategoria }}</span>
+            <h2 class="title-main">{{ selectedProduct?.termekNev }}</h2>
             <div class="gold-line"></div>
             
-            <p class="desc-text">{{ selectedProduct?.description }}</p>
+            <p class="desc-text">{{ selectedProduct?.megjegyzes }}</p>
 
-            <p class="desc-text">{{ selectedProduct?.description }}</p>
-
-              <div class="size-section" *ngIf="selectedProduct?.category === 'Ruházat'">
-                <div class="size-header">
-                  <p class="label-small">VÁLASSZ MÉRETET</p>
-                  <button class="size-chart-link" (click)="toggleSizeChart()">
-                    <mat-icon>straighten</mat-icon> Mérettáblázat
-                  </button>
-                </div>
-                
-                <div class="size-selector">
-                  <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
+            <div class="size-section" *ngIf="selectedProduct?.kategoria === 'Ruházat'">
+              <div class="size-header">
+                <p class="label-small">VÁLASSZ MÉRETET</p>
+                <button class="size-chart-link" (click)="toggleSizeChart()">
+                  <mat-icon>straighten</mat-icon> Mérettáblázat
+                </button>
+              </div>
+              
+              <div class="size-selector">
+                <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
                       class="size-option"
                       [class.selected]="selectedSize === size"
                       (click)="selectedSize = size">
-                    {{ size }}
-                  </div>
-                </div>
-
-                <div class="size-chart-overlay" *ngIf="showSizeChart" (click)="toggleSizeChart()">
-                  <div class="size-chart-content" (click)="$event.stopPropagation()">
-                    <h3>MÉRETTÁBLÁZAT (CM)</h3>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Méret</th>
-                          <th>Mellbőség</th>
-                          <th>Hossz</th>
-                          <th>Váll</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr><td>S</td><td>100</td><td>70</td><td>44</td></tr>
-                        <tr><td>M</td><td>106</td><td>72</td><td>46</td></tr>
-                        <tr><td>L</td><td>112</td><td>74</td><td>48</td></tr>
-                        <tr><td>XL</td><td>118</td><td>76</td><td>50</td></tr>
-                        <tr><td>XXL</td><td>124</td><td>78</td><td>52</td></tr>
-                      </tbody>
-                    </table>
-                    <button class="close-chart" (click)="toggleSizeChart()">BEZÁRÁS</button>
-                  </div>
+                  {{ size }}
                 </div>
               </div>
 
-            <div class="variants-box" *ngIf="selectedProduct?.category === 'Ruházat'">
+              <div class="size-chart-overlay" *ngIf="showSizeChart" (click)="toggleSizeChart()">
+                <div class="size-chart-content" (click)="$event.stopPropagation()">
+                  <h3>MÉRETTÁBLÁZAT (CM)</h3>
+                  <table>
+                    <thead>
+                      <tr><th>Méret</th><th>Mellbőség</th><th>Hossz</th><th>Váll</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>S</td><td>100</td><td>70</td><td>44</td></tr>
+                      <tr><td>M</td><td>106</td><td>72</td><td>46</td></tr>
+                      <tr><td>L</td><td>112</td><td>74</td><td>48</td></tr>
+                      <tr><td>XL</td><td>118</td><td>76</td><td>50</td></tr>
+                      <tr><td>XXL</td><td>124</td><td>78</td><td>52</td></tr>
+                    </tbody>
+                  </table>
+                  <button class="close-chart" (click)="toggleSizeChart()">BEZÁRÁS</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="variants-box" *ngIf="selectedProduct?.kategoria === 'Ruházat'">
               <p class="label-small">ELÉRHETŐ SZÍNEK</p>
               <div class="color-swatches">
-                <div *ngFor="let v of getAvailableColors(selectedProduct?.name)"
+                <div *ngFor="let v of getAvailableColors(selectedProduct?.termekNev ?? '')"
                     class="swatch"
                     [class.active]="v.id === selectedProduct?.id"
-                    [style.background-color]="v.name.includes('Fekete') ? '#000' : 
-                                              v.name.includes('Fehér') ? '#fff' : 
-                                              v.name.includes('Szürke') ? '#777' : '#132435'"
+                    [style.background-color]="v.termekNev.includes('Fekete') ? '#000' : 
+                                              v.termekNev.includes('Fehér') ? '#fff' : 
+                                              v.termekNev.includes('Szürke') ? '#777' : '#132435'"
                     (click)="switchColor(v)">
                 </div>
               </div>
             </div>
 
             <div class="action-footer">
-              <div class="price-display">{{ selectedProduct?.price | number:'1.0-0' }} Ft</div>
-              <button class="btn-primary-gold" (click)="addToCart(selectedProduct)">
+              <div class="price-display">{{ selectedProduct?.ar | number:'1.0-0' }} Ft</div>
+              <button class="btn-primary-gold" (click)="selectedProduct && addToCart(selectedProduct)">
                 <mat-icon>shopping_cart</mat-icon>
                 KOSÁRBA TESZEM
               </button>

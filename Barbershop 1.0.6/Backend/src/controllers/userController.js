@@ -14,13 +14,14 @@ async function findUserByEmail(email) {
 
 
 // Function to create a new user
-async function createUser(name, email, passwordHash, role) {
+async function createUser(name, email, passwordHash, role, phone_number) {
   try {
     const user = await User.create({
       nev: name,
       email,
       jelszo: passwordHash,
-      foglaltsag: role
+      foglaltsag: role,
+      telefonszam: phone_number
     });
     return user.id;
   } catch (error) {
@@ -82,7 +83,6 @@ async function deleteUser(id) {
 async function getEveryUser() {
       try{
           const users = await User.findAll({ limit: 20 });
-
           return users.map(user => user.toJSON());
 
       }catch(error){
@@ -102,6 +102,17 @@ async function getUserByName(nev) {
       }
 }
 
+async function findAllBorbely() {
+  try{
+    const borbelyok = await User.findAll({ where: { foglaltsag: "Borbély" } });
+
+    return borbelyok.map(borbely => borbely.toJSON());
+  }catch(error){
+    console.error("Borbélyok nem találhatóak!", error);
+    throw error;
+  }
+}
+
 module.exports = {
     findUserByEmail,
     createUser,
@@ -109,5 +120,6 @@ module.exports = {
     modifyUser,
     deleteUser,
     getEveryUser,
-    getUserByName
+    getUserByName,
+    findAllBorbely
 }

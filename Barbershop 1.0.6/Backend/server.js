@@ -3,16 +3,12 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const db = require('./config/db');
+const { adminSeeder } = require('./src/seeders/adminSeeder');
+const { termekSeeder } = require('./src/seeders/termekSeeder')
 const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 
-
-const whitelist = [
-  "http://localhost:4200",
-  "https://staging.yourbarbershop.com",
-  "https://yourbarbershop.com"
-];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -31,6 +27,16 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+const whitelist = [
+  "http://localhost:4200",
+  "https://staging.yourbarbershop.com",
+  "https://yourbarbershop.com"
+];
 
 //Táblák generálása és meghívása
 const userModel = require("./src/models/userModel")(db.sequelize);
@@ -44,20 +50,20 @@ const userRoutes = require('./src/routes/userRoute');
 const termekRoutes = require('./src/routes/termekRoute');
 const rendelesekRoutes = require('./src/routes/rendelesekRoute');
 const foglalasRoutes = require('./src/routes/foglalasRoute');
-
-//Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
+const uploadRoutes = require('./src/routes/uploadsRoute')
 
 //Route-ok alkalmazása
 app.use('/api/auth', userRoutes);
 app.use('/api/termek', termekRoutes);
 app.use('/api/foglalas', foglalasRoutes);
 app.use('/api/rendelesek', rendelesekRoutes);
+app.use('/uploads', uploadRoutes);
 
-db.syncDatabase().then(()=>{
+db.syncDatabase().then(async ()=>{
     console.log("Adatbázis szinkronizálva!")
+    await adminSeeder();
+    await termekSeeder();
+    console.log('Admin feltöltve!');
     app.listen(PORT, () => {
     console.log(`Szerver fut: http://localhost:${PORT}`);   
 });

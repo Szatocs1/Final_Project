@@ -16,6 +16,9 @@
     </div>
 
     <div class="navIcons">
+        <a routerLink="/admin-login" routerLinkActive="active-icon">
+            <span class="material-icons">account_circle</span>
+        </a>
         <div class="cart-container" routerLink="/kosar" routerLinkActive="active-icon">
             <span class="material-icons">shopping_bag</span>
             <span class="badge" *ngIf="kosarService.cartCount() > 0">

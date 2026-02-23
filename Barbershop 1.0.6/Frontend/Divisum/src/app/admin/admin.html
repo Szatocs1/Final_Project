@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="logCard search-card">
+    <div class="logImg">
+      <div class="overlay">
+        <div class="logo-box">
+          <h2 class="logo-text">DIVISUM</h2>
+          <span class="logo-slogan">USER SEARCH</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="logText">
+      <span class="premium-label">Adminisztráció</span>
+      <h1>KERESÉS</h1>
+      <div class="divider"></div>
+
+      <div class="search-box">
+        <input type="text" name="name" [(ngModel)]="name" placeholder="Írja be a nevet..." class="search-input">
+        <button class="submit-btn search-btn" (click)="onSearch()">KERESÉS</button>
+      </div>
+
+      <div class="result-container">
+        <div class="user-result-card">
+          <div class="user-header">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="user-main-info">
+              <h3>{{ user?.nev }}</h3>
+              <span class="role-tag">{{ user?.foglaltsag }}</span>
+            </div>
+          </div>
+          
+          <div class="user-details-grid">
+            <div class="detail-item">
+              <label>Email</label>
+              <p>{{ user?.email }}</p>
+            </div>
+            <div class="detail-item">
+              <label>Telefonszám</label>
+              <p>{{ user?.telefonszam || 'Nincs megadva' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="info-text">Adja meg a pontos nevet a lekéréshez.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="logCard product-card">
+    <div class="logImg">
+      <div class="overlay">
+        <div class="logo-box">
+          <h2 class="logo-text">DIVISUM</h2>
+          <span class="logo-slogan">INVENTORY MGMT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="logText">
+      <span class="premium-label">Adminisztráció</span>
+      <h1>ÚJ TERMÉK</h1>
+      <div class="divider"></div>
+
+      <form class="product-form">
+        <div class="input-group">
+          <label>Termék neve</label>
+          <input type="text" [(ngModel)]="product.name" name="nev" placeholder="pl. Prémium Szakállolaj" class="admin-input">
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label>Ár (Ft)</label>
+            <input type="number" [(ngModel)]="product.price" name="ar" placeholder="5500" class="admin-input">
+          </div>
+          <div class="input-group">
+            <label>Kategória</label>
+            <select [(ngModel)]="product.category" name="kategoria" class="admin-input">
+              <option value="Hajápolás">Hajápolás</option>
+              <option value="Szakáll">Szakáll</option>
+              <option value="Eszköz">Eszköz</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>Leírás</label>
+          <textarea [(ngModel)]="product.comment" name="leiras" rows="3" placeholder="Rövid termékismertető..." class="admin-input"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Termék fotó</label>
+          <div class="file-upload-wrapper">
+            <input type="file" name="file" (change)="onFileSelected($event)" class="file-input" id="file">
+            <label for="file" class="file-label">
+              <i class="fas fa-upload"></i> Kép kiválasztása
+            </label>
+          </div>
+        </div>
+
+        <button type="button" class="submit-btn create-btn" (click)="onCreateProduct()">
+          TERMÉK LÉTREHOZÁSA
+        </button>
+      </form>
+
+      <p class="info-text">Minden mező kitöltése kötelező a közzétételhez.</p>
+    </div>
+  </div>
+</div>
