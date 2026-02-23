@@ -15,7 +15,8 @@ const ADMIN_PASS = process.env.SERVER_ADMIN_PASSWORD;
 
 route.post('/register', async (req, res) => {
   try {
-      const { name, email, password, password_again, phone_number, role } = req.body;
+      const { name, email, password, password_again, phone_number} = req.body;
+      let role = "";
   
       if (!name || !password || !email || !password_again || !phone_number) {
         return res.status(400).json({ error: 'Név, jelszó és email mező kitöltése kötelező!' });

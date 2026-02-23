@@ -4,6 +4,8 @@ const upload = require('../middlewares/uploads');
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
 const { searchProduct, searchName, searchCategory, deleteItem, createItem, modifyItem, getEveryItem } = require("../controllers/termekController");
 
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+
 route.get("/products", async (req, res) => {
     const { name, category } = req.query;
 
@@ -14,11 +16,17 @@ route.get("/products", async (req, res) => {
     try{
         const products = await searchProduct(filters);
 
+        // Prepend base URL to image paths so frontend can load them correctly
+        const productsWithFullImageUrl = products.map(product => ({
+            ...product,
+            kepNeve: product.kepNeve ? `${BASE_URL}/${product.kepNeve}` : null
+        }));
+
         if (products.length === 0){
             return res.status(200).json({ message: "Nincs megszabott feltétel!", products: [] })
         }
 
-        return res.status(200).json({ message: "Sikeresen lekért szűrt termékek!", products });
+        return res.status(200).json({ message: "Sikeresen lekért szűrt termékek!", products: productsWithFullImageUrl });
     }catch(error){
         console.error("Nem talált ilyen teméket vagy kategóriát!", error);
         throw error;

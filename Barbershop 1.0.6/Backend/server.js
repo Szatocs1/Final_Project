@@ -57,7 +57,7 @@ app.use('/api/auth', userRoutes);
 app.use('/api/termek', termekRoutes);
 app.use('/api/foglalas', foglalasRoutes);
 app.use('/api/rendelesek', rendelesekRoutes);
-app.use('/uploads', uploadRoutes);
+// Note: /uploads route removed - static file serving at /uploads/termekek handles image requests
 
 db.syncDatabase().then(async ()=>{
     console.log("Adatbázis szinkronizálva!")

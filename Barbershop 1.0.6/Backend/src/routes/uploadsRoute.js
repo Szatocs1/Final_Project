@@ -6,8 +6,10 @@ const Termek = require('../models/termekModel')(sequelize);
 route.get('/termekek/:id', async (req, res) =>{
     const { id } = req.params;
 
-    if(!id){
-        return res.status(401).json({ message: 'Id nem található!' });
+    // Only accept numeric IDs to avoid matching file names like "Polo_Fekete_E.png"
+    // This allows static file serving to work for image files
+    if(!id || isNaN(id)){
+        return res.status(400).json({ message: 'Érvénytelen termék ID!' });
     }
 
     try{
