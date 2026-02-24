@@ -3,7 +3,7 @@ const Rendelesek = require("../models/rendelesekModel.js")(sequelize);
 const Termek = require("../models/termekModel.js")(sequelize);
 const RendelesTermekek = require("../models/rendelesTermekekModel.js")(sequelize);
 
-async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, termekek, ar }) {
+async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, termekek, ar, userId }) {
     const productsWithInfo = [];
 
     for (const item of termekek) {
@@ -29,7 +29,8 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
         szallitasiCim,
         rendelesIdeje: new Date(),
         termekek: productsWithInfo,
-        ar
+        ar,
+        userId
     });
 
     const rendelesId = newRendeles.id;
@@ -40,9 +41,9 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
             
         const newRendelesTermekekHelper = await RendelesTermekek.create({
             rendelesId,
-            termekId: product.id,
-            mennyiseg: product.mennyiseg,
-            ar: product.ar * product.mennyiseg,
+            termekId: item.id,
+            mennyiseg: item.mennyiseg,
+            ar: (item.ar || product.ar) * item.mennyiseg,
         })
     }
 

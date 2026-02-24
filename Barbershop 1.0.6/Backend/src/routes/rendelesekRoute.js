@@ -3,44 +3,44 @@ const route = express.Router();
 const {authMiddleware, isAdmin} = require("../middlewares/authMiddleware");
 const { createRendeles, modifyRendeles, deleteRendeles, getEveryRendeles, getRendelesByName, getRendelesByEmail } = require("../controllers/rendelesekController");
 
-route.post("/rendelesCreate", authMiddleware, async (req, res) =>{
+const { sequelize } = require("../../config/db.js");
+const User = require("../models/userModel.js")(sequelize);
+
+route.post("/rendelesCreate", authMiddleware, async (req, res) => {
     try {
-        const { termekek } = req.body;
+        const { termekek, iranyitoszam, telepules, szallitasiCim } = req.body;
 
         if (!termekek || !Array.isArray(termekek) || termekek.length === 0) {
             return res.status(400).json({ message: "A kosár üres vagy hibás!" });
         }
 
-        let userData = {};
+        if (!iranyitoszam || !telepules || !szallitasiCim) {
+            return res.status(400).json({ message: "Kérlek töltsd ki a hiányzó adatokat (irányítószám, település, szállítási cím)!" });
+        }
 
-        if (req.headers.authorization) {
-            await authMiddleware(req, res, () => {});
-            const user = req.user;
-
-            if (!user) return res.status(401).json({ message: "Nem érvényes token!" });
-
-            const { nev, email } = user;
-            const { telefonszam, iranyitoszam, telepules, szallitasiCim, ar } = req.body;
-
-            if (!telefonszam || !iranyitoszam || !telepules || !szallitasiCim) {
-                return res.status(400).json({ message: "Kérlek töltsd ki a hiányzó adatokat!" });
-            }
-
-            userData = {vasarloNeve: nev, vasarloEmail: email, telefonszam, iranyitoszam, telepules, szallitasiCim, ar};
-        } else {
-            const { vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, ar } = req.body;
-
-            if (!vasarloNeve || !vasarloEmail || !telefonszam || !iranyitoszam || !telepules || !szallitasiCim) {
-                return res.status(400).json({ message: "Kérlek tölts ki minden mezőt!" });
-            }
-
-            userData = { vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim };
+        const { ar } = req.body;
+        
+        const userId = req.user.id;
+        
+        const user = await User.findByPk(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: "Felhasználó nem található!" });
         }
 
         const rendeles = await createRendeles({
-            ...userData,
-            termekek
+            vasarloNeve: user.nev,
+            vasarloEmail: user.email,
+            telefonszam: user.telefonszam,
+            iranyitoszam,
+            telepules,
+            szallitasiCim,
+            ar,
+            termekek,
+            userId: user.id,
         });
+
+        //Email küldés
 
         return res.status(201).json({
             message: "Rendelés sikeresen létrehozva!",
@@ -65,6 +65,8 @@ route.put("/rendelesModify/:id", async (req, res) =>{
 
         const updatedRendeles = await modifyRendeles(id, updates);
 
+        //email
+
         return res.status(200).json({
             message: "Rendelés sikeresen módosítva!",
             updatedRendeles
@@ -84,6 +86,8 @@ route.delete("/rendelesDelete/:id", async (req, res) => {
         }
 
         const deletedRendeles = await deleteRendeles(id);
+
+        //email
 
         return res.status(200).json({ message: "Rendelés sikeresen törölve!", deletedRendeles });
     }catch(error){
@@ -108,6 +112,8 @@ route.post('/admin/modifyRendeles', authMiddleware, isAdmin, async (req, res) =>
     try{
         const rendeles = await modifyRendeles(vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, rendelesIdeje, termekek, final_ar);
 
+        //email
+
         return res.status(200).json({ message: "Rendelés sikeresen módosítva!", rendeles });
     }catch(error){
         return res.status(500).json({ error: "Szerver hiba, nem sikerült módosítani a rendelésen!", error })
@@ -123,6 +129,8 @@ route.delete('/admin/deleteRendeles', authMiddleware, isAdmin, async (req, res) 
 
     try{
         const deletedRendeles = await deleteRendeles(id);
+
+        //email
 
         return res.status(200).json({ message: "Termék sikeresen törölve!", deletedRendeles });
     }catch(error){

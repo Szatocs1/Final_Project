@@ -4,59 +4,150 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { KosarService } from '../services/kosar.services';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-selector: 'app-kosar',
-standalone: true,
-imports: [
-  CommonModule, 
-  FormsModule, 
-  RouterModule, 
-  MatIconModule
-],
-templateUrl: './kosar.html',
-styleUrl: './kosar.css'
+  selector: 'app-kosar',
+  standalone: true,
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterModule, 
+    MatIconModule
+  ],
+  templateUrl: './kosar.html',
+  styleUrl: './kosar.css'
 })
 export class Kosar {
-promoCode: string = '';
-isPromoApplied: boolean = false;
-discount: number = 0;
+  promoCode: string = '';
+  isPromoApplied: boolean = false;
+  discount: number = 0;
 
-constructor(public kosarService: KosarService) {}
+  // Shipping form fields
+  vasarloNeve: string = '';
+  vasarloEmail: string = '';
+  telefonszam: string = '';
+  iranyitoszam: string = '';
+  telepules: string = '';
+  szallitasiCim: string = '';
 
-get cartItems() {
-  return this.kosarService.cartItems;
-}
+  // User authentication status
+  isLoggedIn: boolean = false;
 
-get subtotal() {
-  return this.cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-}
-
-get total() {
-  const discounted = this.subtotal * (1 - this.discount);
-  return Math.round(discounted);
-}
-
-applyPromo() {
-  if (this.promoCode.toUpperCase() === 'DIV26') {
-    this.discount = 0.10;
-    this.isPromoApplied = true;
-  } else {
-    alert('Érvénytelen promóciós kód!');
+  constructor(public kosarService: KosarService, private http: HttpClient) {
+    this.checkLoginStatus();
   }
-}
 
+  checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    this.isLoggedIn = !!token;
+  }
 
-removeItem(item: any) {
-  this.kosarService.removeItem(item); 
-}
+  get cartItems() {
+    return this.kosarService.cartItems;
+  }
 
-// FIX: Changed item.id to item.name to match the service's updateQuantity function
-changeQty(item: any, amount: number) {
-  this.kosarService.updateQuantity(item.name, amount, item.size); 
-}
+  get subtotal() {
+    return this.cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  }
 
-proceedToCheckout() {
-  console.log('Irány a pénztár a Sprinter-szállításhoz!');
-}
+  get total() {
+    const discounted = this.subtotal * (1 - this.discount);
+    return Math.round(discounted);
+  }
+
+  applyPromo() {
+    if (this.promoCode.toUpperCase() === 'DIV26') {
+      this.discount = 0.10;
+      this.isPromoApplied = true;
+    } else {
+      alert('Érvénytelen promóciós kód!');
+    }
+  }
+
+  removeItem(item: any) {
+    this.kosarService.removeItem(item); 
+  }
+
+  changeQty(item: any, amount: number) {
+    this.kosarService.updateQuantity(item.name, amount, item.size); 
+  }
+
+  proceedToCheckout() {
+    console.log('Irány a pénztár a Sprinter-szállításhoz!');
+  }
+
+  isFormValid(): boolean {
+    return !!(
+      this.iranyitoszam.trim() &&
+      this.telepules.trim() &&
+      this.szallitasiCim.trim()
+    );
+  }
+
+  onSendRendeles() {
+    if (!this.isLoggedIn) {
+      alert('A rendeléshez kérlek jelentkezz be!');
+      return;
+    }
+
+    if (!this.isFormValid()) {
+      alert('Kérlek töltsd ki az összes kötelező mezőt!');
+      return;
+    }
+
+    const finalCart = this.kosarService.cartItems;
+    const ar = this.total;
+
+    // Map cart items to the format expected by backend
+    const termekek = finalCart.map(item => ({
+      id: Number(item.id),
+      name: item.name,
+      mennyiseg: item.quantity,
+      ar: item.price
+    }));
+
+    // Build the order data - user data comes from the backend via token
+    const rendelesData: any = {
+      termekek: termekek,
+      ar: ar,
+      iranyitoszam: this.iranyitoszam,
+      telepules: this.telepules,
+      szallitasiCim: this.szallitasiCim
+    };
+
+    // Get token from localStorage
+    const token = localStorage.getItem('token');
+    const headers: any = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+
+    this.http.post('http://localhost:3000/api/rendelesek/rendelesCreate', rendelesData, { headers })
+      .subscribe({
+        next: (response: any) => {
+          window.alert('Rendelés sikeresen elküldve!');
+          console.log('Rendelés részletei:', response.rendeles);
+          this.kosarService.clearCart();
+          this.resetForm();
+        },
+        error: (error) => {
+          console.error('Hiba a rendelés küldésekor:', error);
+          window.alert('Hiba történt a rendelés elküldésekor!');
+        }
+      });
+    }
+
+  resetForm() {
+    this.vasarloNeve = '';
+    this.vasarloEmail = '';
+    this.telefonszam = '';
+    this.iranyitoszam = '';
+    this.telepules = '';
+    this.szallitasiCim = '';
+    this.promoCode = '';
+    this.isPromoApplied = false;
+    this.discount = 0;
+  }
 }
