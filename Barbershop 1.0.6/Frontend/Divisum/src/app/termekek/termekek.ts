@@ -11,7 +11,8 @@ interface Product {
   termekNev: string;
   kategoria: string;
   ar: number;
-  kepNeve: string[];
+  kepNeve: string;
+  megjegyzes?: string;
 }
 
 @Component({
@@ -105,9 +106,13 @@ export class Termekek implements OnInit {
   }
 
   addToCart(product: any) {
+    // Map backend fields to frontend cart fields
     const p = { 
-      ...product, 
-      img: product.kepNeve[0],
+      id: product.id,
+      name: product.termekNev,        
+      category: product.kategoria,   
+      price: product.ar,             
+      image: product.kepNeve,       
       size: product.kategoria === 'Ruházat' ? this.selectedSize : null 
     };
     

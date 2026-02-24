@@ -49,7 +49,9 @@ async function createItem(name, category, price, comment, file) {
             kategoria: category,
             ar: Number(price),
             megjegyzes: comment,
-            kepNeve: file ? file.filename : null
+            // Prepend 'uploads/termekek/' to match the format used in seeder
+            // This ensures the image URL is correctly constructed in termekRoute.js
+            kepNeve: file ? `uploads/termekek/${file.filename}` : null
         });
         return termek ? termek.get({ plain: true }) : null;    
     }
@@ -69,7 +71,7 @@ async function modifyItem(id, termekNev, kategoria, ar, megjegyzes, file) {
         if (kategoria) updates.kategoria = kategoria;
         if (ar !== 0) updates.ar = ar;
         if (megjegyzes) updates.megjegyzes = megjegyzes;
-        if (file) updates.kepNeve = file.filename;
+        if (file) updates.kepNeve = `uploads/termekek/${file.filename}`;
 
         await product.update(updates);
 

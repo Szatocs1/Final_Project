@@ -51,8 +51,9 @@ removeItem(item: any) {
   this.kosarService.removeItem(item); 
 }
 
+// FIX: Changed item.id to item.name to match the service's updateQuantity function
 changeQty(item: any, amount: number) {
-  this.kosarService.updateQuantity(item.id, amount, item.size); 
+  this.kosarService.updateQuantity(item.name, amount, item.size); 
 }
 
 proceedToCheckout() {
