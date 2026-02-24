@@ -1,27 +1,23 @@
 /* ==========================================================================
-1. KONTÉNER ÉS KÁRTYA
-========================================================================== */
-
+    1. PROFIL KÁRTYA KONTÉNER
+    ========================================================================== */
 .auth-container {
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-background-color: #f4f4f4;
-padding: 20px;
-font-family: 'Montserrat', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .auth-logCard {
-display: flex;
-width: 100%;
-max-width: 900px;
-background: white;
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-overflow: hidden;
-min-height: 550px;
-border-radius: 4px;
-border: 1px solid #f9f4ea;
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    min-height: 550px;
+    border-radius: 4px;
 }
 
 /* ==========================================================================
@@ -29,24 +25,63 @@ border: 1px solid #f9f4ea;
     ========================================================================== */
 
 .logImg {
-flex: 1;
-background: url('../../assets/images/profil_photo.png') no-repeat center center/cover;
-position: relative;
-display: none;
-border-right: 4px solid #c5a059;
+    flex: 1;
+    position: relative;
+    border-right: 4px solid #c5a059;
+    overflow: hidden;
+    background: #132435;
 }
 
-@media (min-width: 768px) {
-.logImg { display: block; }
+.image-wrapper {
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(3px) brightness(0.6) grayscale(0.4);
+    transform: scale(1.1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .logImg .overlay {
-position: absolute;
-inset: 0;
-background: rgba(19, 36, 53, 0.85);
-display: flex;
-align-items: center;
-justify-content: center;
+    position: absolute;
+    inset: 0;
+    background: rgba(19, 36, 53, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: opacity 0.5s ease;
+}
+
+.logImg:hover .image-wrapper {
+    filter: blur(0) brightness(1) grayscale(0);
+    transform: scale(1);
+}
+
+.logImg:hover .overlay {
+    opacity: 0;
+}
+
+.logo-container { text-align: center; color: white; }
+.main-title {
+    font-size: 3.5rem; 
+    font-weight: 900; 
+    letter-spacing: 12px; 
+    margin: 0; 
+}
+.separator-line { 
+    width: 100px; 
+    height: 2px; 
+    background-color: #c5a059; 
+    margin: 15px auto; 
+}
+.sub-title { 
+    font-size: 1rem; 
+    color: #c5a059; 
+    letter-spacing: 8px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
 }
 
 /* ==========================================================================
@@ -54,101 +89,364 @@ justify-content: center;
     ========================================================================== */
 
 .logText {
-flex: 1;
-padding: 50px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-background: #ffffff;
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
 }
 
 .premium-label {
-color: #c5a059;
-text-transform: uppercase;
-letter-spacing: 3px;
-font-size: 0.7rem;
-font-weight: 700;
-margin-bottom: 5px;
+    color: #c5a059;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-h1 {
-color: #132435;
-font-weight: 800;
-margin: 0;
-font-size: 2.2rem;
-text-transform: uppercase;
+.profile-header {
+    color: #132435;
+    font-weight: 900;
+    font-size: 2.8rem;
+    margin: 5px 0 0;
 }
 
 .divider {
-width: 50px;
-height: 3px;
-background: #c5a059;
-margin: 15px 0 35px 0;
-}
-
-.profile-info {
-margin-bottom: 30px;
+    width: 50px;
+    height: 3px;
+    background: #c5a059;
+    margin: 15px 0 35px;
 }
 
 .input-group {
-display: flex; 
-align-items: center; 
-padding: 12px 0;
-border-bottom: 1px solid #f2e6d0;
-gap: 10px;
+    display: flex;
+    padding: 12px 0;
+    border-bottom: 1px solid #f2e6d0;
+    align-items: center;
 }
 
 .input-group label {
-color: #c5a059;
-font-size: 0.65rem;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1px;
-min-width: 110px;
-margin: 0;
+    color: #c5a059;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    min-width: 120px;
 }
 
 .input-group p {
-color: #132435;
-font-size: 0.95rem;
-font-weight: 600;
-margin: 0;
-flex: 1;
-line-height: 1; 
+    color: #132435;
+    font-weight: 700;
+    margin: 0;
+    font-size: 0.95rem;
 }
 
-/* ==========================================================================
-    4. GOMB ÉS LÁBLÉC
-    ========================================================================== */
-
 .submit-btn {
-width: 100%;
-background-color: #c5a059;
-color: #132435;
-border: 1px solid #c5a059;
-padding: 16px;
-font-weight: 800;
-text-transform: uppercase;
-cursor: pointer;
-transition: 0.3s ease;
-letter-spacing: 1.5px;
-margin-top: 10px;
+    width: 100%;
+    background: #c5a059;
+    color: #132435;
+    border: none;
+    padding: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 2px;
+    margin-top: 30px;
 }
 
 .submit-btn:hover {
-background-color: #132435;
-color: #c5a059;
+    background: #132435;
+    color: #c5a059;
 }
 
 .auth-footer {
-margin-top: 25px;
-font-size: 0.75rem;
-color: #999;
-text-align: center;
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
 .auth-footer a {
-color: #c5a059;
-font-weight: 700;
-text-decoration: none;
+    color: #132435; 
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-left: 8px;
+    border-bottom: 2px solid #c5a059; 
+    padding-bottom: 2px;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.auth-footer a:hover {
+    color: #c5a059; 
+    border-bottom-color: #132435; 
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+    4. MODAL
+    ========================================================================== */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(19, 36, 53, 0.9);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.edit-modal {
+    background: white;
+    width: 95%;
+    max-width: 600px;
+    padding: 50px;
+    border-radius: 4px;
+    border-top: 6px solid #c5a059;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.modal-header h2 {
+    color: #132435;
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #132435;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #c5a059;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #c5a059;
+    color: #132435;
+}
+
+.profile-pic-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.avatar-preview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #c5a059;
+    margin-bottom: 15px;
+    background: #132435;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-label {
+    color: #c5a059;
+    font-weight: 800;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid #c5a059;
+    padding-bottom: 3px;
+    letter-spacing: 1px;
+}
+
+.modal-input-group {
+    margin-bottom: 25px;
+}
+
+.modal-input-group label {
+    display: block;
+    color: #c5a059;
+    font-size: 0.7rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.modal-input-group input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    outline: none;
+    color: #132435;
+    font-weight: 600;
+    font-size: 1rem;
+    background: #fcfcfc;
+}
+
+.modal-input-group input:focus {
+    border-color: #132435;
+    background: #fff;
+}
+
+.section-title {
+    color: #132435;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 35px 0 20px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.save-btn {
+    background: #132435;
+    color: #c5a059;
+    border: none;
+    flex: 2;
+    padding: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: transparent;
+    color: #132435;
+    border: 2px solid #132435;
+}
+
+.cancel-btn {
+    background: #f0f0f0;
+    color: #888;
+    flex: 1;
+    border: none;
+    padding: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+/* ==========================================================================
+    5. SCROLLBAR
+    ========================================================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #132435;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #132435;
+}
+/* ==========================================================================
+    6. RESZPONZIVITÁS
+    ========================================================================== */
+
+@media (max-width: 900px) {
+    .auth-logCard {
+        flex-direction: column;
+        max-width: 500px;
+        min-height: auto;
+    }
+
+    .logImg {
+        min-height: 300px;
+        border-right: none;
+        border-bottom: 4px solid #c5a059;
+    }
+
+    .main-title { 
+        font-size: 2.5rem; 
+    }
+    .logText { 
+        padding: 40px 30px; 
+    }
+}
+
+@media (max-width: 500px) {
+    .auth-container { 
+        padding: 10px; 
+    }
+    
+    .profile-header { 
+        font-size: 2rem; 
+    }
+    
+    .input-group { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 5px; 
+    }
+    .input-group label { 
+        min-width: 100%; 
+    }
+
+    .edit-modal { 
+        padding: 30px 20px;
+    }
+    .modal-header h2 { 
+        font-size: 1.6rem; 
+    }
+    
+    .modal-actions { 
+        flex-direction: column; 
+    }
+    .save-btn, .cancel-btn { 
+        width: 100%; order: 1; 
+    }
+    .cancel-btn { 
+        order: 2; 
+    }
+
+    .avatar-preview { 
+        width: 100px; height: 100px; 
+    }
 }

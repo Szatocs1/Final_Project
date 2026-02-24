@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -14,75 +15,85 @@ import { FormsModule } from '@angular/forms';
 export class LoggedProfil implements OnInit {
   user: any = null;
   isLoading: boolean = false;
+  isEditModalOpen = false;
 
-  constructor(
-    private http: HttpClient, 
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {}
+  editData: any = {};
+  passwordData = { currentPassword: '', newPassword: '' };
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
 
-  ngOnInit() {
-    this.fetchUserData();
-  }
+  constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() { this.fetchUserData(); }
 
   fetchUserData() {
     const token = localStorage.getItem('token');
-    
-    if (!token) {
-      console.error("Nincs token, irány a login");
-      this.router.navigate(['/login']);
-      return;
-    }
+    if (!token) { this.router.navigate(['/login']); return; }
 
     this.isLoading = true;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.get('http://localhost:3000/api/auth/profile', { headers })
-      .subscribe({
-        next: (response: any) => {
-          this.user = response.user || response;
-          this.isLoading = false;
-          
-          console.log('Profil adatok megérkeztek:', this.user);
-          
-          this.cdr.detectChanges(); 
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error('Hiba az adatok lekérésekor:', error);
-          if (error.status === 401 || error.status === 403) {
-            this.onLogout();
-          }
-        },
-      });
+    this.http.get('http://localhost:3000/api/auth/profile', { headers }).subscribe({
+      next: (res: any) => {
+        this.user = res.user || res;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => { this.isLoading = false; this.onLogout(); }
+    });
+  }
+
+  openEditModal() {
+    this.editData = { ...this.user };
+    this.passwordData = { currentPassword: '', newPassword: '' };
+    this.imagePreview = null;
+    this.selectedFile = null;
+    this.isEditModalOpen = true;
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => { this.imagePreview = reader.result; this.cdr.detectChanges(); };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onUpdateProfile() {
+    this.isLoading = true;
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    
+    formData.append('nev', this.editData.nev);
+    formData.append('telefonszam', this.editData.telefonszam);
+    if (this.selectedFile) formData.append('profileImage', this.selectedFile);
+    if (this.passwordData.newPassword) {
+      formData.append('currentPassword', this.passwordData.currentPassword);
+      formData.append('newPassword', this.passwordData.newPassword);
+    }
+
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    this.http.put('http://localhost:3000/api/auth/update-profile', formData, { headers }).subscribe({
+      next: () => {
+        this.fetchUserData();
+        this.isEditModalOpen = false;
+        alert('Sikeres frissítés!');
+      },
+      error: (err) => { alert(err.error.message || 'Hiba történt!'); this.isLoading = false; }
+    });
   }
 
   onLogout(): void {
-    const currentToken = localStorage.getItem('token');
-    
-    const clearSession = () => {
-      localStorage.removeItem('token');
-      this.router.navigate(['/home']);
-    };
-
-    if (!currentToken) {
-      clearSession();
-      return;
+    const token = localStorage.getItem('token');
+    localStorage.removeItem('token');
+    if (token) {
+      const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+      this.http.post('http://localhost:3000/api/auth/logout', {}, { headers }).subscribe();
     }
-
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${currentToken}` });
-
-    this.http.post('http://localhost:3000/api/auth/logout', {}, { headers }).subscribe({
-      next: () => {
-        console.log("Sikeres kijelentkezés!");
-        clearSession();
-      },
-      error: (error) => {
-        console.error("Hiba kijelentkezéskor:", error);
-        clearSession();
-      }
-    });
+    this.router.navigate(['/home']);
   }
 }
+

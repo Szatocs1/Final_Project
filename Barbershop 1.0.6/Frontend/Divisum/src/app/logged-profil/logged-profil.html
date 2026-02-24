@@ -1,42 +1,105 @@
 <div class="auth-container">
   <div class="auth-logCard">
     <div class="logImg">
+      <div class="image-wrapper" [style.backgroundImage]="'url(' + (user?.profilKepUrl || '../../assets/images/ProfilPic.png') + ')'"></div>
+      <div class="overlay">
+        <div class="logo-container">
+          <h1 class="main-title">DIVISUM</h1>
+          <div class="separator-line"></div>
+          <p class="sub-title">PROFIL</p>
+        </div>
+      </div>
     </div>
 
     <div class="logText">
       <span class="premium-label">Üdvözöljük újra</span>
-      <h1>PROFIL</h1>
+      <h1 class="profile-header">PROFIL</h1>
       <div class="divider"></div>
 
-        <div class="profile-info">
-          <div class="input-group">
-            <label>Név:</label>
-            <p>{{ user?.nev }}</p>
-          </div>
-
-          <div class="input-group">
-            <label>Email:</label><br>
-            <p>{{ user?.email }}</p>
-          </div>
-
-          <div class="input-group">
-            <label>Telefonszám:</label><br>
-            <p>{{ user?.telefonszam || 'Nincs megadva' }}</p>
-          </div>
-
-          <div class="input-group">
-            <label>Foglaltság:</label><br>
-            <p>{{ user?.foglaltsag }}</p>
-          </div>
+      <div class="profile-info" *ngIf="user; else loading">
+        <div class="input-group">
+          <label>Név:</label>
+          <p>{{ user?.nev }}</p>
         </div>
 
-        <form class="logForm" (ngSubmit)="onLogout()">
-          <button type="submit" class="submit-btn">KIJELENTKEZÉS</button>
-          <p class="auth-footer">
-            Módosítani szeretné adatait? <a routerLink="/edit-profile">Szerkesztés</a>
-          </p>
-        </form>
-      
+        <div class="input-group">
+          <label>Email:</label>
+          <p>{{ user?.email }}</p>
+        </div>
+
+        <div class="input-group">
+          <label>Telefonszám:</label>
+          <p>{{ user?.telefonszam || 'Nincs megadva' }}</p>
+        </div>
+
+        <div class="input-group">
+          <label>Foglaltság:</label>
+          <p>{{ user?.foglaltsag }}</p>
+        </div>
+      </div>
+
+      <ng-template #loading>
+        <p class="loading-text">Adatok betöltése...</p>
+      </ng-template>
+
+      <form class="logForm" (ngSubmit)="onLogout()">
+        <button type="submit" class="submit-btn">KIJELENTKEZÉS</button>
+      </form>
+
+      <p class="auth-footer">
+        Módosítani szeretné adatait? 
+        <a href="javascript:void(0)" (click)="openEditModal()">Szerkesztés</a>
+      </p>
     </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="isEditModalOpen">
+  <div class="edit-modal">
+    <div class="modal-header">
+      <h2>PROFIL SZERKESZTÉSE</h2>
+      <button class="close-btn" (click)="isEditModalOpen = false">&times;</button>
+    </div>
+    
+    <form class="edit-form" (ngSubmit)="onUpdateProfile()">
+      
+      <div class="profile-pic-upload">
+        <div class="avatar-preview">
+          <img [src]="imagePreview || user?.profilKepUrl || '../../assets/images/ProfilPic.png'" alt="Profilkép">
+        </div>
+        <label for="fileInput" class="file-label">Fotó módosítása</label>
+        <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-input-group">
+        <label>Név</label>
+        <input type="text" [(ngModel)]="editData.nev" name="nev">
+      </div>
+
+      <div class="modal-input-group">
+        <label>Telefonszám</label>
+        <input type="text" [(ngModel)]="editData.telefonszam" name="tel">
+      </div>
+
+      <div class="modal-divider"></div>
+      <h3 class="section-title">Jelszó módosítása</h3>
+      
+      <div class="modal-input-group">
+        <label>Jelenlegi jelszó</label>
+        <input type="password" [(ngModel)]="passwordData.currentPassword" name="currPass" placeholder="******">
+      </div>
+      
+      <div class="modal-input-group">
+        <label>Új jelszó</label>
+        <input type="password" [(ngModel)]="passwordData.newPassword" name="newPass" placeholder="******">
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="isEditModalOpen = false">Mégse</button>
+        <button type="submit" class="save-btn" [disabled]="isLoading">Mentés</button>
+      </div>
+    </form>
   </div>
 </div>
