@@ -104,7 +104,7 @@ async function getUserByName(nev) {
 
 async function findAllBorbely() {
   try{
-    const borbelyok = await User.findAll({ where: { foglaltsag: "Borbély" } });
+    const borbelyok = await User.findAll({ where: { foglaltsag: "Borbély"} , attributes: ['id', 'nev', 'foglaltsag'] } );
 
     return borbelyok.map(borbely => borbely.toJSON());
   }catch(error){

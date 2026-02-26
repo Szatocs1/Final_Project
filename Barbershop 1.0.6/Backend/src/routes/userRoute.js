@@ -279,4 +279,19 @@ route.post("/admin/getUserByEmail", authMiddleware, isAdmin, async (req, res) =>
     }
 });
 
+route.get("/borbelyok", async (req, res) =>{
+  try{
+    const borbelyok = await findAllBorbely();
+
+    if(!borbelyok || borbelyok.length === 0){
+      return res.status(400).json({ message: "Jelenleg nincsenek borbélyok." });
+    }
+
+    return res.status(200).json({ message: "Borbélyok sikeresen lekérve!", borbelyok });
+  }catch(error){
+    console.error("Szerver hiba: ", error);
+    throw error;
+  }
+});
+
 module.exports = route;

@@ -18,7 +18,8 @@ async function findFoglalasById(id) {
     }
 }
 
-async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar) {
+async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar, userId, borbelyId) {
+    
     try{
         const createdFoglalas = await Foglalasok.create({
             vasarloNeve: nev,
@@ -27,7 +28,9 @@ async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgal
             idopont,
             borbely,
             szolgaltatas,
-            ar
+            ar,
+            userId: userId || null,
+            borbelyId: borbelyId || null,
         });
 
         return createdFoglalas ? createdFoglalas.toJSON() : null;
