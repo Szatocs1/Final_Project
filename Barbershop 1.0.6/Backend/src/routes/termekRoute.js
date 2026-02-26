@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-const upload = require('../middlewares/uploads');
+const { upload } = require('../middlewares/uploads');
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
 const { searchProduct, searchName, searchCategory, deleteItem, createItem, modifyItem, getEveryItem } = require("../controllers/termekController");
 
@@ -16,7 +16,6 @@ route.get("/products", async (req, res) => {
     try{
         const products = await searchProduct(filters);
 
-        // Prepend base URL to image paths so frontend can load them correctly
         const productsWithFullImageUrl = products.map(product => ({
             ...product,
             kepNeve: product.kepNeve ? `${BASE_URL}/${product.kepNeve}` : null

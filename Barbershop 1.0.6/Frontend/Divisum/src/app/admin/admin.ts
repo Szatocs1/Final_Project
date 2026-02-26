@@ -105,7 +105,6 @@ product = {
   }
 
   onCreateProduct() {
-  // 1. Ellenőrzés: Ne küldjünk üres adatokat
   if (!this.product.name || this.product.price <= 0 || !this.selectedFile) {
     alert("Kérlek, töltsd ki a nevet, az árat és válassz egy képet!");
     return;
@@ -113,13 +112,11 @@ product = {
 
   const formData = new FormData();
   
-  // 2. A megfelelő helyről szedjük az adatokat (this.product-ból)
   formData.append('name', this.product.name); 
   formData.append('price', this.product.price.toString());
   formData.append('category', this.product.category);
   formData.append('comment', this.product.comment);
   
-  // 3. A fájl hozzáadása
   formData.append('file', this.selectedFile);
   console.log(this.selectedFile);
 
@@ -130,7 +127,6 @@ product = {
     .subscribe({
       next: (res) => {
         alert('Sikeres feltöltés!');
-        // Opcionális: Űrlap alaphelyzetbe állítása siker után
         this.product = { name: '', price: 0, category: 'Hajápolás', comment: '' };
         this.selectedFile = null;
       },

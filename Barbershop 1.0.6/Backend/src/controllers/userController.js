@@ -1,7 +1,6 @@
 const { sequelize } = require("../../config/db.js");
 const User = require("../models/userModel.js")(sequelize);
 
-// Function to find user by email
 async function findUserByEmail(email) {
   try {
     const user = await User.findOne({ where: { email } });
@@ -13,7 +12,6 @@ async function findUserByEmail(email) {
 }
 
 
-// Function to create a new user
 async function createUser(name, email, passwordHash, role, phone_number) {
   try {
     const user = await User.create({
@@ -30,7 +28,6 @@ async function createUser(name, email, passwordHash, role, phone_number) {
   }
 }
 
-// Function to find user by ID
 async function findUserById(id) {
   try {
     const user = await User.findByPk(id);
@@ -41,21 +38,22 @@ async function findUserById(id) {
   }
 }
 
-async function modifyUser(userId, nev, email, jelszo, telefonszam, foglaltsag){
+async function modifyUser(userId, nev, email, jelszo, telefonszam, foglaltsag, file){
     try {
-        const product = await User.findByPk(userId);
-        if (!product) throw new Error('Felhasználó nem található!');
+        const user = await User.findByPk(userId);
+        if (!user) throw new Error('Felhasználó nem található!');
 
         const updates = {};
         if (nev) updates.nev = nev;
         if (email) updates.email = email;
         if (jelszo) updates.jelszo = jelszo;
         if (telefonszam) updates.telefonszam = telefonszam;
+        if (file) updates.pfPicture = file.filename;
         if (foglaltsag) updates.foglaltsag = foglaltsag;
 
-        await product.update(updates);
+        await user.update(updates);
 
-        return product ? product.toJSON() : null;
+        return user ? user.toJSON() : null;
     }
     catch(error){
         console.error("Nem sikerült módosítani a felhasználót!", error);
@@ -104,7 +102,7 @@ async function getUserByName(nev) {
 
 async function findAllBorbely() {
   try{
-    const borbelyok = await User.findAll({ where: { foglaltsag: "Borbély"} , attributes: ['id', 'nev', 'foglaltsag'] } );
+    const borbelyok = await User.findAll({ where: { foglaltsag: "Borbély"} , attributes: ['id', 'nev', 'foglaltsag', 'pfPicture'] } );
 
     return borbelyok.map(borbely => borbely.toJSON());
   }catch(error){

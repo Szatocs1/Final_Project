@@ -23,7 +23,6 @@ export class Kosar {
   isPromoApplied: boolean = false;
   discount: number = 0;
 
-  // Shipping form fields
   vasarloNeve: string = '';
   vasarloEmail: string = '';
   telefonszam: string = '';
@@ -31,7 +30,6 @@ export class Kosar {
   telepules: string = '';
   szallitasiCim: string = '';
 
-  // User authentication status
   isLoggedIn: boolean = false;
 
   constructor(public kosarService: KosarService, private http: HttpClient) {
@@ -99,7 +97,6 @@ export class Kosar {
     const finalCart = this.kosarService.cartItems;
     const ar = this.total;
 
-    // Map cart items to the format expected by backend
     const termekek = finalCart.map(item => ({
       id: Number(item.id),
       name: item.name,
@@ -107,7 +104,6 @@ export class Kosar {
       ar: item.price
     }));
 
-    // Build the order data - user data comes from the backend via token
     const rendelesData: any = {
       termekek: termekek,
       ar: ar,
@@ -116,7 +112,6 @@ export class Kosar {
       szallitasiCim: this.szallitasiCim
     };
 
-    // Get token from localStorage
     const token = localStorage.getItem('token');
     const headers: any = {};
     if (token) {

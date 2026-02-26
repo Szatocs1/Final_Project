@@ -23,6 +23,10 @@ module.exports = (sequelize) => {
     telefonszam: {
       type: DataTypes.STRING(12)
     },
+    pfPicture: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
     foglaltsag: {
       type: DataTypes.ENUM('Fogyasztó', 'Borbély', 'Admin'),
       allowNull: false,

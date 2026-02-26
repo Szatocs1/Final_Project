@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, CUSTOM_ELEMENTS_SCHEMA, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { KosarService } from '../services/kosar.services';
 
 @Component({
@@ -12,23 +13,24 @@ import { KosarService } from '../services/kosar.services';
     CommonModule, 
     MatExpansionModule, 
     MatChipsModule, 
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
   styleUrl: './home.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Home {
+export class Home implements OnInit {
   readonly panelOpenState = signal(false);
   
   isMenuOpen = false;
 
-  // Modális ablak állapota (Részletes nézet)
+  barbers: any[] = [];
+
   showModal = false;
   selectedProduct: any = null;
 
-  // Gyors méretválasztó állapota (Pólóknál a főoldalon)
   showQuickSizeSelect = false;
   tempProduct: any = null;
 
@@ -72,16 +74,28 @@ export class Home {
     }
   ];
 
-  constructor(public kosarService: KosarService) {}
+  constructor(public kosarService: KosarService, private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
-  /**
-   * Kosárba helyezés logika
-   */
+  ngOnInit(): void {
+    this.loadBarbers();
+  }
+
+  loadBarbers() {
+    this.http.get<any>('http://localhost:3000/api/auth/borbelyok').subscribe({
+      next: (res) => {
+        this.barbers = res.borbelyok || (Array.isArray(res) ? res : []);
+        console.log('Borbélyok betöltve (home):', this.barbers);
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Hiba a borbélyok betöltésekor:', err);
+      }
+    });
+  }
+
   addToCart(product: any) {
     if (!product) return;
 
-    // Ha Ruházat és még nincs kiválasztva méret (vagy nem a nagy modálból hívjuk)
-    // Megnyitjuk a gyors választót
     if (product.category === 'Ruházat' && !this.showModal && !this.showQuickSizeSelect) {
       this.tempProduct = product;
       this.showQuickSizeSelect = true;
@@ -89,7 +103,6 @@ export class Home {
       return;
     }
 
-    // Termék összeállítása mérettel
     const productToAdd = { 
       ...product, 
       size: product.category === 'Ruházat' ? this.selectedSize : null 
@@ -97,14 +110,10 @@ export class Home {
     
     this.kosarService.addToCart(productToAdd);
 
-    // Folyamat lezárása és takarítás
     this.closeQuickSelect();
     console.log('Termék hozzáadva:', productToAdd);
   }
 
-  /**
-   * Gyors választóban rányomnak egy méretre
-   */
   confirmQuickSize(size: string) {
     this.selectedSize = size;
     if (this.tempProduct) {
@@ -112,13 +121,10 @@ export class Home {
     }
   }
 
-  /**
-   * Gyors választó bezárása
-   */
   closeQuickSelect() {
     this.showQuickSizeSelect = false;
     this.tempProduct = null;
-    this.selectedSize = 'M'; // Alapértelmezett visszaállítása
+    this.selectedSize = 'M';
     if (!this.showModal) document.body.style.overflow = 'auto';
   }
 

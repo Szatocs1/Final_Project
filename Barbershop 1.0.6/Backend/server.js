@@ -30,6 +30,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use('/uploads/termekek', express.static(path.join(__dirname, 'uploads/termekek')));
+app.use('/uploads/pfpicture', express.static(path.join(__dirname, 'uploads/pfpicture')));
 
 
 const whitelist = [
@@ -66,4 +67,3 @@ db.syncDatabase().then(async ()=>{
     console.log(`Szerver fut: http://localhost:${PORT}`);   
 });
 })
-

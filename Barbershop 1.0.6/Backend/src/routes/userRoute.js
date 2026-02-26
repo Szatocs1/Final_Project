@@ -1,13 +1,9 @@
-/*
-Teendők: 
-  Megtervezni az összes HTTP lekérést, illetve mindenhol máshol.
-*/
-
 const express = require('express');
 const bcrypt = require('bcrypt');
 const { createAccesToken } = require('../utils/jwtoken');
 const { findUserByEmail, createUser, findUserById, deleteUser, modifyUser, getEveryUser, getUserByName, findAllBorbely } = require('../controllers/userController');
 const { authMiddleware, isAdmin } = require('../middlewares/authMiddleware');
+const { uploadPfp } = require('../middlewares/uploads');
 
 const route = express.Router();
 
@@ -104,6 +100,21 @@ route.get(`/profile`, authMiddleware, async (req, res) => {
     return res.status(200).json({ message: "You are authanticated!", user });
 });
 
+route.put("/modifyUser", uploadPfp.single('profileImage'), authMiddleware, async (req, res) => {
+    try{
+      const userId = req.user.id;
+      const { nev, telefonszam, currentPassword, newPassword } = req.body;
+      const file = req.file;
+
+      const updateUser = await modifyUser(userId, nev, null, newPassword, telefonszam, null, file);
+
+      return res.status(200).json({ message: "Sikeresen módosítottuk a profilodat!", updateUser})
+    }catch(error){
+        console.error("Hiba történt a felhasználó módosításakor!")
+        return res.status(500).json({ message: "Hiba történt a módosításkor!" });
+    }
+});
+
 route.get('/getAllBorbely', async (req, res) =>{
   try{
     const borbelyok = await findAllBorbely();
@@ -115,6 +126,21 @@ route.get('/getAllBorbely', async (req, res) =>{
     return res.status(200).json({ message: 'Borbélyok sikeresen lekérve!', borbelyok });
   }catch(error){
     return res.status(500).json({ error: 'Szerver hiba: ', error });
+  }
+});
+
+route.get("/borbelyok", async (req, res) =>{
+  try{
+    const borbelyok = await findAllBorbely();
+
+    if(!borbelyok || borbelyok.length === 0){
+      return res.status(400).json({ message: "Jelenleg nincsenek borbélyok." });
+    }
+
+    return res.status(200).json({ message: "Borbélyok sikeresen lekérve!", borbelyok });
+  }catch(error){
+    console.error("Szerver hiba: ", error);
+    throw error;
   }
 });
 
@@ -277,21 +303,6 @@ route.post("/admin/getUserByEmail", authMiddleware, isAdmin, async (req, res) =>
     }catch(error){
       return res.status(500).json({ error: "Szerver hiba, felhasználó nem található!", error });
     }
-});
-
-route.get("/borbelyok", async (req, res) =>{
-  try{
-    const borbelyok = await findAllBorbely();
-
-    if(!borbelyok || borbelyok.length === 0){
-      return res.status(400).json({ message: "Jelenleg nincsenek borbélyok." });
-    }
-
-    return res.status(200).json({ message: "Borbélyok sikeresen lekérve!", borbelyok });
-  }catch(error){
-    console.error("Szerver hiba: ", error);
-    throw error;
-  }
 });
 
 module.exports = route;

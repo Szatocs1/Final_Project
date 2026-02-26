@@ -45,24 +45,52 @@ export class Foglalas implements OnInit {
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
+  private removeAccents(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
   ngOnInit() {
     window.scrollTo(0, 0);
     this.loadBarbers();
     this.loadExistingBookings();
+    
+    this.route.queryParams.subscribe(params => {
+      const bName = params['barber'];
+      if (bName && this.barbers.length > 0) {
+        console.log('Query paraméter érkezett:', bName);
+        console.log('Elérhető borbélyok:', this.barbers);
+        this.trySelectBarberFromQuery(bName);
+      }
+    });
+  }
+
+  trySelectBarberFromQuery(bName: string) {
+    const found = this.barbers.find(b => 
+      b.nev === bName || 
+      this.removeAccents(b.nev) === this.removeAccents(bName)
+    );
+    if (found) {
+      console.log('Borbély kiválasztva (query-ből):', found);
+      this.selectBarber(found);
+    }
   }
 
   loadBarbers() {
     this.http.get<any>('http://localhost:3000/api/auth/borbelyok').subscribe({
       next: (res) => {
         this.barbers = res.borbelyok || (Array.isArray(res) ? res : []);
+        console.log('Borbélyok betöltve:', this.barbers);
         this.cdr.detectChanges();
+        
         this.route.queryParams.subscribe(params => {
           const bName = params['barber'];
-          if (bName) {
-            const found = this.barbers.find(b => b.nev === bName);
-            if (found) this.selectBarber(found);
+          if (bName && this.barbers.length > 0) {
+            this.trySelectBarberFromQuery(bName);
           }
         });
+      },
+      error: (err) => {
+        console.error('Hiba a borbélyok betöltésekor:', err);
       }
     });
   }
@@ -89,10 +117,12 @@ export class Foglalas implements OnInit {
   }
 
   selectBarber(barber: any) {
+    console.log('Borbély kiválasztva:', barber);
     this.selectedBarber = barber;
     this.selectedService = null;
     this.selectedDate = null;
     this.selectedTime = null;
+    this.cdr.detectChanges();
   }
 
   selectService(service: any) {
