@@ -50,37 +50,6 @@ async function createRendeles({ vasarloNeve, vasarloEmail, telefonszam, iranyito
     return newRendeles.toJSON();
 }
 
-async function modifyRendeles(id, data) {
-    const rendeles = await Rendelesek.findByPk(id);
-    if (!rendeles) {
-        throw new Error("Rendelés nem található!");
-    }
-
-    try{
-        const updates = {};
-        if (data.vasarloNeve) updates.vasarloNeve = data.vasarloNeve;
-        if (data.vasarloEmail) updates.vasarloEmail = data.vasarloEmail;
-        if (data.telefonszam) updates.telefonszam = data.telefonszam;
-        if (data.iranyitoszam) updates.iranyitoszam = data.iranyitoszam;
-        if (data.telepules) updates.telepules = data.telepules;
-        if (data.szallitasiCim) updates.szallitasiCim = data.szallitasiCim;
-        if (data.termekek) updates.termekek = data.termekek;
-        if (data.ar !== undefined) updates.ar = data.ar;
-
-        const [updatedCount] = await Rendelesek.update(updates, { where: { id } });
-        if (updatedCount === 0) {
-            throw new Error("A rendelés módosítása sikertelen volt!");
-        }
-
-        const updatedRendeles = await Rendelesek.findByPk(id);
-        return updatedRendeles ? updatedRendeles.toJSON() : null;
-    }
-    catch(error){
-        console.error("Hiba történt a rendelés módosításánál: ", error);
-        throw error;
-    }
-}
-
 async function deleteRendeles(id) {
     const rendeles = await Rendelesek.findByPk(id);
     if (!rendeles) {
@@ -92,18 +61,11 @@ async function deleteRendeles(id) {
     return rendelesDeleted ? rendelesDeleted.toJSON() : null;
 }
 
-async function getRendelesByName(nev) {
-    const rendeles = await Rendelesek.findOne({ where: { vasarloNeve: nev } });
-
-    return rendeles ? rendeles.toJSON() : null;
-}
-
-async function getEveryRendeles() {
+async function getRendelesByName(name) {
       try{
-          const rendelesek = await Rendelesek.findAll({ limit: 20 });
+          const rendelesek = await Rendelesek.findAll({where: { vasarloNeve: name }, limit: 20 , });
 
           return rendelesek.map(rendeles => rendeles.toJSON());
-
       }catch(error){
         console.error("Nem talál rendelést!", error)
         throw error;
@@ -120,12 +82,83 @@ async function getRendelesByEmail(email) {
     return rendeles.map(rend => rend.toJSON());
 }
 
+async function findRendelesById(id) {
+    try {
+        const numericId = Number(id); 
+        
+        console.log("Keresés folyamatban ID alapján:", numericId);
+
+        const rendeles = await Rendelesek.findByPk(numericId);
+        
+        if (!rendeles) {
+            console.warn(`Nem található rendeles ezzel az ID-val: ${numericId}`);
+            return null;
+        }
+
+        return rendeles ? rendeles.toJSON() : null;
+    }catch(error){
+        console.error("Rendelés nem található id által: ", error)
+        throw error;
+    }
+}
+
+async function modifyRendeles(id, vasarloNeve, vasarloEmail, telefonszam, iranyitoszam, telepules, szallitasiCim, rendelesIdeje, termekek, final_ar) {
+    const numericId = Number(id);
+    
+    const rendeles = await Rendelesek.findByPk(numericId);
+    
+    if (!rendeles) {
+        throw new Error("Rendelés nem található!");
+    }
+    
+    const updates = {};
+    
+    if (vasarloNeve !== null && vasarloNeve !== undefined && vasarloNeve.trim() !== '') {
+        updates.vasarloNeve = vasarloNeve;
+    }
+    
+    if (vasarloEmail !== null && vasarloEmail !== undefined && vasarloEmail.trim() !== '') {
+        updates.vasarloEmail = vasarloEmail;
+    }
+    
+    if (telefonszam !== null && telefonszam !== undefined && telefonszam.trim() !== '') {
+        updates.telefonszam = telefonszam;
+    }
+    
+    if (iranyitoszam !== null && iranyitoszam !== undefined && iranyitoszam.trim() !== '') {
+        updates.iranyitoszam = iranyitoszam;
+    }
+    
+    if (telepules !== null && telepules !== undefined && telepules.trim() !== '') {
+        updates.telepules = telepules;
+    }
+    
+    if (szallitasiCim !== null && szallitasiCim !== undefined && szallitasiCim.trim() !== '') {
+        updates.szallitasiCim = szallitasiCim;
+    }
+    
+    if (rendelesIdeje !== null && rendelesIdeje !== undefined) {
+        updates.rendelesIdeje = rendelesIdeje;
+    }
+    
+    if (termekek !== null && termekek !== undefined && Array.isArray(termekek) && termekek.length > 0) {
+        updates.termekek = termekek;
+    }
+    
+    if (final_ar !== null && final_ar !== undefined && !isNaN(Number(final_ar))) {
+        updates.ar = Number(final_ar);
+    }
+    
+    await rendeles.update(updates);
+    
+    return rendeles.toJSON();
+}
+
 module.exports = {
     createRendeles,
-    modifyRendeles,
     deleteRendeles,
     getRendelesByName,
-    getEveryRendeles,
-    getRendelesByEmail
+    getRendelesByEmail,
+    findRendelesById,
+    modifyRendeles,
 };
-

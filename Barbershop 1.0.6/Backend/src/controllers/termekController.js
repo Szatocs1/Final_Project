@@ -1,4 +1,6 @@
-const { sequelize, Op } = require("../../config/db.js");
+const { where } = require("sequelize");
+const { sequelize } = require("../../config/db.js");
+const { Op } = require("../../config/db.js");
 const Termek = require("../models/termekModel.js")(sequelize);
 
 async function searchName(name) {
@@ -65,11 +67,26 @@ async function modifyItem(id, termekNev, kategoria, ar, megjegyzes, file) {
         if (!product) throw new Error('Termék nem található!');
 
         const updates = {};
-        if (termekNev) updates.termekNev = termekNev;
-        if (kategoria) updates.kategoria = kategoria;
-        if (ar !== 0) updates.ar = ar;
-        if (megjegyzes) updates.megjegyzes = megjegyzes;
-        if (file) updates.kepNeve = `uploads/termekek/${file.filename}`;
+        
+        if (termekNev !== null && termekNev !== undefined && termekNev.trim() !== '') {
+            updates.termekNev = termekNev;
+        }
+        
+        if (kategoria !== null && kategoria !== undefined && kategoria.trim() !== '') {
+            updates.kategoria = kategoria;
+        }
+        
+        if (ar !== null && ar !== undefined && ar !== '' && !isNaN(Number(ar)) && Number(ar) !== 0) {
+            updates.ar = Number(ar);
+        }
+        
+        if (megjegyzes !== null && megjegyzes !== undefined && megjegyzes.trim() !== '') {
+            updates.megjegyzes = megjegyzes;
+        }
+        
+        if (file) {
+            updates.kepNeve = `uploads/termekek/${file.filename}`;
+        }
 
         await product.update(updates);
 
@@ -108,6 +125,37 @@ async function getEveryItem() {
     }
 }
 
+async function getProductByName(name) {
+    try {
+        const Sequelize = require('sequelize');
+        const operator = Sequelize.Op;
+
+        const product = await Termek.findOne({ 
+            where: { 
+                termekNev: { 
+                    [operator.like]: `%${name}%` 
+                } 
+            } 
+        });
+
+        return product ? product.toJSON() : null;
+    } catch (error) {
+        console.error("Hiba a lekérdezés során:", error);
+        throw error;
+    }
+}
+
+async function getProductById(id) {
+    try{
+        const termek = await Termek.findByPk(id);
+
+        return termek ? termek.toJSON() : null;
+    }catch(error){
+        console.error("Terméket nem találta id által: ", error);
+        throw error;
+    }
+}
+
 module.exports = {
     searchProduct,
     searchName,
@@ -115,5 +163,7 @@ module.exports = {
     createItem,
     modifyItem,
     deleteItem,
-    getEveryItem
+    getEveryItem,
+    getProductByName,
+    getProductById
 };

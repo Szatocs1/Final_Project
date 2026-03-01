@@ -12,6 +12,9 @@ import { Termekek } from './termekek/termekek';
 import { LoggedProfil } from './logged-profil/logged-profil';
 import { AdminLogin } from './admin-login/admin-login';
 import { Admin } from './admin/admin';
+import { DeleteRendeles } from './delete-rendeles/delete-rendeles';
+import { ModifyDeleteFoglalas } from './modify-delete-foglalas/modify-delete-foglalas';
+import { BorbelyNaptar } from './borbely-naptar/borbely-naptar';
 
 const routes: Routes = [
     { path: 'home', component: Home },
@@ -27,6 +30,9 @@ const routes: Routes = [
     { path: 'termekek', component: Termekek },
     { path: 'admin-login', component: AdminLogin },
     { path: 'admin', component: Admin },
+    { path: 'delete-rendeles', component: DeleteRendeles },
+    { path: 'modify-delete-foglalas', component: ModifyDeleteFoglalas },
+    { path: 'borbely-naptar', component: BorbelyNaptar }
 ];
 
 @NgModule({
@@ -34,4 +40,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

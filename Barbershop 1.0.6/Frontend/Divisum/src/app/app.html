@@ -16,6 +16,9 @@
     </div>
 
     <div class="navIcons">
+        <a *ngIf="isBarber()" routerLink="/borbely-naptar" routerLinkActive="active-icon">
+            <span class="material-icons">calendar_month</span>
+        </a>
         <a routerLink="/admin-login" routerLinkActive="active-icon">
             <span class="material-icons">content_cut</span>
         </a>

@@ -119,7 +119,7 @@ export class Kosar {
     }
     
 
-    this.http.post('http://localhost:3000/api/rendelesek/rendelesCreate', rendelesData, { headers })
+    this.http.post('http://localhost:3000/api/rendeles/rendelesCreate', rendelesData, { headers })
       .subscribe({
         next: (response: any) => {
           window.alert('Rendelés sikeresen elküldve!');

@@ -1,0 +1,81 @@
+<div class="auth-container">
+  <div class="auth-logCard wide-card">
+    <div class="logText full-width">
+      <h1>FOGLALÁS MÓDOSÍTÁSA</h1>
+      <div class="divider"></div>
+
+      <div class="search-box">
+        <input type="text" [(ngModel)]="searchId" placeholder="Foglalás ID beírása..." class="search-input">
+        <button class="submit-btn search-cta" (click)="loadFoglalasById()">KERESÉS</button>
+      </div>
+
+      <div *ngIf="editableFoglalas" class="edit-area">
+        <div class="result-info">
+          <h3>Szerkesztés alatt: #{{ foglalasId }}</h3>
+          <button class="delete-btn" (click)="deleteFoglalas()">TÖRLÉS</button>
+        </div>
+
+        <div class="section">
+          <label>Ügyfél adatai</label>
+          <div class="customer-info-grid">
+            <div class="input-wrapper">
+              <small>Név</small>
+              <input type="text" [(ngModel)]="customerName" class="search-input" placeholder="Név">
+            </div>
+            <div class="input-wrapper">
+              <small>Email</small>
+              <input type="email" [(ngModel)]="customerEmail" class="search-input" placeholder="Email">
+            </div>
+            <div class="input-wrapper">
+              <small>Telefon</small>
+              <input type="text" [(ngModel)]="customerPhone" class="search-input" placeholder="Telefon">
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <label>1. Szakember kiválasztása</label>
+          <div class="options-grid">
+            <div *ngFor="let b of barbers" class="option-card" [class.selected]="selectedBarber?.id === b.id" (click)="selectBarber(b)">
+              <mat-icon>content_cut</mat-icon>
+              <span>{{ b.nev }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" *ngIf="selectedBarber">
+          <label>2. Szolgáltatás kiválasztása</label>
+          <div class="options-grid">
+            <div *ngFor="let s of services" class="option-card" [class.selected]="selectedService?.name === s.name" (click)="selectService(s)">
+              <mat-icon>{{ s.icon }}</mat-icon>
+              <div class="service-details">
+                <span class="service-name">{{ s.name }}</span>
+                <span class="service-meta">{{ s.duration }} perc | {{ s.price | number }} Ft</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" *ngIf="selectedService">
+          <label>3. Új időpont kijelölése</label>
+          <div class="calendar-wrapper">
+            <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange()"></mat-calendar>
+            <div class="time-picker-container" *ngIf="selectedDate">
+              <span class="time-label">Szabad időpontok:</span>
+              <div class="time-grid">
+                <button *ngFor="let t of availableTimes" class="time-btn" [disabled]="!isSlotAvailable(t)" [class.selected]="selectedTime === t" (click)="selectedTime = t">
+                  {{ t }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-footer" *ngIf="selectedTime">
+          <div class="gold-line"></div>
+          <button class="submit-btn save-btn" (click)="updateFoglalas()">MÓDOSÍTÁSOK MENTÉSE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

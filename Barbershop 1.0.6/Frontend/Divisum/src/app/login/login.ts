@@ -23,10 +23,11 @@ export class Login {
       password: this.password,
     }
     this.http.post('http://localhost:3000/api/auth/login', loginData).subscribe({
-      next: (response) =>{
-        const token = (response as any).token;
+      next: (response: any)=>{
+        const token = response.token;
         if(token){
           localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(response.user));
           window.location.href = '/home'
         }
         console.log("Sikeres bejelentkezés!")

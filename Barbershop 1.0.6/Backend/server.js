@@ -9,6 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 
+const whitelist = [
+  "http://localhost:4200",
+  "https://staging.yourbarbershop.com",
+  "https://yourbarbershop.com"
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -32,13 +37,6 @@ app.use(express.urlencoded({ extended: true}));
 app.use('/uploads/termekek', express.static(path.join(__dirname, 'uploads/termekek')));
 app.use('/uploads/pfpicture', express.static(path.join(__dirname, 'uploads/pfpicture')));
 
-
-const whitelist = [
-  "http://localhost:4200",
-  "https://staging.yourbarbershop.com",
-  "https://yourbarbershop.com"
-];
-
 //Táblák generálása és meghívása
 const userModel = require("./src/models/userModel")(db.sequelize);
 const foglalasModel = require("./src/models/foglalasModel")(db.sequelize);
@@ -56,7 +54,7 @@ const foglalasRoutes = require('./src/routes/foglalasRoute');
 app.use('/api/auth', userRoutes);
 app.use('/api/termek', termekRoutes);
 app.use('/api/foglalas', foglalasRoutes);
-app.use('/api/rendelesek', rendelesekRoutes);
+app.use('/api/rendeles', rendelesekRoutes);
 
 db.syncDatabase().then(async ()=>{
     console.log("Adatbázis szinkronizálva!")

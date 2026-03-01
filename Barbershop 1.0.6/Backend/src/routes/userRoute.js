@@ -75,7 +75,7 @@ route.post('/login', async (req, res) => {
         return res.status(401).json({error : 'Hibás email vagy jelszó'});
     }
   
-    const safeUser = { id: user.id, email: user.email, role: user.foglaltsag }
+    const safeUser = { id: user.id, name: user.nev, email: user.email, role: user.foglaltsag }
     const token = createAccesToken(safeUser);
 
     return res.status(200).json(
@@ -115,20 +115,6 @@ route.put("/modifyUser", uploadPfp.single('profileImage'), authMiddleware, async
     }
 });
 
-route.get('/getAllBorbely', async (req, res) =>{
-  try{
-    const borbelyok = await findAllBorbely();
-
-    if(!borbelyok){
-      return res.status(401).json({ message: 'Borbélyok nem találhatóak!' })
-    }
-
-    return res.status(200).json({ message: 'Borbélyok sikeresen lekérve!', borbelyok });
-  }catch(error){
-    return res.status(500).json({ error: 'Szerver hiba: ', error });
-  }
-});
-
 route.get("/borbelyok", async (req, res) =>{
   try{
     const borbelyok = await findAllBorbely();
@@ -144,10 +130,45 @@ route.get("/borbelyok", async (req, res) =>{
   }
 });
 
+route.get("/borbelyokNeve", async (req, res) => {
+  try{
+    const borbelyok = await findAllBorbely();
+
+    if(!borbelyok || borbelyok.length === 0){
+      return res.status(400).json({ message: "Jelenleg nincsenek borbélyok." });
+    }
+
+    const borbelyokNevei = borbelyok.map(b => b.nev);
+
+    return res.status(200).json({ message: "Borbély nevek sikeresen lekérve!", borbelyokNevei })
+  }catch (error) {
+    console.error("Hiba a borbélyok lekérésekor:", error);
+    return res.status(500).json({ message: "Szerver hiba!" });
+  }
+});
+
+route.delete("/deleteUser", authMiddleware, async (req, res) => {
+    const userId = req.user.id || {};
+
+    if(!userId){
+        return res.status(400).json({ message: "A felhasználó nem található meg!" });
+    }
+
+    try{
+        const deletedUser = await deleteUser(userId);
+
+        return res.status(200).json({ message: "Felhasználó sikeresen törölve!", deletedUser })
+    }catch(error){
+        console.error("Hiba a felhasználó törlésekor!", error);
+        throw error;
+    }
+});
+
 /*
 admin
 */
 
+//pipa
 route.post('/admin/login', async (req, res) =>{
 try {
   const {email, password} = req.body;
@@ -168,7 +189,7 @@ try {
     return res.status(401).json({error : 'Hibás email vagy jelszó', user});
   }
   
-  const safeUser = { id: user.id, email: user.email, role: user.foglaltsag };
+const safeUser = { id: user.id, name: user.nev, email: user.email, role: user.foglaltsag };
   const token = createAccesToken(safeUser);
 
   return res.status(200).json(
@@ -182,33 +203,33 @@ try {
   }
 });
 
+//pipa
 route.post('/admin/createUser', authMiddleware, isAdmin, async (req, res) => {
-    const admin = await findUserById(req.user.id);
+    const { name, email, password, password_again, role, phone_number  } = req.body || {};
 
-    if(!admin){
-      return res.status(400).json({ message: "A felhasználó nem admin!" })
-    }
-
-    const { name, email, password, role } = req.body || {};
-
-    if(!name || !email || !password || !role){
+    if(!name || !email || !password || !role || !password_again || !phone_number){
       return res.status(400).json({ message: "Nincs megadva az egyik mező!" })
     }
 
+    if(password !== password_again){
+      return res.status(400).json({ message: "Nem egyeznek a jelszavak!" })
+    }
+
     try{
-      const user = createUser(name, email, password, role)
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      const user = createUser(name, email, passwordHash, role, phone_number)
 
       return res.status(200).json({ message: "Felhasználó sikeresen létrehozva", user });
     }catch(error){
       return res.status(500).json({error: "Szerver hiba, nem sikerült felhasználót létre hozni!"});
     }
 });
+// pipa
+route.put("/admin/modifyUser", authMiddleware, isAdmin, async (req, res) => {
+    const { id, name, email, password, phone, role } = req.body;
 
-route.put("/admin/modifyUser/:id", authMiddleware, isAdmin, async (req, res) => {
     try{
-      const id = await findUserById(req.user.id);
-      const { name, email, password, phone, role } = req.body;
-
       if(role !== "Admin" && role !== "Fogyasztó" && role !== "Borbély"){
         return res.status(401).json({ message: "Nem létező foglaltságot adott meg!" })
       }
@@ -221,58 +242,24 @@ route.put("/admin/modifyUser/:id", authMiddleware, isAdmin, async (req, res) => 
         throw error;
     }
 });
-
-route.delete("/admin/deleteUser/:id", authMiddleware, isAdmin, async (req, res) => {
-    const { id } = req.params || {};
+// pipa
+route.delete("/admin/deleteUser", authMiddleware, isAdmin, async (req, res) => {
+    const id = req.body.id;
 
     if(!id){
         return res.status(400).json({ message: "A felhasználó nem található meg!" });
     }
 
     try{
-        const deleteUser = await deleteUser(id);
+        const deletedUser = await deleteUser(id);
 
-        return res.status(200).json({ message: "Felhasználó sikeresen törölve!", deleteUser })
+        return res.status(200).json({ message: "Felhasználó sikeresen törölve!", deletedUser })
     }catch(error){
-        console.error("Hiba a felhasználó törlésekor!", error);
+        console.error("Hiba a felhasználó törlésekor:", error);
         throw error;
     }
 });
-
-route.post("/admin/getUserById", authMiddleware, isAdmin, async (req, res) =>{
-    const { id } = req.query;
-
-    if(!id){
-      return res.status(400).json({ message: "Nincs kitötlve a mező!" })
-    }
-
-    try {
-      const user = await findUserById(id);
-
-      return res.status(200).json({ message: "Felhasználó sikeresen megtalálva!", user })
-    }catch(error){
-      res.status(500).json({ error: "Szerver hiba, nem található a felhasználó!", error })
-    }
-});
-
-route.get("/admin/getEveryUser", authMiddleware, isAdmin, async (req, res) => {
-    console.log("Lekérés beérkezett az admin/getEveryUser-re"); // 1. Log: Eljut-e idáig?
-    
-    try {
-        const users = await getEveryUser();
-        console.log("Userek az adatbázisból:", users);
-
-        return res.status(200).json({ 
-            message: "Sikeres lekérés!", 
-            users
-        });
-
-    } catch (error) {
-        console.error("HIBA:", error);
-        return res.status(500).json({ error: "Szerver hiba" });
-    }
-});
-
+//pipa
 route.post("/admin/getUserByName", authMiddleware, isAdmin, async (req, res) =>{
     const { name } = req.body;
 
@@ -288,9 +275,9 @@ route.post("/admin/getUserByName", authMiddleware, isAdmin, async (req, res) =>{
       return res.status(500).json({ error: "Szerver hiba, felhasználó nem található!", error });
     }
 });
-
+//pipa
 route.post("/admin/getUserByEmail", authMiddleware, isAdmin, async (req, res) =>{
-    const { email } = req.query;
+    const { email } = req.body;
 
     if(!email){
       return res.status(400).json({ message: "Nincs kitötlve a mező!" })

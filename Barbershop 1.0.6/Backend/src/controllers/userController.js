@@ -44,12 +44,30 @@ async function modifyUser(userId, nev, email, jelszo, telefonszam, foglaltsag, f
         if (!user) throw new Error('Felhasználó nem található!');
 
         const updates = {};
-        if (nev) updates.nev = nev;
-        if (email) updates.email = email;
-        if (jelszo) updates.jelszo = jelszo;
-        if (telefonszam) updates.telefonszam = telefonszam;
-        if (file) updates.pfPicture = file.filename;
-        if (foglaltsag) updates.foglaltsag = foglaltsag;
+        
+        if (nev !== null && nev !== undefined && nev.trim() !== '') {
+            updates.nev = nev;
+        }
+        
+        if (email !== null && email !== undefined && email.trim() !== '') {
+            updates.email = email;
+        }
+        
+        if (jelszo !== null && jelszo !== undefined && jelszo.trim() !== '') {
+            updates.jelszo = jelszo;
+        }
+        
+        if (telefonszam !== null && telefonszam !== undefined && telefonszam.trim() !== '') {
+            updates.telefonszam = telefonszam;
+        }
+        
+        if (foglaltsag !== null && foglaltsag !== undefined && foglaltsag.trim() !== '') {
+            updates.foglaltsag = foglaltsag;
+        }
+        
+        if (file) {
+            updates.pfPicture = file.filename;
+        }
 
         await user.update(updates);
 
@@ -61,17 +79,17 @@ async function modifyUser(userId, nev, email, jelszo, telefonszam, foglaltsag, f
     }
 }
 
-async function deleteUser(id) {
+async function deleteUser(userId) {
     try{
-        const deletedCount = await User.destroy({
-            where: { id }
-        });
+      const deletedCount = await User.destroy({
+        where: { id: userId }
+      });
 
-        if (deletedCount === 0){
-            throw new Error("Felhasználó nem található!");
-        }
+      if (deletedCount === 0){
+        throw new Error("Felhasználó nem található!");
+      }
 
-        return { message: 'Felhasználó sikeresen eltávolítva!' }
+      return { message: 'Felhasználó sikeresen eltávolítva!' }
     }catch(error){
         console.error("Felhasználó nem található!", error);
         throw error;

@@ -1,0 +1,46 @@
+<div class="delete-container">
+  <div class="delete-card">
+    <h1>RENDELÉS TÖRLÉSE</h1>
+    <div class="divider"></div>
+
+    <div class="search-section">
+      <input 
+        type="text" 
+        [(ngModel)]="searchId" 
+        placeholder="Rendelés ID..." 
+        class="id-input"
+        (keyup.enter)="searchRendeles()"> 
+      <button type="button" (click)="searchRendeles()" [disabled]="loading" class="search-btn">
+        {{ loading ? 'KERESÉS...' : 'KERESÉS' }}
+      </button>
+    </div>
+
+    <div *ngIf="foundRendeles" class="details-panel">
+      <div class="info-row">
+        <span>Vásárló:</span>
+        <strong>{{ foundRendeles.vasarloNeve }}</strong>
+      </div>
+      <div class="info-row">
+        <span>Email:</span>
+        <strong>{{ foundRendeles.vasarloEmail }}</strong>
+      </div>
+      <div class="info-row">
+        <span>Cím:</span>
+        <strong>{{ foundRendeles.iranyitoszam }} {{ foundRendeles.telepules }}, {{ foundRendeles.szallitasiCim }}</strong>
+      </div>
+      <div class="info-row">
+        <span>Összeg:</span>
+        <strong style="color: #d4af37;">{{ foundRendeles.ar | number }} Ft</strong>
+      </div>
+
+      <div class="warning-box">
+        <mat-icon>warning</mat-icon>
+        <span>VIGYÁZAT: A törlés végleges!</span>
+      </div>
+
+      <button type="button" class="final-delete-btn" (click)="triggerDeleteAlert()">
+        RENDELÉS VÉGLEGES TÖRLÉSE
+      </button>
+    </div>
+  </div>
+</div>

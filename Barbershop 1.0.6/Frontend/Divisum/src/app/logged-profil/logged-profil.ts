@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -21,6 +20,8 @@ export class LoggedProfil implements OnInit {
   passwordData = { currentPassword: '', newPassword: '', newPasswordAgain: '' };
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+
+  confirmDelete: any = false;
 
   constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
 
@@ -90,11 +91,33 @@ export class LoggedProfil implements OnInit {
   onLogout(): void {
     const token = localStorage.getItem('token');
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     if (token) {
       const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
       this.http.post('http://localhost:3000/api/auth/logout', {}, { headers }).subscribe();
     }
     this.router.navigate(['/home']);
   }
-}
 
+  onDeleteInit(): void{
+    this.confirmDelete = true;
+  }
+
+  onDelete(): void{
+    const token = localStorage.getItem('token');
+    
+    this.http.delete('http://localhost:3000/api/auth/deleteUser', {
+      headers: { Authorization: `Bearer ${token}` }
+    }).subscribe({
+      next: () => {
+        alert('Fiók sikeresen törölve.');
+        localStorage.clear();
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Hiba a törlés során:', err);
+        alert('Nem sikerült a törlés.');
+      }
+    });
+  }
+}

@@ -1,0 +1,51 @@
+<div class="naptar-container">
+  <div class="naptar-header">
+    <h1>Borbély Naptár</h1>
+    <p>Üdv, {{ barberName }}!</p>
+    <button class="logout-btn" (click)="onLogout()">Kijelentkezés</button>
+  </div>
+
+  <div class="naptar-content">
+    <div class="naptar-info">
+      <h2>Mai foglalásaid</h2>
+      <p class="info-text">Itt láthatod a rád foglalt időpontokat</p>
+    </div>
+
+    <div *ngIf="isLoading" class="loading">
+      <p>Betöltés...</p>
+    </div>
+
+    <div *ngIf="!isLoading && foglalasok.length === 0" class="no-foglalas">
+      <p>Nincs foglalásod!</p>
+    </div>
+
+    <div class="foglalas-list" *ngIf="!isLoading && foglalasok.length > 0">
+      <table class="naptar-table">
+        <thead>
+          <tr>
+            <th>Időpont</th>
+            <th>Vásárló</th>
+            <th>Telefon</th>
+            <th>Szolgáltatás</th>
+            <th>Ár</th>
+            <th>Művelet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of foglalasok">
+            <td>{{ f.idopont | date:'yyyy.MM.dd. HH:mm' }}</td>
+            <td>{{ f.vasarloNeve }}</td>
+            <td>{{ f.vasarloTelefonszam || 'Nincs' }}</td>
+            <td>{{ f.szolgaltatas }}</td>
+            <td>{{ f.ar | number }} Ft</td>
+            <td>
+              <button class="action-btn complete-btn" (click)="markCompleted(f.id)">
+                Elkészült
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

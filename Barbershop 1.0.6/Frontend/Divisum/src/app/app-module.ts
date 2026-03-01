@@ -26,11 +26,12 @@ import { Termekek } from './termekek/termekek';
 import { LoggedProfil } from './logged-profil/logged-profil';
 import { Admin } from './admin/admin';
 import { AdminLogin } from './admin-login/admin-login';
+import { ModifyDeleteFoglalas } from './modify-delete-foglalas/modify-delete-foglalas';
+import { DeleteRendeles } from './delete-rendeles/delete-rendeles';
 
 @NgModule({
   declarations: [
     // Standalone komponensek ide nem kellenek
-  
   ],
   imports: [
     BrowserModule,
@@ -52,6 +53,8 @@ import { AdminLogin } from './admin-login/admin-login';
     LoggedProfil,
     Admin,
     AdminLogin,
+    DeleteRendeles,
+    ModifyDeleteFoglalas,
 
 
     // Material modulok

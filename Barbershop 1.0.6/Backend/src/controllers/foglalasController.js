@@ -1,10 +1,22 @@
+const { where } = require("sequelize");
 const { sequelize } = require("../../config/db");
+const { getEveryUser } = require("./userController");
 
 const Foglalasok = require("../models/foglalasModel")(sequelize);
 
 async function findFoglalasById(id) {
-    try{
-        const foglalas = await Foglalasok.findByPk(id);
+    try {
+        const numericId = Number(id); 
+        
+        console.log("Keresés folyamatban ID alapján:", numericId);
+
+        const foglalas = await Foglalasok.findByPk(numericId);
+        
+        if (!foglalas) {
+            console.warn(`Nem található foglalás ezzel az ID-val: ${numericId}`);
+            return null;
+        }
+
         return foglalas ? foglalas.toJSON() : null;
     }catch(error){
         console.error("Foglalás nem található id által: ", error)
@@ -35,81 +47,104 @@ async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgal
 }
 
 async function foglalasModify(id, data) {
-    const foglalas = await findFoglalasById(id);
+    const foglalas = await Foglalasok.findByPk(id);
     if (!foglalas) {
         throw new Error("Foglalás nem található!");
     }
 
-    try{
+    try {
         const updates = {};
-        if (data.vasarloNeve) updates.vasarloNeve = data.vasarloNeve;
-        if (data.vasarloEmail) updates.vasarloEmail = data.vasarloEmail;
-        if (data.vasarloTelefonszam) updates.vasarloTelefonszam = data.vasarloTelefonszam;
-        if (data.idopont) updates.idopont = data.idopont;
-        if (data.borbely) updates.borbely = data.borbely;
-        if (data.szolgaltatas) updates.szolgaltatas = data.szolgaltatas;
-        if (data.ar !== undefined) updates.ar = data.ar;
-
-        const [updatedCount] = await Foglalasok.update(updates, { where: { id } });
-        if (updatedCount === 0) {
-            throw new Error("A foglalás módosítása sikertelen volt!");
+        
+        if (data.nev !== null && data.nev !== undefined && data.nev.trim() !== '') {
+            updates.vasarloNeve = data.nev;
+        }
+        
+        if (data.email !== null && data.email !== undefined && data.email.trim() !== '') {
+            updates.vasarloEmail = data.email;
+        }
+        
+        if (data.telefonszam !== null && data.telefonszam !== undefined && data.telefonszam.trim() !== '') {
+            updates.vasarloTelefonszam = data.telefonszam;
+        }
+        
+        if (data.idopont !== null && data.idopont !== undefined) {
+            updates.idopont = data.idopont;
+        }
+        
+        if (data.borbely !== null && data.borbely !== undefined && data.borbely.trim() !== '') {
+            updates.borbely = data.borbely;
+        }
+        
+        if (data.szolgaltatas !== null && data.szolgaltatas !== undefined && data.szolgaltatas.trim() !== '') {
+            updates.szolgaltatas = data.szolgaltatas;
+        }
+        
+        if (data.ar !== null && data.ar !== undefined && !isNaN(Number(data.ar))) {
+            updates.ar = Number(data.ar);
         }
 
-        const updatedfoglalas = await Foglalasok.findFoglalasById(id);
+        console.log("Módosítandó adatok:", updates);
+
+        const [updatedCount] = await Foglalasok.update(updates, { where: { id: id } });
+
+        const updatedfoglalas = await Foglalasok.findByPk(id);
         return updatedfoglalas ? updatedfoglalas.toJSON() : null;
     }
-    catch(error){
+    catch (error) {
         console.error("Hiba történt a foglalás módosításánál: ", error);
         throw error;
     }
 }
 
 async function foglalasDelete(id) {
-    try{
-        const foglalas = await findFoglalasById(id);
+    try {
+        const deletedRowsCount = await Foglalasok.destroy({ 
+            where: { id: id } 
+        });
 
-        const deletedFoglalas = await foglalas.destroy();
+        if (deletedRowsCount === 0) {
+            return { success: false, message: "Nem található ilyen azonosítóju foglalás." };
+        }
 
-        return deletedFoglalas.toJSON();
+        return { success: true, deletedCount: deletedRowsCount };
     }
-    catch(error){
+    catch (error) {
         console.error("Nem sikerült törölni a foglalást: ", error);
         throw error;
     }
 }
-
-async function getFoglalasByName(nev) {
+async function getFoglalasByName(name) {
     try{
-        const foglalas = await Foglalasok.findOne({ where: { vasarloNeve: nev } });
+        const foglalasok = await Foglalasok.findAll({ where: { vasarloNeve: name}, limit: 20 });
 
-        return foglalas ? foglalas.toJSON() : null;
+        return foglalasok.map(foglalas => foglalas.toJSON());
     }catch(error){
         console.error("Nem sikerült lekérni a foglalást név által!", error)
     }
 }
 
-async function getEveryFoglalas() {
-    try{
-          const foglalasok = await Foglalasok.findAll({ limit: 20 });
-
-          return foglalasok.map(foglalas => foglalas.toJSON());
-
-      }catch(error){
-        console.error("Nem talál foglalást!", error)
-        throw error;
-      }
-}
 
 async function getFoglalasByEmail(email) {
     try{
-        const foglalas = await Foglalasok.findOne({ where: {vasarloEmail: email} });
+        const foglalasok = await Foglalasok.findAll({ where: {vasarloEmail: email}, limit: 20 });
 
-        return foglalas ? foglalas.toJSON() : null;
+        return foglalasok.map(foglalas => foglalas.toJSON());
     }catch(error){
         console.error("Nem talál foglalást email áltl!", error)
         throw error;
     }
 }
+async function getEveryFoglalas() {
+    try{
+        const foglalasok = await Foglalasok.findAll();
+
+        return foglalasok.map(foglalas => foglalas.toJSON());
+    }catch(error){
+        console.error("Nem sikerült lekérni minden foglalást: ", error);
+        throw error;
+    }
+}
+
 
 module.exports = {
     findFoglalasById,
@@ -117,6 +152,6 @@ module.exports = {
     foglalasDelete,
     createFoglalas,
     getFoglalasByName,
-    getEveryFoglalas,
-    getFoglalasByEmail
+    getFoglalasByEmail,
+    getEveryFoglalas
 }

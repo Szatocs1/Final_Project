@@ -23,15 +23,23 @@ constructor(private http: HttpClient, private router: Router){}
       password: this.password,
     }
     this.http.post('http://localhost:3000/api/auth/admin/login', loginData).subscribe({
-      next: (response) =>{
-        const token = (response as any).token;
-        const role = (response as any).role
+      next: (response: any)=>{
+        const token = response.token;
+        const role = response.user.role;
+        
         if(role){
           localStorage.setItem('role', role);
         }
+        
         if(token){
           localStorage.setItem('token', token);
-          this.router.navigate(['/admin']);
+          localStorage.setItem('user', JSON.stringify(response.user));
+          
+          if (role === 'Borbély') {
+            this.router.navigate(['/borbely-naptar']);
+          } else {
+            this.router.navigate(['/admin']);
+          }
         }
         console.log("Sikeres Admin bejelentkezés!")
       },
