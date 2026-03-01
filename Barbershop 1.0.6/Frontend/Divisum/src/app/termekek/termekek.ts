@@ -32,8 +32,6 @@ export class Termekek implements OnInit {
   showSizeChart: boolean = false;
   isLoading: boolean = false;
   allProducts : Product[] = [];
-
-
   filteredProducts : Product[] = [];
 
   constructor(private kosarService: KosarService, private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}

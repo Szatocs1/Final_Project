@@ -57,7 +57,6 @@
     justify-content: center;
     text-align: center;
     color: white;
-    font-family: 'Montserrat', sans-serif;
     border-bottom: 5px solid #c5a059;
     position: relative;
     padding: 0 20px;
@@ -221,7 +220,6 @@
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: 25px;
-    font-family: 'Playfair Display', serif;
 }
 
 .intro-tagline .gold-text {
@@ -267,7 +265,6 @@
 .slider-container {
     width: 80%;
     margin: 0 auto;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .slider-header {
@@ -545,7 +542,6 @@
 .modal-title {
     color: #132435;
     font-size: 3rem;
-    font-family: 'Playfair Display', serif;
     font-weight: 900;
     margin-bottom: 25px;
     line-height: 1.1;
@@ -782,7 +778,6 @@
     font-size: 3rem;
     font-weight: 900;
     margin-bottom: 25px;
-    font-family: 'Playfair Display', serif;
 }
 
 .about-divider {

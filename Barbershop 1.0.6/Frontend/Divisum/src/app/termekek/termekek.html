@@ -76,18 +76,16 @@
             <div class="gold-line"></div>
             
             <p class="desc-text">{{ selectedProduct?.megjegyzes }}</p>
-
-            <div class="size-section" *ngIf="selectedProduct?.kategoria === 'Ruházat'">
-              <div class="size-header">
-                <p class="label-small">VÁLASSZ MÉRETET</p>
-                <button class="size-chart-link" (click)="toggleSizeChart()">
-                  <mat-icon>straighten</mat-icon> Mérettáblázat
-                </button>
-              </div>
-              
-              <div class="size-selector">
-                <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
-
+              <div class="size-section" *ngIf="selectedProduct?.category === 'Ruházat'">
+                <div class="size-header">
+                  <p class="label-small">VÁLASSZ MÉRETET</p>
+                  <button class="size-chart-link" (click)="toggleSizeChart()">
+                    <mat-icon>straighten</mat-icon> Mérettáblázat
+                  </button>
+                </div>
+                
+                <div class="size-selector">
+                  <div *ngFor="let size of ['S', 'M', 'L', 'XL', 'XXL']" 
                       class="size-option"
                       [class.selected]="selectedSize === size"
                       (click)="selectedSize = size">
