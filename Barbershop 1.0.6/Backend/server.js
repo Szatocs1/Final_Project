@@ -30,6 +30,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use('/uploads/termekek', express.static(path.join(__dirname, 'uploads/termekek')));
+app.use('/uploads/pfpicture', express.static(path.join(__dirname, 'uploads/pfpicture')));
 
 
 const whitelist = [
@@ -50,14 +51,12 @@ const userRoutes = require('./src/routes/userRoute');
 const termekRoutes = require('./src/routes/termekRoute');
 const rendelesekRoutes = require('./src/routes/rendelesekRoute');
 const foglalasRoutes = require('./src/routes/foglalasRoute');
-const uploadRoutes = require('./src/routes/uploadsRoute')
 
 //Route-ok alkalmazása
 app.use('/api/auth', userRoutes);
 app.use('/api/termek', termekRoutes);
 app.use('/api/foglalas', foglalasRoutes);
 app.use('/api/rendelesek', rendelesekRoutes);
-// Note: /uploads route removed - static file serving at /uploads/termekek handles image requests
 
 db.syncDatabase().then(async ()=>{
     console.log("Adatbázis szinkronizálva!")
@@ -68,4 +67,3 @@ db.syncDatabase().then(async ()=>{
     console.log(`Szerver fut: http://localhost:${PORT}`);   
 });
 })
-

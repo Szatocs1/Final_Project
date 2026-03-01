@@ -18,7 +18,7 @@ export class LoggedProfil implements OnInit {
   isEditModalOpen = false;
 
   editData: any = {};
-  passwordData = { currentPassword: '', newPassword: '' };
+  passwordData = { currentPassword: '', newPassword: '', newPasswordAgain: '' };
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
@@ -45,7 +45,7 @@ export class LoggedProfil implements OnInit {
 
   openEditModal() {
     this.editData = { ...this.user };
-    this.passwordData = { currentPassword: '', newPassword: '' };
+    this.passwordData = { currentPassword: '', newPassword: '', newPasswordAgain: '' };
     this.imagePreview = null;
     this.selectedFile = null;
     this.isEditModalOpen = true;
@@ -72,11 +72,12 @@ export class LoggedProfil implements OnInit {
     if (this.passwordData.newPassword) {
       formData.append('currentPassword', this.passwordData.currentPassword);
       formData.append('newPassword', this.passwordData.newPassword);
+      formData.append('newPasswordAgain', this.passwordData.newPasswordAgain)
     }
 
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    this.http.put('http://localhost:3000/api/auth/update-profile', formData, { headers }).subscribe({
+    this.http.put('http://localhost:3000/api/auth/modifyUser', formData, { headers }).subscribe({
       next: () => {
         this.fetchUserData();
         this.isEditModalOpen = false;

@@ -35,19 +35,11 @@
           <h2 class="section-title">VÁLASSZ PROFI CSAPATUNKBÓL</h2>
       </div>
       <div class="barbers-container">
-        <div class="barber-card">
+        <div class="barber-card" *ngFor="let barber of barbers">
           <div class="barber-image-wrapper">
-              <img src="../../assets/images/Aron.png" alt="Áron">
+              <img [src]="barber.pfPicture ? 'http://localhost:3000/uploads/pfpicture/' + barber.pfPicture : '../../assets/images/ProfilPic.png'" [alt]="barber.nev">
           </div>
-          <button class="barber-book-btn" [routerLink]="['/foglalas']" [queryParams]="{ barber: 'Áron' }">
-              Hozzá foglalok
-          </button>
-        </div>
-        <div class="barber-card">
-          <div class="barber-image-wrapper">
-              <img src="../../assets/images/Mate.png" alt="Máté">
-          </div>
-          <button class="barber-book-btn" [routerLink]="['/foglalas']" [queryParams]="{ barber: 'Máté' }">
+          <button class="barber-book-btn" [routerLink]="['/foglalas']" [queryParams]="{ barber: barber.nev }">
               Hozzá foglalok
           </button>
         </div>

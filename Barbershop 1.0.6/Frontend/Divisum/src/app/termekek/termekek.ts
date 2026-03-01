@@ -36,7 +36,6 @@ export class Termekek implements OnInit {
 
   constructor(private kosarService: KosarService, private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
   ngOnInit(): void {
-  // 1. Üres állapot biztosítása
   this.allProducts = [];
   this.filteredProducts = [];
 
@@ -104,7 +103,6 @@ export class Termekek implements OnInit {
   }
 
   addToCart(product: any) {
-    // Map backend fields to frontend cart fields
     const p = { 
       id: product.id,
       name: product.termekNev,        

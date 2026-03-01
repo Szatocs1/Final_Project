@@ -1,11 +1,5 @@
 const { sequelize } = require("../../config/db");
 
-/*
-ha a foglalás felhasználva, vagy nem jelenik meg a vevő: törölje a foglalást
-foglalások módosítása, foglalások létrehozása, foglalások törlése
-foglalás keresés név és gmail által
-minden foglalás mutatása a borbélynak
-*/
 const Foglalasok = require("../models/foglalasModel")(sequelize);
 
 async function findFoglalasById(id) {
@@ -18,7 +12,8 @@ async function findFoglalasById(id) {
     }
 }
 
-async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar) {
+async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar, userId, borbelyId) {
+    
     try{
         const createdFoglalas = await Foglalasok.create({
             vasarloNeve: nev,
@@ -27,7 +22,9 @@ async function createFoglalas(nev, email, telefonszam, idopont, borbely, szolgal
             idopont,
             borbely,
             szolgaltatas,
-            ar
+            ar,
+            userId: userId || null,
+            borbelyId: borbelyId || null,
         });
 
         return createdFoglalas ? createdFoglalas.toJSON() : null;

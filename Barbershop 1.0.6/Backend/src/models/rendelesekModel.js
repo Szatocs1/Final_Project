@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
             },
             telefonszam: {
                 type: DataTypes.STRING(12),
-                allowNull: false,
+                allowNull: true,
             },
             iranyitoszam: {
                 type: DataTypes.STRING(4),
@@ -45,7 +45,7 @@ module.exports = (sequelize) => {
             },
             userId: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
                 references: {
                     model: 'users',
                     key: 'id'

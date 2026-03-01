@@ -49,8 +49,6 @@ async function createItem(name, category, price, comment, file) {
             kategoria: category,
             ar: Number(price),
             megjegyzes: comment,
-            // Prepend 'uploads/termekek/' to match the format used in seeder
-            // This ensures the image URL is correctly constructed in termekRoute.js
             kepNeve: file ? `uploads/termekek/${file.filename}` : null
         });
         return termek ? termek.get({ plain: true }) : null;    

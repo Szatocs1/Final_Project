@@ -1,28 +1,40 @@
 const express = require("express");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware")
 const { createFoglalas, findFoglalasById, foglalasDelete, foglalasModify, getFoglalasByName, getEveryFoglalas, getFoglalasByEmail } = require("../controllers/foglalasController");
+const { findUserById, findAllBorbely } = require('../controllers/userController');
 const { sendEmail } = require("../../config/mail");
 
 const route = express.Router();
 
-route.post("/foglalasCreate", async (req, res) =>{
-    const { nev, email, telefonszam, borbely, idopont, szolgaltatas, ar } = req.body;
+route.get('/getEveryFoglalas', async (req, res) =>{
+    try{
+        const foglalasok = await getEveryFoglalas();
 
-    if (!nev || !email || !telefonszam || !borbely || !idopont || !szolgaltatas || !ar){
+        return res.status(200).json({ message: "Minden foglalás sikeresen lekérve!", foglalasok });
+    }catch(error){
+        return res.status(500).json({ message: "Szerver hiba, nem sikerült lekérn minden foglalást! ", error });
+    }
+});
+
+
+route.post("/foglalasCreate", authMiddleware,async (req, res) =>{
+    const { nev, email, telefonszam, borbely, idopont, szolgaltatas, ar, userId, borbelyId } = req.body;
+
+    if (!nev || !email || !telefonszam || !borbely || !idopont || !szolgaltatas || !ar || !borbelyId){
         return res.status(400).json({ message: "Valamelyik mező nincs kitöltve vagy megadva!" })
     }
 
     try{
-        const foglalas = await createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar);
+        const foglalas = await createFoglalas(nev, email, telefonszam, idopont, borbely, szolgaltatas, ar, userId, borbelyId);
 
         const userData = {nev, email};
         const targy = "Sikeres foglalás!"
         const message = `Köszönjük foglalását! ${borbely} a választott borbély, ${idopont} a választott időpont!
         Ha módosítani vagy törölni szeretné foglalását, akkor kattintson a linkre!` //a kattintson után egy link van, melyet a sendEmail-en belül adok meg.
 
-        const emailKuldes = await sendEmail({ userData, targy, message });
+        //const emailKuldes = await sendEmail({ userData, targy, message });
 
-        return res.status(200).json({ message: "Sikeres foglalás és email küldés!", foglalas, emailKuldes })
+        return res.status(200).json({ message: "Sikeres foglalás és email küldés!", foglalas, /*emailKuldes*/ })
     }catch(error){
         console.error("Nem sikerült létre hozni a foglalást, vagy az email nem került elküldésre!")
         return res.status(500).json({ message: "Nem sikerült a foglalás vagy az email küldés!", error })

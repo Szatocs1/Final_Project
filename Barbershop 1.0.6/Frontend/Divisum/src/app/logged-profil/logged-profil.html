@@ -1,7 +1,7 @@
 <div class="auth-container">
   <div class="auth-logCard">
     <div class="logImg">
-      <div class="image-wrapper" [style.backgroundImage]="'url(' + (user?.profilKepUrl || '../../assets/images/ProfilPic.png') + ')'"></div>
+      <div class="image-wrapper" [style.backgroundImage]="user?.pfPicture ? 'url(http://localhost:3000/uploads/pfpicture/' + user.pfPicture + ')' : 'url(../../assets/images/ProfilPic.png)'"></div>
       <div class="overlay">
         <div class="logo-container">
           <h1 class="main-title">DIVISUM</h1>
@@ -65,7 +65,7 @@
       
       <div class="profile-pic-upload">
         <div class="avatar-preview">
-          <img [src]="imagePreview || user?.profilKepUrl || '../../assets/images/ProfilPic.png'" alt="Profilkép">
+          <img [src]="imagePreview || 'http://localhost:3000/uploads/pfpicture/' + user?.pfPicture || '../../assets/images/ProfilPic.png'" alt="Profilkép">
         </div>
         <label for="fileInput" class="file-label">Fotó módosítása</label>
         <input id="fileInput" type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
@@ -94,6 +94,11 @@
       <div class="modal-input-group">
         <label>Új jelszó</label>
         <input type="password" [(ngModel)]="passwordData.newPassword" name="newPass" placeholder="******">
+      </div>
+
+      <div class="modal-input-group">
+        <label>Új jelszó újra</label>
+        <input type="password" [(ngModel)]="passwordData.newPassword" name="newPassAgain" placeholder="******">
       </div>
       
       <div class="modal-actions">
