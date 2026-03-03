@@ -1,114 +1,168 @@
+  /* ==========================================================================
+    1. FŐ KONTÉNER ÉS ALAPSTÍLUSOK
+    ========================================================================== */
+
 .naptar-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  padding: 20px;
+    min-height: 100vh;
+    background-color: #f8f9fa; 
+    color: #2d3436;
+    padding: 40px 20px;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
 }
 
+  /* ==========================================================================
+      2. FEJLÉC ÉS KIJELENTKEZÉS
+      ========================================================================== */
+
 .naptar-header {
-  background: rgba(212, 175, 55, 0.1);
-  border-bottom: 2px solid #d4af37;
-  padding: 20px;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .naptar-header h1 {
-  color: #d4af37;
-  margin: 0;
-  font-size: 2rem;
+    font-size: 1.8rem;
+    margin: 0;
+    color: #0a192f;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .naptar-header p {
-  color: #fff;
-  margin: 5px 0 0 0;
+    margin: 0;
+    font-weight: 500;
+    color: #636e72;
 }
 
 .logout-btn {
-  background: #d4af37;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
+    background-color: #fff;
+    color: #d63031;
+    border: 1.5px solid #d63031;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .logout-btn:hover {
-  background: #b8962e;
+    background-color: #d63031;
+    color: white;
 }
+
+  /* ==========================================================================
+      3. TARTALMI KÁRTYA ÉS INFORMÁCIÓK
+      ========================================================================== */
 
 .naptar-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.naptar-info {
-  margin-bottom: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .naptar-info h2 {
-  color: #fff;
-  margin-bottom: 5px;
+    font-size: 1.4rem;
+    color: #0a192f;
+    margin-bottom: 5px;
 }
 
 .info-text {
-  color: #888;
+    color: #b2bec3;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
 }
 
-.loading, .no-foglalas {
-  text-align: center;
-  padding: 40px;
-  color: #888;
-}
-
-.foglalas-list {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  overflow: hidden;
-}
+  /* ==========================================================================
+      4. NAPTÁR TÁBLÁZAT
+      ========================================================================== */
 
 .naptar-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.naptar-table thead {
-  background: rgba(212, 175, 55, 0.2);
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; 
 }
 
 .naptar-table th {
-  color: #d4af37;
-  padding: 15px;
-  text-align: left;
-  font-weight: 600;
+    color: #0a192f;
+    text-align: left;
+    padding: 15px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #f1f2f6;
+}
+
+.naptar-table tbody tr {
+    background-color: #ffffff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .naptar-table td {
-  color: #fff;
-  padding: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 15px;
+    border-bottom: 1px solid #f1f2f6;
+    font-size: 1rem;
 }
 
 .naptar-table tr:hover {
-  background: rgba(212, 175, 55, 0.1);
+    background-color: #fdfdfd;
+    cursor: default;
 }
 
-.action-btn {
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-  transition: all 0.3s;
+.naptar-table td:first-child {
+    font-weight: 700;
+    color: #0a192f;
 }
+
+  /* ==========================================================================
+      5. MŰVELETI GOMBOK
+      ========================================================================== */
 
 .complete-btn {
-  background: #4CAF50;
-  color: white;
+    background-color: #0a192f;
+    color: #c5b358; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(10, 25, 47, 0.2);
 }
 
 .complete-btn:hover {
-  background: #45a049;
+    background-color: #112240;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(10, 25, 47, 0.3);
+}
+
+  /* ==========================================================================
+      6. ÁLLAPOTJELZŐK ÉS RESPONSIVITY
+      ========================================================================== */
+
+.loading, .no-foglalas {
+    text-align: center;
+    padding: 60px;
+    color: #b2bec3;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 2px dashed #dfe6e9;
+}
+
+@media (max-width: 768px) {
+    .naptar-table {
+      display: block;
+      overflow-x: auto;
+    }
 }

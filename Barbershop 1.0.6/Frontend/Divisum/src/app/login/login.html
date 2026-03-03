@@ -15,19 +15,48 @@
             <div class="divider"></div>
             
             <form class="logForm" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+                
+                <div class="alert-box" *ngIf="loginError">
+                    {{ loginError }}
+                </div>
+
                 <div class="input-group">
                     <label>Email cím</label>
-                    <input type="email" name="email" [(ngModel)]="email" placeholder="pelda@email.hu" />
-                    <small class="error-text" *ngIf="false">Valós email-t adjon meg!</small>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        [(ngModel)]="email" 
+                        #emailModel="ngModel"
+                        required 
+                        email
+                        placeholder="pelda@email.hu" 
+                        [class.input-error]="emailModel.invalid && emailModel.touched"
+                    />
+                    <small class="error-text" *ngIf="emailModel.invalid && emailModel.touched">
+                        Kérjük, érvényes email címet adjon meg!
+                    </small>
                 </div>
 
                 <div class="input-group">
                     <label>Jelszó</label>
-                    <input type="password" name="password" [(ngModel)]="password" placeholder="••••••••" />
-                    <small class="error-text" *ngIf="false">Helytelen jelszó!</small>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        [(ngModel)]="password" 
+                        #passModel="ngModel"
+                        required
+                        minlength="6"
+                        placeholder="••••••••" 
+                        [class.input-error]="passModel.invalid && passModel.touched"
+                    />
+                    <small class="error-text" *ngIf="passModel.invalid && passModel.touched">
+                        A jelszó legalább 6 karakter hosszú kell legyen!
+                    </small>
                 </div>
 
-                <button type="submit" class="submit-btn">BEJELENTKEZÉS</button>
+                <button type="submit" class="submit-btn" [disabled]="!loginForm.form.valid">
+                    BEJELENTKEZÉS
+                </button>
                 
                 <p class="auth-footer">Még nincs fiókja? <a routerLink="/register">Hozzon létre egyet</a></p>
             </form>

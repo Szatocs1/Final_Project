@@ -9,13 +9,13 @@
     <h2 class="section-title">1. Szakember kiválasztása</h2>
     <div class="barber-grid">
       <div *ngFor="let barber of barbers" 
-           class="barber-card" 
-           [class.selected]="selectedBarber?.id === barber.id" 
-           (click)="selectBarber(barber)">
+          class="barber-card" 
+          [class.selected]="selectedBarber?.id === barber.id" 
+          (click)="selectBarber(barber)">
           <div class="barber-image-container">
             <div *ngIf="barber.pfPicture; else initials" 
-                 class="barber-image"
-                 [style.backgroundImage]="'url(http://localhost:3000/uploads/pfpicture/' + barber.pfPicture + ')'">
+                class="barber-image"
+                [style.backgroundImage]="'url(http://localhost:3000/uploads/pfpicture/' + barber.pfPicture + ')'">
             </div>
             <ng-template #initials>
               <div class="barber-placeholder">{{ (barber.nev ? barber.nev.charAt(0) : '?') }}</div>
@@ -31,8 +31,8 @@
     <h2 class="section-title">2. Szolgáltatás kiválasztása - ({{selectedBarber.nev}})</h2>
     <div class="service-list">
       <div class="service-item" *ngFor="let s of services" 
-           (click)="selectService(s)" 
-           [class.active]="selectedService === s">
+          (click)="selectService(s)" 
+          [class.active]="selectedService === s">
         <div class="service-info">
           <mat-icon class="gold-icon">{{s.icon}}</mat-icon>
           <div class="service-text">

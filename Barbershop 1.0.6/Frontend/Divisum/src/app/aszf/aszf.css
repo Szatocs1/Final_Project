@@ -1,52 +1,52 @@
 .legal-header {
-    background-color: #132435;
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-  }
-  
-  .legal-header h1 {
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
-  
-  .legal-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 60px 20px;
-  }
-  
-  .legal-block {
-    margin-bottom: 50px;
-  }
-  
-  .legal-block h2 {
-    color: #132435;
-    font-size: 1.5rem;
-    font-weight: 800;
-    border-left: 5px solid #132435;
-    padding-left: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .legal-block p, .legal-block li {
-    color: #555;
-    line-height: 1.8;
-    font-size: 1.1rem;
-  }
-  
-  .legal-block ul {
-    padding-left: 20px;
-    margin-top: 15px;
-  }
-  
-  .legal-block li {
-    margin-bottom: 10px;
-  }
-  
-  .legal-block strong {
-    color: #132435;
-  }
+  background-color: #132435;
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.legal-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.legal-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.legal-block {
+  margin-bottom: 50px;
+}
+
+.legal-block h2 {
+  color: #132435;
+  font-size: 1.5rem;
+  font-weight: 800;
+  border-left: 5px solid #132435;
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+
+.legal-block p, .legal-block li {
+  color: #555;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.legal-block ul {
+  padding-left: 20px;
+  margin-top: 15px;
+}
+
+.legal-block li {
+  margin-bottom: 10px;
+}
+
+.legal-block strong {
+  color: #132435;
+}

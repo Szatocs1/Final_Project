@@ -1,237 +1,390 @@
-/* ==========================================================================
-    1. KONTÉNER ÉS ALAPOK
-    ========================================================================== */
+/* =========================================================
+    1. ALAP
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f4f7f6;
+    color: #132435;
+    padding: 60px 0;
+}
+
+/* =========================================================
+    2. KÁRTYA
+========================================================= */
 
 .auth-container {
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-background-color: #f4f4f4;
-padding: 40px 20px;
-font-family: 'Montserrat', sans-serif;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
 }
 
 .auth-logCard {
-display: flex;
-width: 100%;
-max-width: 1000px;
-background: white;
-min-height: 600px;
-box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-border-radius: 4px;
-overflow: hidden;
-border: 1px solid #f2e6d0;
-margin: 40px auto;
+    display: flex;
+    width: 1100px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+    overflow: hidden;
 }
 
-/* ==========================================================================
-    2. BAL OLDAL
-    ========================================================================== */
+/* =========================================================
+    3. BAL OLDAL
+========================================================= */
 
 .logImg {
-flex: 0 0 350px;
-background: #132435 !important;
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-border-right: 4px solid #c5a059;
-}
-
-@media (max-width: 850px) {
-.logImg { display: none; } 
-}
-
-.logImg .overlay {
-padding: 40px;
-text-align: center;
+    flex: 0 0 280px;
+    background: #132435;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-text {
-font-weight: 900;
-font-size: 2.2rem;
-letter-spacing: 8px;
-color: #ffffff;
-margin: 0;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 6px;
 }
 
 .logo-slogan {
-font-size: 0.7rem;
-letter-spacing: 4px;
-text-transform: uppercase;
-color: #c5a059;
-display: block;
-margin-top: 15px;
-border-top: 1px solid rgba(197, 160, 89, 0.4);
-padding-top: 10px;
+    display: block;
+    margin-top: 8px;
+    color: #c5a059;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
-/* ==========================================================================
-    3. JOBB OLDAL
-    ========================================================================== */
+/* =========================================================
+    4. JOBB OLDAL
+========================================================= */
 
 .logText {
-flex: 1;
-padding: 50px;
-background: #ffffff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 50px 60px;
 }
 
+/* =========================================================
+    5. FEJLÉC
+========================================================= */
+
 .premium-label {
-color: #c5a059;
-text-transform: uppercase;
-letter-spacing: 3px;
-font-size: 0.75rem;
-font-weight: 700;
-display: block;
+    color: #c5a059;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 h1 {
-color: #132435;
-font-weight: 800;
-font-size: 2rem;
-margin: 10px 0 15px 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #132435;
 }
 
 .divider {
-width: 60px;
-height: 4px;
-background: #c5a059;
-margin-bottom: 35px;
+    width: 40px;
+    height: 2px;
+    background: #c5a059;
 }
 
-/* ==========================================================================
-    4. KERESŐ FUNKCIÓ
-    ========================================================================== */
-/* 4.  */
+/* =========================================================
+    6. KERESŐ SOR 
+========================================================= */
+
 .search-box {
-display: flex;
-margin-bottom: 35px;
-background: #f9f9f9;
-padding: 5px;
-border-radius: 4px;
-border: 1px solid #f2e6d0;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #edf2f7;
+    gap: 0;
 }
 
 .search-input {
-flex: 1;
-border: none;
-background: transparent;
-padding: 15px;
-font-family: 'Montserrat', sans-serif;
-font-size: 1rem;
-outline: none;
+    flex: 1;
+    height: 50px;
+    padding: 15px 0;
+    background: transparent;
+    border: none !important;
+    outline: none;
+    font-size: 1rem;
 }
 
-/* ==========================================================================
-    5. INPUTOK ÉS KATEGÓRIA
-    ========================================================================== */
-
-.admin-input {
-width: 100%;
-padding: 15px 0;
-border: none;
-border-bottom: 2px solid #f2e6d0;
-font-family: 'Montserrat', sans-serif;
-font-weight: 600;
-margin-bottom: 25px;
-transition: 0.3s;
-background-color: transparent;
+.search-input::placeholder {
+    color: #94a3b8;
 }
 
-.admin-input:focus {
-border-bottom-color: #c5a059;
-outline: none;
+.search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    padding: 0 25px !important;
+    margin: 0 !important;
+    border-radius: 4px 4px 0 0 !important;
+    white-space: nowrap;
 }
 
-select.admin-input {
-appearance: none;
--webkit-appearance: none;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c5a059' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-background-repeat: no-repeat;
-background-position: right 10px center;
-padding-right: 30px;
-cursor: pointer;
+.search-btn:hover {
+    color: #c5a059;
 }
 
-/* ==========================================================================
-    6. TERMÉK FOTÓ
-    ========================================================================== */
+/* =========================================================
+    7. GOMBOK 
+========================================================= */
+
+.submit-btn,
+.create-btn,
+.save-action-btn,
+.cancel-action-btn {
+    padding: 14px 24px;
+    background: #132435;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.submit-btn:hover,
+.create-btn:hover,
+.save-action-btn:hover,
+.cancel-action-btn:hover {
+    background: #c5a059;
+    color: #ffffff;
+}
+
+.edit-btn {
+    padding: 10px 16px;
+    background: #f1f5f9;
+    color: #132435;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background: #132435;
+    color: #ffffff;
+}
+
+.delete-btn {
+    padding: 10px 16px;
+    background: transparent;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* =========================================================
+    8. INPUTOK (LETISZTULT)
+========================================================= */
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.admin-input,
+.admin-edit-input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.admin-input:focus,
+.admin-edit-input:focus,
+select:focus,
+textarea:focus {
+    border-color: #c5a059;
+}
 
 .file-input {
-position: absolute;
-width: 0.1px;
-height: 0.1px;
-opacity: 0;
-overflow: hidden;
-z-index: -1;
-}
-
-.file-upload-wrapper {
-position: relative;
-margin-top: 15px;
-margin-bottom: 30px;
-display: flex;
-justify-content: flex-start;
+    position: absolute;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
 }
 
 .file-label {
-display: inline-block; 
-margin-left: 20px; 
-padding: 15px 30px;
-background: #fdfaf4;
-color: #132435;
-border: 2px dashed #c5a059;
-border-radius: 4px;
-text-align: center;
-cursor: pointer;
-font-weight: 800;
-font-size: 0.8rem;
-text-transform: uppercase;
-letter-spacing: 1.5px;
-transition: all 0.3s ease;
+    display: inline-block;
+    padding: 12px 20px;
+    background: #f8fafc;
+    color: #132435;
+    border: 1px dashed #c5a059;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
 }
-
-@media (max-width: 600px) {
-.file-label {
-    margin-left: 0;
-    width: 100%;
-}
-}
-
 
 .file-label:hover {
-background: #c5a059;
-color: white;
+    background: #fdfaf3;
+    border-style: solid;
 }
 
-/* ==========================================================================
-    7. GOMBOK
-    ========================================================================== */
-.submit-btn {
-width: 100%;
-background: #c5a059;
-color: #132435;
-border: none;
-padding: 18px;
-font-weight: 800;
-text-transform: uppercase;
-letter-spacing: 2px;
-cursor: pointer;
-transition: 0.3s;
+/* =========================================================
+    9. TÁBLÁZAT
+========================================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
-.submit-btn:hover {
-background: #132435;
-color: #c5a059;
-transform: translateY(-2px);
-box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+.admin-table {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
 }
+
+.admin-table th {
+    padding: 12px;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.85rem;
+}
+
+.admin-table tr:hover {
+    background: #fafafa;
+}
+
+.mini-product-img {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* =========================================================
+    10. SZERKESZTŐ PANEL
+========================================================= */
+
+.edit-panel {
+    margin-top: 15px;
+    padding: 25px;
+    background: #f8fafc;
+    border-left: 3px solid #c5a059;
+    border-radius: 0 6px 6px 0;
+}
+
+.edit-panel h4 {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* =========================================================
+    11. INFO / HIBA
+========================================================= */
 
 .info-text {
-margin-top: 20px;
-font-size: 0.75rem;
-color: #999;
-text-align: center;
-font-style: italic;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.error-msg {
+    color: #dc2626;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+    12. PRODUCT IMAGE PREVIEW
+========================================================= */
+
+.product-image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.product-image-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-image-preview:hover {
+    border-color: #c5a059;
+}
+
+/* =========================================================
+    13. RESZPONZÍV
+========================================================= */
+
+@media (max-width: 1150px) {
+    .auth-logCard {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-logCard {
+        flex-direction: column;
+    }
+
+    .logImg {
+        flex: none;
+        height: 120px;
+    }
+
+    .logText {
+        padding: 30px 20px;
+    }
 }

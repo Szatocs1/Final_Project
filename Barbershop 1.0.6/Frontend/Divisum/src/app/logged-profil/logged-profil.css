@@ -386,8 +386,94 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #132435;
 }
+
 /* ==========================================================================
-    6. RESZPONZIVITÁS
+    6. FIÓK TÖRLÉSE SZEKCIÓ
+   ========================================================================== */
+.delete-account-section {
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px solid #f2e6d0;
+    padding-top: 20px;
+}
+
+.init-delete-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+}
+
+.init-delete-btn:hover {
+    color: #d63031; 
+    letter-spacing: 1.5px;
+}
+
+.confirm-box {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.confirm-box p {
+    color: #c53030;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-danger {
+    background: #d63031;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background: #132435;
+    color: #d63031;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+    7. RESZPONZIVITÁS
     ========================================================================== */
 
 @media (max-width: 900px) {

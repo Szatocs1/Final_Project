@@ -6,33 +6,52 @@
             <div class="divider"></div>
             
             <form class="regForm" #registrationForm="ngForm" (ngSubmit)="onSubmit()">
-                    <div class="input-group">
+                
+                <div class="alert-box" *ngIf="serverError">
+                    {{ serverError }}
+                </div>
+
+                <div class="input-group">
                     <label>Teljes Név</label>
-                    <input type="text" name="username" [(ngModel)]="username" placeholder="pl. Kiss István" />
+                    <input type="text" name="username" [(ngModel)]="username" #uName="ngModel" required placeholder="pl. Kiss István" />
+                    <small class="error-msg" *ngIf="uName.invalid && uName.touched">Név megadása kötelező!</small>
                 </div>
 
                 <div class="input-group">
                     <label>Email cím</label>
-                    <input type="email" name="email" [(ngModel)]="email" placeholder="pelda@email.hu" />
+                    <input type="email" name="email" [(ngModel)]="email" #uEmail="ngModel" required email placeholder="pelda@email.hu" />
+                    <small class="error-msg" *ngIf="uEmail.invalid && uEmail.touched">Érvényes email címet adjon meg!</small>
                 </div>
 
                 <div class="input-group">
                     <label>Telefonszám</label>
-                    <input type="tel" name="phone_number" [(ngModel)]="phone_number" placeholder="+36 30 123 4567" />
+                    <input 
+                        type="tel" 
+                        name="phone_number" 
+                        [(ngModel)]="phone_number" 
+                        #uPhone="ngModel" 
+                        required 
+                        pattern="^(06\d{9})|(\+36\d{9})$"
+                        placeholder="+36301234567" 
+                    />
+                    <small class="error-msg" *ngIf="uPhone.errors?.['required'] && uPhone.touched">Telefonszám megadása kötelező!</small>
+                    <small class="error-msg" *ngIf="uPhone.errors?.['pattern'] && uPhone.touched">Helytelen formátum (06... vagy +36...)!</small>
                 </div>
 
                 <div class="grid-inputs">
                     <div class="input-group">
                         <label>Jelszó</label>
-                        <input type="password" name="password" [(ngModel)]="password" placeholder="••••••••" />
+                        <input type="password" name="password" [(ngModel)]="password" #uPass="ngModel" required minlength="6" placeholder="••••••••" />
+                        <small class="error-msg" *ngIf="uPass.invalid && uPass.touched">Min. 6 karakter!</small>
                     </div>
                     <div class="input-group">
                         <label>Jelszó újra</label>
-                        <input type="password" name="password_again" [(ngModel)]="password_again" placeholder="••••••••" />
+                        <input type="password" name="password_again" [(ngModel)]="password_again" #uPass2="ngModel" required placeholder="••••••••" />
+                        <small class="error-msg" *ngIf="password !== password_again && uPass2.touched">A jelszavak nem egyeznek!</small>
                     </div>
                 </div>
 
-                <button type="submit" class="submit-btn" [disabled]="!registrationForm.form.valid">
+                <button type="submit" class="submit-btn" [disabled]="!registrationForm.form.valid || password !== password_again">
                     FIÓK LÉTREHOZÁSA
                 </button>
                 

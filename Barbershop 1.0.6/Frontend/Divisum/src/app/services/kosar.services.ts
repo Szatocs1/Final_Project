@@ -4,10 +4,7 @@ import { Injectable, signal, computed } from '@angular/core';
   providedIn: 'root'
 })
 export class KosarService {
-  /* ==========================================================================
-      1. ÁLLAPOTKEZELÉS
-     ========================================================================== */
-  
+
   private items = signal<any[]>([]);
 
   cartCount = computed(() => {
@@ -17,10 +14,6 @@ export class KosarService {
   get cartItems() {
     return this.items();
   }
-
-  /* ==========================================================================
-      2. KOSÁR MŰVELETEK
-     ========================================================================== */
 
   addToCart(product: any) {
     const currentItems = this.items();

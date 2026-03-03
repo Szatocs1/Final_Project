@@ -169,7 +169,44 @@ font-weight: 700;
 }
 
 /* ==========================================================================
-    5. MOBIL NÉZET
+    5. HIBAÜZENETEK ÉS VALIDÁCIÓ
+========================================================================== */
+
+.error-msg {
+    color: #dc2626; 
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+    text-transform: none; 
+}
+
+.input-group input.ng-invalid.ng-touched {
+    border-color: #dc2626 !important;
+    background-color: #fffafb;
+}
+
+.alert-box {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.submit-btn:disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ==========================================================================
+    6. MOBIL NÉZET
 ========================================================================== */
 
 @media (max-width: 992px) {

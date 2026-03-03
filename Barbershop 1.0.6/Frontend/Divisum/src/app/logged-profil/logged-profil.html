@@ -109,20 +109,16 @@
   </div>
 </div>
 
-<div>
-  <button *ngIf="!confirmDelete" type="button" (click)="onDeleteInit()">
+<div class="delete-account-section">
+  <button *ngIf="!confirmDelete" type="button" class="init-delete-btn" (click)="onDeleteInit()">
     Fiók törlése
   </button>
 
   <div *ngIf="confirmDelete" class="confirm-box">
     <p>Biztosan törölni szeretnéd a fiókodat? Ez a folyamat nem visszavonható.</p>
-    
-    <button type="button" (click)="onDelete()" class="btn-danger">
-      Igen, törlöm
-    </button>
-    
-    <button type="button" (click)="confirmDelete = false">
-      Mégse
-    </button>
+    <div class="confirm-actions">
+      <button type="button" (click)="onDelete()" class="btn-danger">Igen, törlöm</button>
+      <button type="button" (click)="confirmDelete = false" class="btn-secondary">Mégse</button>
+    </div>
   </div>
 </div>

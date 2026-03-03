@@ -1,5 +1,5 @@
 /* ==========================================================================
-  1. HERO SZEKCIÓ (A TERMÉKEK OLDAL STÍLUSA ALAPJÁN)
+  1. HERO SZEKCIÓ
   ========================================================================== */
 
 .cart-hero {
@@ -57,7 +57,7 @@
 }
 
 /* ==========================================================================
-    3. KOSÁR ELEMEK LISTÁJA 
+    3. KOSÁR
     ========================================================================== */
 
 .cart-items-list {
@@ -217,7 +217,7 @@
 }
 
 /* ==========================================================================
-    5. ÖSSZEGZÉS OLDALSÁV
+    5. OLDALSÁV
     ========================================================================== */
 
 .summary-card {
@@ -346,7 +346,7 @@
 }
 
 /* ==========================================================================
-    6. ÜRES KOSÁR ÁLLAPOT
+    6. ÜRES KOSÁR
     ========================================================================== */
 
 .empty-basket-container {
@@ -450,4 +450,100 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
+}
+
+/* ==========================================================================
+    8. RESPONSIVITY (KIEGÉSZÍTÉS)
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .cart-layout {
+      grid-template-columns: 1fr; 
+  }
+
+  .cart-container {
+      margin-top: -30px;
+  }
+
+  .summary-card {
+      position: static; 
+      width: 100%;
+      box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-hero {
+      height: 250px;
+  }
+
+  .cart-hero h1 {
+      font-size: 2rem;
+  }
+
+  .cart-items-list {
+      padding: 20px;
+  }
+
+  .cart-header-labels {
+      display: none;
+  }
+
+  .cart-item {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      text-align: center;
+      padding: 20px 0;
+  }
+
+  .item-main {
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  .img-wrapper {
+      width: 100%;
+      max-width: 200px;
+      height: 150px;
+      margin: 0 auto;
+  }
+
+  .qty-control {
+      margin: 0 auto; 
+  }
+
+  .price-and-delete {
+      justify-content: center;
+      gap: 30px;
+  }
+
+  .form-row {
+      grid-template-columns: 1fr;
+  }
+
+  .browse-btn {
+      width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-hero h1 {
+      font-size: 1.6rem;
+  }
+
+  .summary-card {
+      padding: 20px;
+  }
+
+  .final-price {
+      font-size: 1.5rem;
+  }
+
+  .promo-input-group {
+      flex-direction: column;
+  }
+
+  .promo-input-group button {
+      padding: 12px;
+  }
 }

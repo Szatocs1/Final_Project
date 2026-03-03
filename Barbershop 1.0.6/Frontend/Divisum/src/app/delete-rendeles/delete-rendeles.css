@@ -1,153 +1,169 @@
-.delete-container {
+/* ==========================================================================
+  1. FŐ KONTÉNER ÉS ELRENDEZÉS
+  ========================================================================== */
+
+  .delete-container {
+  min-height: 100vh;
+  background-color: #f8f9fa; 
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
-  background-color: #050505;
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
+  padding: 40px 20px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .delete-card {
-  background: #111;
-  border: 1px solid #222;
-  padding: 40px;
-  border-radius: 16px;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
 }
 
-h1 { 
-  color: #fff; 
-  letter-spacing: 3px; 
-  margin-bottom: 5px; 
+/* ==========================================================================
+    2. CÍMSOR ÉS ELVÁLASZTÓ
+    ========================================================================== */
+
+.delete-card h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0a192f; 
+  letter-spacing: 3px;
+  margin-bottom: 20px;
   text-transform: uppercase;
 }
 
-.divider { 
-  height: 2px; 
-  background: linear-gradient(90deg, transparent, #d4af37, transparent); 
-  margin: 15px auto 25px; 
-  width: 60%; 
+.divider {
+  width: 60px;
+  height: 3px;
+  background: #c5b358; 
+  margin: 0 auto 30px;
 }
 
-.subtitle { 
-  color: #666; 
-  font-size: 0.95rem; 
-  margin-bottom: 30px; 
-}
+/* ==========================================================================
+    3. KERESÉS 
+    ========================================================================== */
 
-.search-section { 
-  display: flex; 
-  gap: 12px; 
-  margin-bottom: 30px; 
+.search-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .id-input {
   flex: 1;
-  background: #000;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 14px;
+  padding: 15px;
+  border: 1.5px solid #eee;
   border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .id-input:focus {
-  border-color: #d4af37;
+  border-color: #c5b358;
+  box-shadow: 0 0 10px rgba(197, 179, 88, 0.1);
 }
 
 .search-btn {
-  background: #d4af37;
-  color: #000;
+  background-color: #0a192f;
+  color: white;
   border: none;
   padding: 0 25px;
-  font-weight: 700;
   border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.search-btn:hover {
-  background: #f1c40f;
-  transform: scale(1.02);
+.search-btn:hover:not(:disabled) {
+  background-color: #112240;
+  transform: translateY(-2px);
 }
 
 .search-btn:disabled {
-  background: #444;
-  color: #888;
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
+/* ==========================================================================
+    4. RÉSZLETEK PANEL ÉS ADATOK
+    ========================================================================== */
+
 .details-panel {
-  background: #1a1a1a;
-  padding: 25px;
-  border-radius: 12px;
-  border-left: 4px solid #d4af37;
   text-align: left;
-  animation: fadeIn 0.4s ease forwards;
+  background: #fcfcfc;
+  border: 1px solid #f1f2f6;
+  border-radius: 10px;
+  padding: 25px;
+  margin-top: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #2a2a2a;
-  padding-bottom: 8px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f2f6;
 }
 
-.info-row span { color: #888; font-size: 0.9rem; }
-.info-row strong { color: #fff; font-weight: 500; }
+.info-row span {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.info-row strong {
+  color: #132435;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+    5. FIGYELMEZTETÉS ÉS TÖRLÉS GOMB
+    ========================================================================== */
 
 .warning-box {
-  background: rgba(231, 76, 60, 0.08);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #ff6b6b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff5f5;
+  color: #d63031;
   padding: 15px;
   border-radius: 8px;
   margin: 25px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
   font-size: 0.85rem;
+  font-weight: 600;
+  border-left: 4px solid #d63031;
 }
 
 .warning-box mat-icon {
   font-size: 20px;
-  width: 20px;
-  height: 20px;
 }
 
 .final-delete-btn {
   width: 100%;
-  background: #c0392b;
-  color: #fff;
+  background: linear-gradient(135deg, #d63031 0%, #a82323 100%);
+  color: white;
   border: none;
-  padding: 16px;
-  font-weight: 800;
-  font-size: 1rem;
+  padding: 18px;
   border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(214, 48, 49, 0.2);
 }
 
-.final-delete-btn:hover { 
-  background: #e74c3c; 
-  transform: translateY(-3px); 
-  box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
-}
-
-.final-delete-btn:active {
-  transform: translateY(-1px);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+.final-delete-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 10px 20px rgba(214, 48, 49, 0.3);
 }

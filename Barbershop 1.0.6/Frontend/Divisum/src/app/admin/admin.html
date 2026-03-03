@@ -42,40 +42,40 @@
             </div>
           </div>
 
-          <div class="user-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+          <div class="user-actions">
             <button class="action-btn edit-btn" (click)="onEditUser(user)">Módosítás</button>
             <button class="action-btn delete-btn" (click)="onDeleteUser(user.id)">Törlés</button>
           </div>
 
-          <div class="edit-panel" *ngIf="isEditing" style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid #d4af37;">
-            <h4 style="color: #d4af37; margin-bottom: 10px;">Adatok módosítása</h4>
+          <div class="edit-panel" *ngIf="isEditing">
+            <h4>Adatok módosítása</h4>
           
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
               <div>
-                <label style="font-size: 12px; color: #aaa;">Név</label>
-                <input type="text" [(ngModel)]="user.nev" style="width: 100%; background: #333; color: white; border: 1px solid #555; padding: 5px;">
+                <label>Név</label>
+                <input type="text" [(ngModel)]="user.nev">
               </div>
               <div>
-                <label style="font-size: 12px; color: #aaa;">Szerepkör</label>
-                <select [(ngModel)]="user.foglaltsag" style="width: 100%; background: #333; color: white; border: 1px solid #555; padding: 5px;">
+                <label>Szerepkör</label>
+                <select [(ngModel)]="user.foglaltsag">
                   <option value="Fogyasztó">Fogyasztó</option>
                   <option value="Borbély">Borbély</option>
                   <option value="Admin">Admin</option>
                 </select>
               </div>
               <div>
-                <label style="font-size: 12px; color: #aaa;">Email</label>
-                <input type="email" [(ngModel)]="user.email" style="width: 100%; background: #333; color: white; border: 1px solid #555; padding: 5px;">
+                <label>Email</label>
+                <input type="email" [(ngModel)]="user.email">
               </div>
               <div>
-                <label style="font-size: 12px; color: #aaa;">Telefon</label>
-                <input type="text" [(ngModel)]="user.telefonszam" style="width: 100%; background: #333; color: white; border: 1px solid #555; padding: 5px;">
+                <label>Telefon</label>
+                <input type="text" [(ngModel)]="user.telefonszam">
             </div>
           </div>
 
-          <div style="margin-top: 15px; display: flex; gap: 10px;">
-            <button (click)="saveUserChanges(user)" style="flex: 1; background: #d4af37; border: none; padding: 8px; cursor: pointer; font-weight: bold;">MENTÉS</button>
-            <button (click)="isEditing = false" style="flex: 1; background: #555; color: white; border: none; padding: 8px; cursor: pointer;">MÉGSE</button>
+          <div>
+            <button (click)="saveUserChanges(user)" class="save-action-btn">MENTÉS</button>
+            <button (click)="isEditing = false" class="cancel-action-btn">MÉGSE</button>
           </div>
         </div>
       </div>
@@ -123,25 +123,25 @@
       <div class="detail-item"><label>Tel</label><p>{{ foundByEmail.telefonszam || 'Nincs' }}</p></div>
     </div>
 
-    <div class="user-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+    <div class="user-actions">
       <button class="action-btn edit-btn" (click)="isEditing = !isEditing">
         {{ isEditing ? 'Bezárás' : 'Módosítás' }}
       </button>
       <button class="action-btn delete-btn" (click)="onDeleteUser(foundByEmail.id)">Törlés</button>
     </div>
 
-    <div class="edit-panel" *ngIf="isEditing" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid #d4af37;">
-  <h4 style="color: #d4af37; margin-bottom: 15px; border-bottom: 1px solid #555; padding-bottom: 5px;">Adatok módosítása</h4>
+    <div class="edit-panel" *ngIf="isEditing">
+  <h4>Adatok módosítása</h4>
   
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+  <div>
     <div>
-      <label style="font-size: 12px; color: #aaa;">Név</label>
-      <input type="text" [(ngModel)]="foundByEmail.nev" class="admin-edit-input" style="width: 100%; background: #333; color: white; padding: 8px; border: 1px solid #555;">
+      <label>Név</label>
+      <input type="text" [(ngModel)]="foundByEmail.nev" class="admin-edit-input">
     </div>
     
     <div>
-      <label style="font-size: 12px; color: #aaa;">Szerepkör</label>
-      <select [(ngModel)]="foundByEmail.foglaltsag" class="admin-edit-input" style="width: 100%; background: #333; color: white; padding: 8px; border: 1px solid #555;">
+      <label>Szerepkör</label>
+      <select [(ngModel)]="foundByEmail.foglaltsag" class="admin-edit-input">
         <option value="Fogyasztó">Fogyasztó</option>
         <option value="Borbély">Borbély</option>
         <option value="Admin">Admin</option>
@@ -149,24 +149,24 @@
     </div>
 
     <div>
-      <label style="font-size: 12px; color: #aaa;">Email</label>
-      <input type="email" [(ngModel)]="foundByEmail.email" class="admin-edit-input" style="width: 100%; background: #333; color: white; padding: 8px; border: 1px solid #555;">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="foundByEmail.email" class="admin-edit-input">
     </div>
 
     <div>
-      <label style="font-size: 12px; color: #aaa;">Telefonszám</label>
-      <input type="text" [(ngModel)]="foundByEmail.telefonszam" class="admin-edit-input" style="width: 100%; background: #333; color: white; padding: 8px; border: 1px solid #555;">
+      <label>Telefonszám</label>
+      <input type="text" [(ngModel)]="foundByEmail.telefonszam" class="admin-edit-input">
     </div>
 
-    <div style="grid-column: span 2;">
-      <label style="font-size: 12px; color: #aaa;">Új jelszó (Hagyd üresen, ha nem változik)</label>
-      <input type="password" [(ngModel)]="foundByEmail.password" placeholder="********" class="admin-edit-input" style="width: 100%; background: #333; color: white; padding: 8px; border: 1px solid #555;">
+    <div>
+      <label>Új jelszó (Hagyd üresen, ha nem változik)</label>
+      <input type="password" [(ngModel)]="foundByEmail.password" placeholder="********" class="admin-edit-input">
     </div>
   </div>
 
-  <div style="margin-top: 20px; display: flex; gap: 10px;">
-    <button (click)="saveUserChanges(foundByEmail)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; font-weight: bold; color: black;">MENTÉS</button>
-    <button (click)="isEditing = false" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+  <div>
+    <button (click)="saveUserChanges(foundByEmail)" class="save-action-btn">MENTÉS</button>
+    <button (click)="isEditing = false" class="cancel-action-btn">MÉGSE</button>
   </div>
 </div>
   </div>
@@ -196,28 +196,28 @@
         <div class="input-group">
           <label>Felhasználó neve</label>
           <input type="text" 
-                 [(ngModel)]="username" 
-                 name="username" 
-                 placeholder="Teljes név..." 
-                 class="admin-input">
+                [(ngModel)]="username" 
+                name="username" 
+                placeholder="Teljes név..." 
+                class="admin-input">
         </div>
 
         <div class="input-row">
           <div class="input-group">
             <label>Email cím</label>
             <input type="email" 
-                   [(ngModel)]="email" 
-                   name="email" 
-                   placeholder="pelda@email.com" 
-                   class="admin-input">
+                  [(ngModel)]="email" 
+                  name="email" 
+                  placeholder="pelda@email.com" 
+                  class="admin-input">
           </div>
           <div class="input-group">
             <label>Telefonszám</label>
             <input type="tel" 
-                   [(ngModel)]="phone_number" 
-                   name="phone_number" 
-                   placeholder="+36 30 123 4567" 
-                   class="admin-input">
+                  [(ngModel)]="phone_number" 
+                  name="phone_number" 
+                  placeholder="+36 30 123 4567" 
+                  class="admin-input">
           </div>
         </div>
 
@@ -225,18 +225,18 @@
           <div class="input-group">
             <label>Jelszó</label>
             <input type="password" 
-                   [(ngModel)]="password" 
-                   name="password" 
-                   placeholder="••••••••" 
-                   class="admin-input">
+                  [(ngModel)]="password" 
+                  name="password" 
+                  placeholder="••••••••" 
+                  class="admin-input">
           </div>
           <div class="input-group">
             <label>Jelszó újra</label>
             <input type="password" 
-                   [(ngModel)]="password_again" 
-                   name="password_again" 
-                   placeholder="••••••••" 
-                   class="admin-input">
+                  [(ngModel)]="password_again" 
+                  name="password_again" 
+                  placeholder="••••••••" 
+                  class="admin-input">
           </div>
         </div>
 
@@ -344,9 +344,9 @@
 
       <div class="search-box">
         <input type="text" 
-               [(ngModel)]="searchProductByName" 
-               placeholder="Termék pontos neve..." 
-               class="search-input">
+              [(ngModel)]="searchProductByName" 
+              placeholder="Termék pontos neve..." 
+              class="search-input">
         <button class="submit-btn search-btn" (click)="getProductByName()">
           KERESÉS
         </button>
@@ -375,28 +375,28 @@
             </div>
           </div>
 
-          <div class="product-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+          <div class="product-actions">
             <button class="action-btn edit-btn" (click)="isProductEditing = !isProductEditing">
               {{ isProductEditing ? 'Bezárás' : 'Módosítás' }}
             </button>
             <button class="action-btn delete-btn" (click)="onDeleteProduct(foundProduct.id)">Törlés</button>
           </div>
 
-          <div class="edit-panel" *ngIf="isProductEditing" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid #d4af37;">
-            <h4 style="color: #d4af37; margin-bottom: 15px;">Termék adatok módosítása</h4>
+          <div class="edit-panel" *ngIf="isProductEditing">
+            <h4>Termék adatok módosítása</h4>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div>
               <div>
                 <label>Név</label>
-                <input type="text" [(ngModel)]="foundProduct.termekNev" class="admin-edit-input" style="width: 100%;">
+                <input type="text" [(ngModel)]="foundProduct.termekNev" class="admin-edit-input">
               </div>
               <div>
                 <label>Ár (Ft)</label>
-                <input type="number" [(ngModel)]="foundProduct.ar" class="admin-edit-input" style="width: 100%;">
+                <input type="number" [(ngModel)]="foundProduct.ar" class="admin-edit-input">
               </div>
               <div>
                 <label>Categoría</label>
-                <select [(ngModel)]="foundProduct.kategoria" class="admin-edit-input" style="width: 100%;">
+                <select [(ngModel)]="foundProduct.kategoria" class="admin-edit-input">
                   <option [value]="'Hajápolás'">Hajápolás</option>
                   <option [value]="'Ruházat'">Ruházat</option>
                   <option [value]="'Eszköz'">Eszköz</option>
@@ -404,17 +404,17 @@
               </div>
               <div>
                 <label>Új kép (opcionális)</label>
-                <input type="file" (change)="onFileSelected($event)" style="width: 100%; color: white;">
+                <input type="file" (change)="onFileSelected($event)" class="file-input">
               </div>
-              <div style="grid-column: span 2;">
+              <div>
                 <label>Leírás</label>
-                <textarea [(ngModel)]="foundProduct.megjegyzes" class="admin-edit-input" style="width: 100%; height: 80px;"></textarea>
+                <textarea [(ngModel)]="foundProduct.megjegyzes" class="admin-edit-input"></textarea>
               </div>
             </div>
 
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-              <button (click)="saveProductChanges(foundProduct)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-              <button (click)="isProductEditing = false" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+            <div>
+              <button (click)="saveProductChanges(foundProduct)" class="save-action-btn">MENTÉS</button>
+              <button (click)="isProductEditing = false" class="cancel-action-btn">MÉGSE</button>
             </div>
           </div>
         </div>
@@ -452,16 +452,16 @@
           LEKÉRÉS
         </button>
       </div>
-
+      
       <div class="table-container" *ngIf="categoryProducts && categoryProducts.length > 0">
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Kép</th>
-              <th>Terméknév</th>
-              <th>Ár</th>
-              <th>Categoría</th>
-              <th>Műveletek</th>
+              <th style="width: 15%;">Kép</th>
+              <th style="width: 25%;">Terméknév</th>
+              <th style="width: 15%;">Ár</th>
+              <th style="width: 20%;">Kategória</th>
+              <th style="width: 25%;">Műveletek</th>
             </tr>
           </thead>
           <tbody>
@@ -470,41 +470,42 @@
                 <td>
                   <div class="product-mini-wrapper">
                     <img *ngIf="p.kepNeve" [src]="p.kepNeve" alt="termék" class="mini-product-img">
-                    <span *ngIf="!p.kepNeve" style="color: #666; font-size: 0.8rem;">Nincs kép</span>
+                    <span *ngIf="!p.kepNeve" class="info-text">Nincs kép</span>
                   </div>
                 </td>
                 <td class="bold-text">{{ p.nev }}</td>
                 <td class="price-text">{{ p.ar | number }} Ft</td>
                 <td><span class="role-badge">{{ p.kategoria }}</span></td>
                 <td>
-                  <button class="action-btn edit-btn" (click)="editingProductId = (editingProductId === p.id ? null : p.id)">
-                    {{ editingProductId === p.id ? 'Bezárás' : 'Módosítás' }}
-                  </button>
-                  <button class="action-btn delete-btn" (click)="onDeleteProduct(p.id)">Törlés</button>
+                  <div class="confirm-actions">
+                    <button class="action-btn edit-btn" (click)="editingProductId = (editingProductId === p.id ? null : p.id)">
+                      {{ editingProductId === p.id ? 'Bezárás' : 'Módosítás' }}
+                    </button>
+                    <button class="action-btn delete-btn" (click)="onDeleteProduct(p.id)">Törlés</button>
+                  </div>
                 </td>
               </tr>
-              
               <tr *ngIf="editingProductId === p.id">
-                <td colspan="5" style="background: rgba(0,0,0,0.3); padding: 20px;">
-                  <div class="edit-panel" style="border: 1px solid #d4af37; padding: 15px; border-radius: 8px;">
-                    <h4 style="color: #d4af37; margin-bottom: 15px;">Termék módosítása ({{p.nev}})</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <td colspan="5">
+                  <div class="edit-panel">
+                    <h4>Termék módosítása</h4>
+                    <div class="edit-grid">
                       <div>
-                        <label>Név</label>
-                        <input type="text" [(ngModel)]="p.name" class="admin-edit-input" style="width: 100%;">
+                        <label class="edit-label">Név</label>
+                        <input type="text" [(ngModel)]="p.name" class="admin-edit-input">
                       </div>
                       <div>
-                        <label>Ár (Ft)</label>
-                        <input type="number" [(ngModel)]="p.price" class="admin-edit-input" style="width: 100%;">
+                        <label class="edit-label">Ár (Ft)</label>
+                        <input type="number" [(ngModel)]="p.price" class="admin-edit-input">
                       </div>
-                      <div style="grid-column: span 2;">
-                        <label>Leírás</label>
-                        <textarea [(ngModel)]="p.comment" class="admin-edit-input" style="width: 100%; height: 60px;"></textarea>
+                      <div class="full-width-column">
+                        <label class="edit-label">Leírás</label>
+                        <textarea [(ngModel)]="p.comment" class="admin-edit-input"></textarea>
                       </div>
                     </div>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                      <button (click)="saveProductChanges(p)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-                      <button (click)="editingProductId = null" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+                    <div class="edit-panel-actions">
+                      <button (click)="saveProductChanges(p)" class="save-action-btn">MENTÉS</button>
+                      <button (click)="editingProductId = null" class="cancel-action-btn">MÉGSE</button>
                     </div>
                   </div>
                 </td>
@@ -572,21 +573,21 @@
               </tr>
               
               <tr *ngIf="editingOrderId === r.id">
-                <td colspan="6" style="background: rgba(0,0,0,0.3); padding: 20px;">
-                  <div class="edit-panel" style="border: 1px solid #d4af37; padding: 15px; border-radius: 8px;">
-                    <h4 style="color: #d4af37; margin-bottom: 15px;">Rendelés módosítása (#{{r.id}})</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <td colspan="6">
+                  <div class="edit-panel">
+                    <h4>Rendelés módosítása (#{{r.id}})</h4>
+                    <div>
                       <input type="text" [(ngModel)]="r.vasarloNeve" placeholder="Vásárló neve" class="admin-edit-input">
                       <input type="email" [(ngModel)]="r.vasarloEmail" placeholder="Email" class="admin-edit-input">
                       <input type="text" [(ngModel)]="r.telefonszam" placeholder="Telefon" class="admin-edit-input">
                       <input type="number" [(ngModel)]="r.ar" placeholder="Végösszeg (Ft)" class="admin-edit-input">
                       <input type="text" [(ngModel)]="r.iranyitoszam" placeholder="Irányítószám" class="admin-edit-input">
                       <input type="text" [(ngModel)]="r.telepules" placeholder="Település" class="admin-edit-input">
-                      <input type="text" [(ngModel)]="r.szallitasiCim" placeholder="Szállítási cím" class="admin-edit-input" style="grid-column: span 2;">
+                      <input type="text" [(ngModel)]="r.szallitasiCim" placeholder="Szállítási cím" class="admin-edit-input">
                     </div>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                      <button (click)="onEditOrder(r)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-                      <button (click)="editingOrderId = null" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+                    <div>
+                      <button (click)="onEditOrder(r)" class="save-action-btn">MENTÉS</button>
+                      <button (click)="editingOrderId = null" class="cancel-action-btn">MÉGSE</button>
                     </div>
                   </div>
                 </td>
@@ -653,42 +654,42 @@
                 </td>
               </tr>
               <tr *ngIf="editingOrderId === r.id">
-                <td colspan="6" style="background: rgba(0,0,0,0.3); padding: 20px;">
-                  <div class="edit-panel" style="border: 1px solid #d4af37; padding: 15px; border-radius: 8px;">
-                    <h4 style="color: #d4af37; margin-bottom: 15px;">Rendelés módosítása (#{{r.id}})</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <td colspan="6">
+                  <div class="edit-panel">
+                    <h4>Rendelés módosítása (#{{r.id}})</h4>
+                    <div>
                       <div>
                         <label>Vásárló neve</label>
-                        <input type="text" [(ngModel)]="r.vasarloNeve" class="admin-edit-input" style="width: 100%;">
+                        <input type="text" [(ngModel)]="r.vasarloNeve" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Email</label>
-                        <input type="email" [(ngModel)]="r.vasarloEmail" class="admin-edit-input" style="width: 100%;">
+                        <input type="email" [(ngModel)]="r.vasarloEmail" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Telefon</label>
-                        <input type="text" [(ngModel)]="r.telefonszam" class="admin-edit-input" style="width: 100%;">
+                        <input type="text" [(ngModel)]="r.telefonszam" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Végösszeg (Ft)</label>
-                        <input type="number" [(ngModel)]="r.ar" class="admin-edit-input" style="width: 100%;">
+                        <input type="number" [(ngModel)]="r.ar" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Irányítószám</label>
-                        <input type="text" [(ngModel)]="r.iranyitoszam" class="admin-edit-input" style="width: 100%;">
+                        <input type="text" [(ngModel)]="r.iranyitoszam" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Település</label>
-                        <input type="text" [(ngModel)]="r.telepules" class="admin-edit-input" style="width: 100%;">
+                        <input type="text" [(ngModel)]="r.telepules" class="admin-edit-input">
                       </div>
-                      <div style="grid-column: span 2;">
+                      <div>
                         <label>Szállítási cím</label>
-                        <input type="text" [(ngModel)]="r.szallitasiCim" class="admin-edit-input" style="width: 100%;">
+                        <input type="text" [(ngModel)]="r.szallitasiCim" class="admin-edit-input">
                       </div>
                     </div>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                      <button (click)="onEditOrder(r)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-                      <button (click)="editingOrderId = null" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+                    <div>
+                      <button (click)="onEditOrder(r)" class="save-action-btn">MENTÉS</button>
+                      <button (click)="editingOrderId = null" class="cancel-action-btn">MÉGSE</button>
                     </div>
                   </div>
                 </td>
@@ -759,34 +760,34 @@
               </tr>
               
               <tr *ngIf="editingFoglalasId === f.id">
-                <td colspan="5" style="background: rgba(0,0,0,0.3); padding: 20px;">
-                  <div class="edit-panel" style="border: 1px solid #d4af37; padding: 15px; border-radius: 8px;">
-                    <h4 style="color: #d4af37; margin-bottom: 15px;">Foglalás módosítása ({{f.vasarloNeve}})</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <td colspan="5">
+                  <div class="edit-panel">
+                    <h4>Foglalás módosítása ({{f.vasarloNeve}})</h4>
+                    <div>
                       <div>
                         <label>Borbély</label>
-                        <select [(ngModel)]="f.borbely" class="admin-edit-input" style="width: 100%;">
+                        <select [(ngModel)]="f.borbely" class="admin-edit-input">
                           <option *ngFor="let barber of barberList" [value]="barber">{{ barber }}</option>
                         </select>
                       </div>
                       <div>
                         <label>Szolgáltatás</label>
-                        <select [(ngModel)]="f.szolgaltatas" class="admin-edit-input" style="width: 100%;">
+                        <select [(ngModel)]="f.szolgaltatas" class="admin-edit-input">
                           <option *ngFor="let service of serviceList" [value]="service">{{ service }}</option>
                         </select>
                       </div>
                       <div>
                         <label>Ár (Ft)</label>
-                        <input type="number" [(ngModel)]="f.ar" class="admin-edit-input" style="width: 100%;">
+                        <input type="number" [(ngModel)]="f.ar" class="admin-edit-input">
                       </div>
-                      <div style="grid-column: span 2;">
+                      <div>
                         <label>Időpont</label>
-                        <input type="datetime-local" [(ngModel)]="f.idopont" class="admin-edit-input" style="width: 100%;">
+                        <input type="datetime-local" [(ngModel)]="f.idopont" class="admin-edit-input">
                       </div>
                     </div>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                      <button (click)="onEditFoglalas(f)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-                      <button (click)="editingFoglalasId = null" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+                    <div>
+                      <button (click)="onEditFoglalas(f)" class="save-action-btn">MENTÉS</button>
+                      <button (click)="editingFoglalasId = null" class="cancel-action-btn">MÉGSE</button>
                     </div>
                   </div>
                 </td>
@@ -857,34 +858,34 @@
               </tr>
               
               <tr *ngIf="editingFoglalasId === f.id">
-                <td colspan="5" style="background: rgba(0,0,0,0.3); padding: 20px;">
-                  <div class="edit-panel" style="border: 1px solid #d4af37; padding: 15px; border-radius: 8px;">
-                    <h4 style="color: #d4af37; margin-bottom: 15px;">Foglalás módosítása (#{{f.id}})</h4>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <td colspan="5">
+                  <div class="edit-panel">
+                    <h4>Foglalás módosítása (#{{f.id}})</h4>
+                    <div>
                       <div>
                         <label>Borbély</label>
-                        <select [(ngModel)]="f.borbely" class="admin-edit-input" style="width: 100%;">
+                        <select [(ngModel)]="f.borbely" class="admin-edit-input">
                           <option *ngFor="let barber of barberList" [value]="barber">{{ barber }}</option>
                         </select>
                       </div>
                       <div>
                         <label>Szolgáltatás</label>
-                        <select [(ngModel)]="f.szolgaltatas" class="admin-edit-input" style="width: 100%;">
+                        <select [(ngModel)]="f.szolgaltatas" class="admin-edit-input">
                           <option *ngFor="let service of serviceList" [value]="service">{{ service }}</option>
                         </select>
                       </div>
                       <div>
                         <label>Ár (Ft)</label>
-                        <input type="number" [(ngModel)]="f.ar" class="admin-edit-input" style="width: 100%;">
+                        <input type="number" [(ngModel)]="f.ar" class="admin-edit-input">
                       </div>
                       <div>
                         <label>Időpont</label>
-                        <input type="datetime-local" [(ngModel)]="f.idopont" class="admin-edit-input" style="width: 100%;">
+                        <input type="datetime-local" [(ngModel)]="f.idopont" class="admin-edit-input">
                       </div>
                     </div>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                      <button (click)="onEditFoglalas(f)" style="flex: 2; background: #d4af37; border: none; padding: 10px; cursor: pointer; color: black; font-weight: bold;">MENTÉS</button>
-                      <button (click)="editingFoglalasId = null" style="flex: 1; background: #555; color: white; border: none; padding: 10px; cursor: pointer;">MÉGSE</button>
+                    <div>
+                      <button (click)="onEditFoglalas(f)" class="save-action-btn">MENTÉS</button>
+                      <button (click)="editingFoglalasId = null" class="cancel-action-btn">MÉGSE</button>
                     </div>
                   </div>
                 </td>
