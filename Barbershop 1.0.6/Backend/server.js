@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 
+//cors-hoz engedélyezett origin-ek listája és cors beállítások
 const whitelist = [
   "http://localhost:4200",
   "https://staging.yourbarbershop.com",
@@ -32,12 +33,13 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+//Multer beállítása fájl feltöltéshez és statikus fájlok kiszolgálásához
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use('/uploads/termekek', express.static(path.join(__dirname, 'uploads/termekek')));
 app.use('/uploads/pfpicture', express.static(path.join(__dirname, 'uploads/pfpicture')));
 
-//Táblák generálása és meghívása
+//Táblák meghívása
 const userModel = require("./src/models/userModel")(db.sequelize);
 const foglalasModel = require("./src/models/foglalasModel")(db.sequelize);
 const rendelesekModel = require("./src/models/rendelesekModel")(db.sequelize);
@@ -56,6 +58,7 @@ app.use('/api/termek', termekRoutes);
 app.use('/api/foglalas', foglalasRoutes);
 app.use('/api/rendeles', rendelesekRoutes);
 
+//Adatbázis szinkronizálásának meghívása, seederekben tartott adatok feltöltése és szerver indítása
 db.syncDatabase().then(async ()=>{
     console.log("Adatbázis szinkronizálva!")
     await adminSeeder();

@@ -6,46 +6,42 @@
   </div>
 
   <div class="naptar-content">
-    <div class="naptar-info">
-      <h2>Mai foglalásaid</h2>
-      <p class="info-text">Itt láthatod a rád foglalt időpontokat</p>
-    </div>
+    <h2>Mai foglalásaid</h2>
+    <table class="naptar-table">
+      <thead>
+        <tr>
+          <th>Időpont</th>
+          <th>Vásárló</th>
+          <th>Szolgáltatás</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of todayBookings; trackBy: trackById">
+          <td>{{ f.idopont | date:'HH:mm' }}</td>
+          <td>{{ f.vasarloNeve }}</td>
+          <td>{{ f.szolgaltatas }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    <div *ngIf="isLoading" class="loading">
-      <p>Betöltés...</p>
+<div class="calendar-section">
+  <h3>Foglalási naptár</h3>
+  <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateSelected()"></mat-calendar>
+  
+  <div class="daily-bookings" *ngIf="selectedDate">
+    <h4>Foglalások ekkor: {{ selectedDate | date:'yyyy.MM.dd.' }}</h4>
+    <div *ngFor="let b of dailyBookings" class="booking-card" (click)="showBookingDetails(b)">
+      {{ b.idopont | date:'HH:mm' }} - {{ b.vasarloNeve }}
     </div>
+  </div>
 
-    <div *ngIf="!isLoading && foglalasok.length === 0" class="no-foglalas">
-      <p>Nincs foglalásod!</p>
-    </div>
-
-    <div class="foglalas-list" *ngIf="!isLoading && foglalasok.length > 0">
-      <table class="naptar-table">
-        <thead>
-          <tr>
-            <th>Időpont</th>
-            <th>Vásárló</th>
-            <th>Telefon</th>
-            <th>Szolgáltatás</th>
-            <th>Ár</th>
-            <th>Művelet</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let f of foglalasok">
-            <td>{{ f.idopont | date:'yyyy.MM.dd. HH:mm' }}</td>
-            <td>{{ f.vasarloNeve }}</td>
-            <td>{{ f.vasarloTelefonszam || 'Nincs' }}</td>
-            <td>{{ f.szolgaltatas }}</td>
-            <td>{{ f.ar | number }} Ft</td>
-            <td>
-              <button class="action-btn complete-btn" (click)="markCompleted(f.id)">
-                Elkészült
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="details-panel" *ngIf="selectedBooking">
+    <h3>Foglalás adatai</h3>
+    <p><strong>Név:</strong> {{ selectedBooking.vasarloNeve }}</p>
+    <p><strong>Szolgáltatás:</strong> {{ selectedBooking.szolgaltatas }}</p>
+    <p><strong>Telefon:</strong> {{ selectedBooking.vasarloTelefonszam }}</p>
+    <button (click)="selectedBooking = null" class="close-btn">Bezárás</button>
   </div>
 </div>

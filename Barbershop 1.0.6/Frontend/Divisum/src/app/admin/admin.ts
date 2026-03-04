@@ -155,7 +155,7 @@ product = {
       password: this.password,
       password_again: this.password_again,
       phone_number: this.phone_number,
-      role: 'Fogyasztó'
+      role: this.role,
     }
 
     const token = localStorage.getItem('token');
@@ -168,7 +168,7 @@ product = {
           localStorage.setItem('token', token);
           window.location.href = '/logged-profil'
         }
-        alert("Sikeresponseen regisztráltál");
+        alert("Sikeres regisztráltálás!");
       },
       error: (error) => {
         console.error("Hiba a regisztrálás közben: ", error);

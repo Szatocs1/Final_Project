@@ -103,10 +103,23 @@ route.get(`/profile`, authMiddleware, async (req, res) => {
 route.put("/modifyUser", uploadPfp.single('profileImage'), authMiddleware, async (req, res) => {
     try{
       const userId = req.user.id;
-      const { nev, telefonszam, currentPassword, newPassword } = req.body;
+      const { nev, telefonszam, currentPassword, newPassword, confirmPassword } = req.body;
       const file = req.file;
 
-      const updateUser = await modifyUser(userId, nev, null, newPassword, telefonszam, null, file);
+      if(newPassword !== confirmPassword) return res.status(400).json({ message: "Nem egyeznek a jelszavak!" });
+
+      if(newPassword.length < 6) return res.status(400).json({ message: "A jelszónak legalább 6 karakter hosszúnak kell lennie!" });
+
+      const user = await findUserById(userId);
+      const ok = await bcrypt.compare(currentPassword, user.jelszo);
+  
+      if(!ok){
+        return res.status(401).json({error : 'Hibás jelszó!'});
+      }
+
+      const newPasswordHash = await bcrypt.hash(newPassword, 12);
+
+      const updateUser = await modifyUser(userId, nev, null, newPasswordHash, telefonszam, null, file);
 
       return res.status(200).json({ message: "Sikeresen módosítottuk a profilodat!", updateUser})
     }catch(error){

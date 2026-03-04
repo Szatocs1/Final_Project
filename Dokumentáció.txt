@@ -1,1 +1,0 @@
-Szeptember 2.: Megbeszéltük a projektet, mit szeretnénk csinálni, hogyan szeretnénk csinálni. Írtam egy adatbázis tervet, amelyet még biztosan javítani kell majd. Ki osztottuk a feladatokat, adatbázist, illetve a backenden fogok dolgozni. Megcsináltuk a githubot, felvettük a szükséges embereket.

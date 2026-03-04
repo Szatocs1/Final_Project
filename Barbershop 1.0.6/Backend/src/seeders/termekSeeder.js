@@ -4,7 +4,7 @@ const Termek = require("../models/termekModel.js")(sequelize);
 async function termekSeeder() {
     const termekek = [
         { id: 2, termekNev: 'Signature Póló, Fekete', kategoria: 'Ruházat', ar: 12990, kepNeve: 'uploads/termekek/Polo_Fekete_E.png', megjegyzes: 'Prémium pamut póló, kényelmes viselet a mindennapokra.'},
-        { id: 3, termekNev: 'DIVISUM PréMIUM Sampon', kategoria: 'Hajápolás', ar: 9990, kepNeve: 'uploads/termekek/Sampon.png', megjegyzes: 'Mélytisztító formula, amely felfrissíti a fejbőrt és fényessé teszi a hajat.' },
+        { id: 3, termekNev: 'DIVISUM Prémium Sampon', kategoria: 'Hajápolás', ar: 9990, kepNeve: 'uploads/termekek/Sampon.png', megjegyzes: 'Mélytisztító formula, amely felfrissíti a fejbőrt és fényessé teszi a hajat.' },
         { id: 4, termekNev: 'Professzionális Hajvágó Olló', kategoria: 'Eszközök', ar: 34990, kepNeve: 'uploads/termekek/Ollo.png', megjegyzes: 'Japán acélból készült, precíziós olló professzionális borbélyoknak.' },
         { id: 5, termekNev: 'Professzionális Leválasztó Fésű', kategoria: 'Eszközök', ar: 7990, kepNeve: 'uploads/termekek/Fesu.png', megjegyzes: 'Hőálló, antisztatikus fésű a tökéletes választékokért.' },
         { id: 6, termekNev: 'DIVISUM Prémium Kondicionáló', kategoria: 'Hajápolás', ar: 9990, kepNeve: 'uploads/termekek/Kondicionalo.png', megjegyzes: 'Hidratáló kondicionáló, amely puhává és könnyen kezelhetővé teszi a hajat.' },

@@ -8,7 +8,7 @@ npm init -y
 3) Függőségek
 npm i bcrypt dotenv express express-session jsonwebtoken mariadb nodemon sequelize multer nodemailer
 
- 4) (opcionális) fejlesztői eszköz
+4) (opcionális) fejlesztői eszköz
 npm i -D nodemon
 
 5) Könyvtárak
@@ -20,35 +20,53 @@ mkdir src\contorllers
 mkdir src\models
 mkdir src\routes
 
- 6) Fájlok létrehozása 
+
+6) Fájlok létrehozása
 notepad .env
-notepad .gtiignore
+notepad .env.example
+notepad .gitignore
 notepad package.json
 notepad server.js
-notepad public\index.html
-notepad public\login.html
-notepad public\register.html
-notepad public\profile.html
-notepad public\style.css
 notepad public\utils.js
 notepad config\db.js
-notepad src\contorllers\adminController.js
-notepad src\contorllers\foglalasController.js
-notepad src\contorllers\kepekController.js
-notepad src\contorllers\rendelesekController.js
-notepad src\contorllers\termekController.js
-notepad src\contorllers\userController.js
+notepad config\mail.js
+
+# Src: controllers
+notepad src\controllers\adminController.js
+notepad src\controllers\foglalasController.js
+notepad src\controllers\rendelesekController.js
+notepad src\controllers\termekController.js
+notepad src\controllers\userController.js
+
+# Src: middlewares
+notepad src\middlewares\authMiddleware.js
+notepad src\middlewares\uploads.js
+
+# Src: models
 notepad src\models\foglalasModel.js
-notepad src\models\kepekModel.js
+notepad src\models\relations.js
 notepad src\models\rendelesekModel.js
+notepad src\models\rendelesTermekekModel.js
 notepad src\models\termekModel.js
 notepad src\models\userModel.js
-notepad src\routes\adminRoute.js
+
+# Src: routes
 notepad src\routes\foglalasRoute.js
-notepad src\routes\kepekRoute.js
 notepad src\routes\rendelesekRoute.js
 notepad src\routes\termekRoute.js
+notepad src\routes\uploadsRoute.js
 notepad src\routes\userRoute.js
+
+# Seeders és utils
+notepad src\seeders\adminSeeder.js
+notepad src\seeders\termekSeeder.js
+notepad src\utils\jwtoken.js
+
+# Uploads könyvtárak (készítsd el a mappát, majd tölts fel fájlokat)
+mkdir uploads
+mkdir uploads\pfpicture
+mkdir uploads\termekek
+
 
 
 7) nodemon-nal kényelmes:

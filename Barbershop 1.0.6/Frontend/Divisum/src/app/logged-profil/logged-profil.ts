@@ -17,7 +17,7 @@ export class LoggedProfil implements OnInit {
   isEditModalOpen = false;
 
   editData: any = {};
-  passwordData = { currentPassword: '', newPassword: '', newPasswordAgain: '' };
+  passwordData = { currentPassword: '', newPassword: '', confirmPassword: '' };
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
 
@@ -46,7 +46,7 @@ export class LoggedProfil implements OnInit {
 
   openEditModal() {
     this.editData = { ...this.user };
-    this.passwordData = { currentPassword: '', newPassword: '', newPasswordAgain: '' };
+    this.passwordData = { currentPassword: '', newPassword: '', confirmPassword: '' };
     this.imagePreview = null;
     this.selectedFile = null;
     this.isEditModalOpen = true;
@@ -73,7 +73,7 @@ export class LoggedProfil implements OnInit {
     if (this.passwordData.newPassword) {
       formData.append('currentPassword', this.passwordData.currentPassword);
       formData.append('newPassword', this.passwordData.newPassword);
-      formData.append('newPasswordAgain', this.passwordData.newPasswordAgain)
+      formData.append('confirmPassword', this.passwordData.confirmPassword);
     }
 
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
