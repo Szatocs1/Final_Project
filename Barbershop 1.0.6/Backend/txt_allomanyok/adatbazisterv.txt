@@ -1,38 +1,68 @@
-1.users tábla:
-	(A regisztrációnál a weblapon legyen megadva a jelszónak, meg minden olyan adatnak felétel, 	amely olyan pl.: legyen legalább 8 karakter hoszzú) 
-	-ID INT AUTO-INCREMENT 255
-	-Nev VARCHAR 75
-	-Jelszó VARCHAR 255 //(a fiókhoz, a weblaphoz írtam: jelszó újra regisztrálásnál)
-	-Email VARCHAR 255
-	-Foglaltsag (Fogyasztó, Borbély)
+ADATBÁZIS TERVEZÉS - Aktuális Sequelize modellek (2024)
 
-2.rendelesek tábla:
-	-Id INT AUTO-INCREMENT 255
-	-vasarloNeve VARCHAR 75
-	-telefonszam INT 11
-	-iranyitoszam INT 4
-	-telepules VARCHAR 255
-	-szallitasiCim VARCHAR 255
-	-rendelesIdeje DATETTIME
-	-termekekNeve VARCHAR 255 //(A termékek neve lesz megjelenítve, ez a weboldalra vonatkozik, ha tetszik: A termékek ára külön külön van, majd a végén összesítve írja ki, fölötte a kívánt termékekkel és azok árával)
-	-ar INT 255
+Az adatbázis Sequelize ORM-mel van implementálva (PostgreSQL/MySQL kompatibilis). Az alábbiakban részletesen leírjuk az összes táblát, mezőiket típusaikkal, megkötéseikkel, valamint a kapcsolatokat.
 
-3.Termékek tábla: 
-	-Id INT AUTO-INCREMENT 255
-	-kepNeve VARCHAR 255
-	-ar INT 255
-	-megjegyzes VARCHAR 255
-	(still in developmeant)
+## 1. users tábla (Felhasználók - Fogyasztó/Borbély/Admin):
+- id: INTEGER(255), PRIMARY KEY, AUTO_INCREMENT
+- nev: STRING(75), NOT NULL
+- jelszo: STRING(255), NOT NULL (bcrypt hash)
+- email: STRING(255), NOT NULL, UNIQUE
+- telefonszam: STRING(12), NULLABLE
+- pfPicture: STRING(255), NULLABLE (profilképek elérési útja)
+- foglaltsag: ENUM('Fogyasztó', 'Borbély', 'Admin'), NOT NULL, DEFAULT 'Fogyasztó'
 
-4.Foglalas:
-	-vasarloEmail VARCHAR 255
-	-vasarloNeve VARCHAR 255
-	-idopont DATETIME
-	-borbely VARCHAR 75
-	-szolgalatas VARCHAR 255
-	-ar INT 10
+## 2. termekek tábla (Termékek):
+- id: INTEGER(255), PRIMARY KEY, AUTO_INCREMENT
+- termekNev: STRING(255), NOT NULL
+- kepNeve: STRING(255), NOT NULL (kép fájlnév)
+- kategoria: STRING(255), NOT NULL
+- ar: INTEGER(255), NOT NULL (Ft)
+- megjegyzes: STRING(255), NULLABLE
 
+## 3. rendelesek tábla (Rendelések):
+- id: INTEGER(255), PRIMARY KEY, AUTO_INCREMENT
+- vasarloNeve: STRING(75), NOT NULL
+- vasarloEmail: STRING(75), NOT NULL
+- telefonszam: STRING(12), NULLABLE
+- iranyitoszam: STRING(4), NOT NULL
+- telepules: STRING(255), NOT NULL
+- szallitasiCim: STRING(255), NOT NULL
+- rendelesIdeje: DATE, NOT NULL
+- termekek: JSON, NOT NULL (termék lista snapshot: [{productId, name, price, quantity}])
+- ar: INTEGER(255), NOT NULL (összes ár)
+- userId: INTEGER, NULLABLE, FOREIGN KEY (users.id) CASCADE
 
+## 4. foglalasok tábla (Foglalások):
+- id: INTEGER(255), PRIMARY KEY, AUTO_INCREMENT
+- vasarloNeve: STRING(75), NOT NULL
+- vasarloEmail: STRING(255), NOT NULL
+- vasarloTelefonszam: STRING(12), NOT NULL
+- idopont: DATE, NOT NULL
+- borbely: STRING(75), NOT NULL (borbély neve)
+- szolgaltatas: STRING(255), NOT NULL
+- ar: INTEGER(255), NOT NULL (Ft)
+- userId: INTEGER, NULLABLE, FOREIGN KEY (users.id) CASCADE/SET NULL
+- borbelyId: INTEGER, NULLABLE, FOREIGN KEY (users.id) CASCADE/SET NULL
 
+## 5. rendelestermekek tábla (Rendelés-Termék összekapcsoló - junction):
+- id: INTEGER, PRIMARY KEY, AUTO_INCREMENT
+- rendelesId: INTEGER, NOT NULL, FOREIGN KEY (rendelesek.id) CASCADE
+- termekId: INTEGER, NOT NULL, FOREIGN KEY (termekek.id) RESTRICT
+- mennyiseg: INTEGER, NOT NULL
+- ar: INTEGER, NOT NULL (egységár a rendelés idején)
 
-----------------------------------------------------------------------------------------------------------
+## Kapcsolatok (relations.js alapján):
+- User 1:N Rendelesek (userId)
+- User 1:N Foglalasok (userId, borbelyId)
+- Rendelesek 1:N RendelesTermekek (rendelesId)
+- Termekek 1:N RendelesTermekek (termekId)
+- Rendelesek N:M Termekek (through: rendelestermekek)
+
+**Megjegyzések:**
+- Minden tábla: timestamps: false
+- Jelszó: legalább 8 karakter, bcrypt hash-el tárolva
+- Képek: uploads/termekek/ és uploads/pfpicture/ mappákban
+- ERD diagram: databaseRelations.erd (vizuális ábra a kapcsolatokról)
+
+A terv tükrözi a jelenlegi modellek pontos struktúráját a Backend/src/models/ mappából.
+

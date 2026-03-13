@@ -1,0 +1,326 @@
+Projekt Technikai Szójegyzéke
+Ez a dokumentum a Barbershop projektben használt idegen és szakmai kifejezéseket tartalmazza részletes magyar magyarázatokkal.
+
+1. Szerepkörök és jogosultságok (Role)
+Admin (Rendszergazda)
+Jelentés: Olyan felhasználó, akinek teljes körű joga van a rendszerhez.
+Jogosultságok:
+Felhasználók létrehozása, módosítása és törlése
+Termékek kezelése (létrehozás, módosítás, törlés)
+Foglalások kezelése és törlése
+Rendelések kezelése és törlése
+Más felhasználók adatainak megtekintése név vagy email alapján
+Hozzáférés: Az adminisztrátori funkciók csak a /admin útvonalon érhetők el, és minden művelethez isAdmin middleware ellenőrzés szükséges.
+
+Fogyasztó (User/Felhasználó)
+Jelentés: A rendszer alapvető felhasználói csoportja.
+Jogosultságok:
+Regisztráció és bejelentkezés
+Profil adatok megtekintése és módosítása
+Foglalás időpontokra
+Rendelések leadása és saját rendeléseinek megtekintése
+Termékek böngészése és kosár használata
+
+Borbély (Borbély, munka végző)
+Jelentés: Speciális felhasználó, aki szolgáltatásokat nyújt a fogyasztóknak.
+Jogosultságok:
+Bejelentkezés a rendszerbe
+Naptár megtekintése (milyen foglalások vannak rá)
+A saját foglalásainak kezelése
+
+2. Hitelesítés és biztonság (Authentication & Security)
+Password (Jelszó)
+Jelentés: A felhasználó azonosítására szolgáló titkos karaktersorozat.
+Tárolás: A jelszó soha nemplaintext (szöveges) formában tárolódik. A projektben a bcrypt algoritmus használatával történik a hash-elés (titkosítás). A bcrypt egy egyirányú titkosítási algoritmus, ami azt jelenti, hogy a tárolt hash-ből nem lehet visszaállítani az eredeti jelszót.
+Példa: bcrypt.hash(password, 12) - a 12 a költségfaktor (cost factor), ami meghatározza a hash-elés bonyolultságát.
+
+JWT (JSON Web Token)
+Jelentés: A hitelesítés alapjául szolgáló token, amely a felhasználó adatait tartalmazza JSON formátumban, digitálisan aláírva.
+Működés:
+A felhasználó bejelentkezéskor kap egy JWT tokent a szervertől
+Ezt a tokent a kliens (frontend) eltárolja (localStorage)
+Minden kérésnél a token elküldésre kerül az Authorization header-ben
+A szerver ellenőrzi a token érvényességét
+Tartalom: A token tartalmazza a felhasználó id, email és role (szerepkör) adatait.
+Példa: Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+Token
+Jelentés: Általános értelemben egy azonosító, amely a hitelesítési folyamat során keletkezik.
+Típus: Ebben a projektben JWT tokenről van szó.
+Élettartam: A token JWT_EXPIRES környezeti változóban meghatározott ideig érvényes (pl. 7d = 7 nap).
+Auth Middleware (Hitelesítési köztesréteg)
+Jelentés: Egy szoftverréteg, amely minden védett kérés előtt lefut és ellenőrzi, hogy a felhasználó be van-e jelentkezve érvényes tokennel.
+Funkció:
+Ellenőrzi, hogy a kérés tartalmaz-e token
+Validálja a token formátumát (Bearer schema)
+Dekódolja és ellenőrzi a token aláírását
+Ha érvénytelen vagy hiányzik a token, 401-es HTTP hibakódot ad vissza
+
+Fájl: src/middlewares/authMiddleware.js
+isAdmin Middleware
+Jelentés: Speciális middleware, amely ellenőrzi, hogy a bejelentkezett felhasználó Admin szerepkörű-e.
+Funkció: Csak az Admin szerepkörű felhasználók férhetnek hozzá az admin funkciókhoz.
+Példa használat: route.post('/admin/createUser', authMiddleware, isAdmin, userController.adminCreateUser)
+
+bcrypt
+Jelentés: Egy jelszó hash-elésére használt Node.js könyvtár.
+Funkció: A jelszavakat biztonságos, visszafejthetetlen formában tárolja.
+Példa: await bcrypt.hash(password, 12) - hash-elés; await bcrypt.compare(password, hash) - jelszó ellenőrzés.
+
+3. Adatbázis és ORM (Database & ORM)
+Sequelize
+Jelentés: Egy ORM (Object-Relational Mapping) könyvtár Node.js-hez, amely lehetővé teszi az adatbázis műveletek programozási nyelven történő végrehajtását SQL helyett.
+Funkció:
+Adatbázis kapcsolat kezelése
+Modellek (adattáblák) definiálása
+CRUD műveletek végrehajtása
+Kapcsolatok (relációk) kezelése a táblák között
+Használat: A projektben MariaDB/MySQL adatbázissal használják.
+
+Model (Adatmodell)
+Jelentés: Az adatbázis táblájának JavaScript/TypeScript osztályként való reprezentációja.
+Példák a projektben:
+userModel.js - felhasználók táblája
+termekModel.js - termékek táblája
+rendelesekModel.js - rendelések táblája
+foglalasModel.js - foglalások táblája
+Migration ( Migráció)
+Jelentés: Az adatbázis séma (szerkezet) változtatásainak verziókövetett leírása.
+Cél: A projektben a db.sync() automatikusan kezeli a táblák létrehozását.
+
+Seeder (Seedelő)
+Jelentés: Olyan script, amely kezdeti (demo) adatokat tölt fel az adatbázisba.
+Példák a projektben:
+adminSeeder.js - létrehozza az alapértelmezett admin felhasználót
+termekSeeder.js - feltölti a kezdeti termékeket
+Foreign Key (Külső kulcs)
+Jelentés: Egy táblában lévő mező, amely egy másik táblára mutat, ezzel kapcsolatot teremtve közöttük.
+Példa: A rendelesek táblában a user_id mező a users táblára mutat.
+Primary Key (Elsődleges kulcs)
+Jelentés: Egyedi azonosító minden rekordhoz a táblában.
+Példa: A legtöbb táblában az id mező az elsődleges kulcs, amely auto-increment (automatikusan növekvő) típusú.
+
+Relation (Kapcsolat/Reláció)
+Jelentés: Az adatbázis táblák közötti kapcsolat leírása.
+Típusok:
+One-to-One (1:1) - egy felhasználóhoz egy profil
+One-to-Many (1:N) - egy felhasználónak több rendelése lehet
+Many-to-Many (N:N) - egy rendelés több terméket tartalmaz, egy termék több rendelésben szerepelhet
+
+4. Backend architektúra (Backend Architecture)
+Controller (Kontroller)
+Jelentés: A backend logikáját tartalmazó fájl, amely kezeli a kéréseket és válaszokat.
+Funkció:
+Beérkező adatok validálása
+Adatbázis műveletek végrehajtása (modellek használatával)
+Válasz küldése a kliensnek
+Példák: userController.js, termekController.js, rendelesekController.js, foglalasController.js
+
+Route (Útvonal/Végpont)
+Jelentés: Az API elérési útja, amely meghatározza, hogy egy adott URL és HTTP metódus esetén melyik kontroller függvény fusson le.
+Példák:
+POST /api/auth/register - regisztráció
+POST /api/auth/login - bejelentkezés
+GET /api/termek/products - termékek listázása
+Endpoint (Végpont)
+Jelentés: Ugyanaz, mint a Route - egy API elérési pont.
+Példa: "A /api/auth/login endpoint-on keresztül lehet bejelentkezni."
+
+Middleware (Köztesréteg)
+Jelentés: Olyan függvény, amely a kérés és a válasz között fut le.
+Típusok a projektben:
+authMiddleware.js - hitelesítés ellenőrzése
+uploads.js - fájlfeltöltés kezelése
+
+API (Application Programming Interface)
+Jelentés: Az alkalmazások közötti kommunikációt lehetővé tevő interfész.
+REST API: A projektben RESTful API stílust használnak, ahol:
+GET - adat lekérése
+POST - új adat létrehozása
+PUT - adat módosítása
+DELETE - adat törlése
+
+Server (Szerver)
+Jelentés: A backend alkalmazást futtató szerver.
+Fájl: server.js
+Port: Alapértelmezetten 3000 (konfigurálható a PORT környezeti változóval)
+
+5. Frontend architektúra (Frontend Architecture)
+Component (Komponens)
+Jelentés: Az Angular alkalmazás önálló, újrafelhasználható része.
+Példák: home, login, register, profil, termekek, foglalas, admin, kosar
+Service (Szolgáltatás)
+Jelentés: Olyan osztály, amely az üzleti logikát és az adatok kezelését végzi, jellemzően HTTP kéréseket intéz a backend felé.
+Példa: kosar.services.ts - a kosár kezeléséhez szükséges függvények
+
+HTTP
+Jelentés: A frontend és backend közötti kommunikáció protocollja.
+Angular használat: HttpClient modulon keresztül történik a backend API hívása.
+
+LocalStorage
+Jelentés: A böngészőben tárolt kulcs-érték párok, amelyek a munkamenet után is megmaradnak.
+Használat: A projektben a token és a user (bejelentkezett felhasználó adatai) eltárolása.
+
+Routing (Útvonal-vezérlés)
+Jelentés: A különböző oldalak (komponensek) közötti navigáció kezelése.
+Fájl: app-routing-module.ts
+
+Module (Modul)
+Jelentés: Az Angular alkalmazás logikai egysége, amely összefogja a komponenseket, szolgáltatásokat és más elemeket.
+Fájl: app-module.ts
+
+6. Fájlfeltöltés (File Upload)
+Multer
+Jelentés: Node.js middleware a multipart/form-data kezelésére, azaz fájlfeltöltésre.
+Funkció: Képek (termék képek, profil képek) feltöltésének kezelése.
+Uploads (Feltöltések)
+Jelentés: A feltöltött fájlok tárolására szolgáló mappa.
+Almappák:
+uploads/pfpicture/ - profilképek
+uploads/termekek/ - termékképek
+Profile Image / PfPicture (Profilkép)
+Jelentés: A felhasználó által beállított kép, amely a profilját reprezentálja.
+Tárolás: A feltöltött képek az uploads/pfpicture/ mappában, fájlnévvel (pl. UUID vagy timestamp alapján).
+
+7. HTTP státuszkódok (HTTP Status Codes)
+200 OK
+Jelentés: A kérés sikeresen lefutott.
+201 Created
+Jelentés: Új erőforrás (pl. felhasználó, termék) sikeresen létrehozva.
+400 Bad Request
+Jelentés: A kérés hibás vagy hiányos adatokat tartalmaz.
+401 Unauthorized
+Jelentés: Nincs hitelesítés (nincs token vagy érvénytelen token).
+403 Forbidden
+Jelentés: Nincs jogosultság a művelethez (pl. nem Admin).
+500 Internal Server Error
+Jelentés: Szerver oldali hiba.
+
+8. Egyéb technikai kifejezések
+CRUD
+Jelentés: Create (Létrehozás), Read (Olvasás), Update (Módosítás), Delete (Törlés) - az alapvető adatkezelő műveletek.
+Environment Variables (Környezeti változók)
+Jelentés: A rendszer konfigurációs beállításai, amelyek a .env fájlban tárolódnak és nem kerülnek verziókezelésbe.
+Példák:
+DB_HOST - adatbázis szerver címe
+DB_USER - adatbázis felhasználó
+DB_PASS - adatbázis jelszó
+JWT_SECRET - JWT aláírás titkos kulcsa
+.env fájl
+Jelentés: Konfigurációs fájl, amely tartalmazza a környezeti változókat.
+Fontos: Soha ne kerüljön verziókezelésbe (Git), csak a .env.example!
+Package.json
+Jelentés: A Node.js projekt fájlja, amely tartalmazza a függőségeket és scripteket.
+npm install
+Jelentés: Parancs a projekt függőségeinek telepítésére a package.json alapján.
+Express
+Jelentés: Node.js keretrendszer webalkalmazások és API-k készítéséhez.
+Node.js
+Jelentés: JavaScript futtatási környezet szerveroldalon.
+Angular
+Jelentés: Google által fejlesztett TypeScript keretrendszer frontend alkalmazásokhoz.
+TypeScript
+Jelentés: A JavaScript típusokkal kibővített változata.
+CORS (Cross-Origin Resource Sharing)
+Jelentés: Biztonsági mechanizmus, amely engedélyezi vagy blokkolja a különböző domain-ek közötti kéréseket.
+Database (Adatbázis)
+Jelentés: Strukturált adatok tárolására szolgáló rendszer.
+Használt adatbázis: MariaDB vagy MySQL
+SQL (Structured Query Language)
+Jelentés: Adatbázis lekérdező és kezelő nyelv.
+
+9. Üzleti entitások (Business Entities)
+User / Felhasználó
+Mezők: id, nev (név), jelszo (jelszó hash), email, telefonszam, pfPicture (profil kép), foglaltsag (szerepkör)
+Termek / Termék
+Mezők: id, name (név), description (leírás), price (ár), stock (készlet), image (kép)
+Rendeles / Rendelés
+Mezők: id, user_id (felhasználó), total_price (összes ár), status (állapot), created_at
+Foglalas / Foglalás
+Mezők: id, user_id (felhasználó), borbely_id (borbély), idopont (időpont), szolgaltatas (szolgáltatás), status (állapot)
+RendelesTermekek / Rendelés-termék kapcsolat
+Mezők: id, rendeles_id (rendelés), termek_id (termék), quantity (mennyiség), unit_price (egységár)
+
+10. Szolgáltatások (Services - a foglalas komponensben)
+Hajvágás
+Ár: 6490 Ft
+Időtartam: 45 perc
+Szakállvágás
+Ár: 3990 Ft
+Időtartam: 30 perc
+Hajvágás + Szakáll
+Ár: 8990 Ft
+Időtartam: 60 perc
+
+11. Státuszok (Status)
+User foglaltsag (szerepkör)
+Fogyasztó - normál felhasználó
+Borbély - fodrász szolgáltató
+Admin - rendszergazda
+Rendeles status (állapot)
+A projektben különböző állapotok lehetnek: pending (függőben), paid (fizetve), shipped (kiszállítva), cancelled (lemondva)
+Foglalas status (állapot)
+booked (lefoglalva)
+completed (befejezve)
+cancelled (lemondva)
+
+12. Email és levelezés
+SMTP (Simple Mail Transfer Protocol)
+Jelentés: Levelek küldésének protocollja.
+Konfiguráció: A config/mail.js fájlban található a mail küldés beállítása.
+Mail Host/Port/User/Pass
+Jelentés: Az SMTP szerver eléréséhez szükséges adatok (környezeti változókban tárolva).
+
+13. Egyéb projekt-specifikus kifejezések
+ADMIN_PASS
+Jelentés: Speciális jelszó, amelynek használatakor a regisztráló felhasználó automatikusan Admin szerepkört kap.
+Használat: A regisztrációs űrlapon ha valaki ezt a jelszót adja meg, Admin lesz, ellenkező esetben Fogyasztó.
+
+Kosar / Shopping Cart
+Jelentés: A termékek ideiglenes tárolása vásárlás előtt.
+Működés: A frontend kosar.services.ts service-ben kezelt kosár.
+
+Borbely-naptar
+Jelentés: A borbélyok naptár nézete, ahol a foglalásaik láthatók.
+Összefoglaló táblázat
+Angol kifejezés	Magyar jelentés	Rövid magyarázat
+Admin	Rendszergazda	Teljes körű hozzáférésű felhasználó
+Password	Jelszó	Felhasználó azonosítója, bcrypt-pel titkosítva
+JWT	JSON Web Token	Hitelesítési token
+Token	Token	Azonosító karaktersorozat
+Auth	Hitelesítés	Bejelentkezés ellenőrzése
+Middleware	Köztesréteg	Kérés előtt futó ellenőrző kód
+Controller	Kontroller	Backend logika
+Model	Modell	Adatbázis tábla reprezentáció
+Route	Útvonal	API elérési pont
+Endpoint	Végpont	API elérési pont
+Seeder	Seedelő	Kezdeti adatok feltöltése
+bcrypt	bcrypt	Jelszó titkosító könyvtár
+Role	Szerepkör	Felhasználó jogosultsági szintje
+Email	Email	Elektronikus levélcím
+Register	Regisztráció	Új felhasználó létrehozása
+Login	Bejelentkezés	Azonosítás
+Logout	Kijelentkezés	Session megszüntetése
+Sequelize	Sequelize	ORM könyvtár
+Migration	Migráció	Adatbázis séma változtatás
+Foreign Key	Külső kulcs	Táblák közti kapcsolat
+Primary Key	Elsődleges kulcs	Egyedi azonosító
+Relation	Kapcsolat	Táblák közötti kapcsolat
+API	API	Alkalmazás interfész
+Server	Szerver	Backend alkalmazás futtató
+Component	Komponens	UI elem
+Service	Szolgáltatás	Üzleti logika
+HTTP	HTTP	Protokoll
+LocalStorage	LocalStorage	Böngésző tárhely
+Uploads	Feltöltések	Fájltárolás
+Multer	Multer	Fájlfeltöltő middleware
+CRUD	CRUD	Alapvető adatműveletek
+.env	.env	Konfigurációs fájl
+Express	Express	Node.js keretrendszer
+Angular	Angular	Frontend keretrendszer
+CORS	CORS	Cross-Origin megosztás
+Database	Adatbázis	Adattároló
+Status	Állapot	Művelet/státusz
+Cart	Kosár	Vásárlás előtti tár
+
+Ez a szójegyzék a Barbershop 1.0.6 projekt technikai dokumentációjának kiegészítő anyaga.

@@ -26,7 +26,8 @@ const sendEmail = async ({ userData, subject, message, link }) => {
                 <div style="font-family: sans-serif; color: #333;">
                     <h2>BarberShop Értesítés</h2>
                     <p>${message}</p>
-                    <a href="${link}" style="background: #d4af37; color: #000; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Művelet elvégzése</a>
+                    <a href="${link}" style="background: #d4af37; color: #000; padding: 10px 20px;
+                    text-decoration: none; border-radius: 5px;">Művelet elvégzése</a>
                 </div>
             `,
         });
@@ -38,6 +39,4 @@ const sendEmail = async ({ userData, subject, message, link }) => {
     }
 }
 
-module.exports = {
-    sendEmail
-}
+module.exports = { sendEmail }

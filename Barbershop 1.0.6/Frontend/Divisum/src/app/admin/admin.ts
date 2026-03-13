@@ -36,6 +36,11 @@ user: any = null;
       name: this.name,
     }
     
+    if (!this.name || this.name.trim() === '') {
+      alert('Kérlek adj meg egy nevet a kereséshez!');
+      return;
+    }
+    
     if (!token) {
       console.error("Nincs token, irány a login");
       this.router.navigate(['/login']);
@@ -55,11 +60,13 @@ user: any = null;
           
           console.log('Felhasználói adatok megérkeztek:', this.user);
           
-          this.cdr.detectChanges(); 
+          this.cdr.markForCheck(); 
         },
         error: (error) => {
           this.isLoading = false;
+          this.user = null;
           console.error('Hiba az adatok lekérésekor:', error);
+          this.cdr.markForCheck();
         },
       });
   }
@@ -180,11 +187,14 @@ product = {
   foundByEmail: any = null;
 
   onGetByEmail(): void{
+    if (!this.emailFind || this.emailFind.trim() === '') {
+      alert('Kérlek adj meg egy email címet!');
+      return;
+    }
+
     const email = {
       email: this.emailFind,
     }
-
-    if (!this.emailFind) return;
 
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -193,10 +203,12 @@ product = {
     .subscribe({
       next: (response) => {
         this.foundByEmail = response.user;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         alert("Hiba történt a felhasználó email általi lekérésekor!");
         this.foundByEmail = null;
+        this.cdr.markForCheck();
       }
     });
   }
@@ -206,7 +218,10 @@ foundProduct: any = null;
 foundProductId: any = null;
 
 getProductByName() {
-  if (!this.searchProductByName) return;
+  if (!this.searchProductByName || this.searchProductByName.trim() === '') {
+    alert('Kérlek adj meg egy terméknevet!');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -223,11 +238,13 @@ getProductByName() {
       }
       this.foundProductId = response.productWithFullImageUrl.id;
       console.log("Termék adatai:", this.foundProduct);
+      this.cdr.markForCheck();
     },
     error: (err) => {
       console.error("Hiba:", err);
       alert("A termék nem található!");
       this.foundProduct = null;
+      this.cdr.markForCheck();
     }
   });
 }
@@ -253,12 +270,14 @@ getProductsByCategory() {
         this.categoryProducts = res.products || [];
         this.searched = true;
         console.log("Sikeres lekérés:", this.categoryProducts);
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error("Hiba a kategória lekérésekor:", err);
         this.categoryProducts = [];
         this.searched = true;
         alert(err.error?.message || "Hiba történt a lekérés során.");
+        this.cdr.markForCheck();
       }
     });
   }
@@ -268,7 +287,10 @@ getProductsByCategory() {
   Searched: boolean = false;
 
 searchOrder() {
-  if (!this.searchName) return;
+  if (!this.searchName || this.searchName.trim() === '') {
+    alert('Kérlek adj meg egy nevet!');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -283,11 +305,13 @@ searchOrder() {
         parsedTermekek: typeof r.termekek === 'string' ? JSON.parse(r.termekek) : r.termekek
       }));
       this.searched = true;
+      this.cdr.markForCheck();
     },
     error: (err) => {
       console.error("Hiba a keresésben:", err);
       this.foundOrders = [];
       this.searched = true;
+      this.cdr.markForCheck();
     }
   });
 }
@@ -297,7 +321,10 @@ foundOrdersByEmail: any[] = [];
 searchedEmail: boolean = false;
 
 searchByEmail() {
-  if (!this.searchEmail) return;
+  if (!this.searchEmail || this.searchEmail.trim() === '') {
+    alert('Kérlek adj meg egy email címet!');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -312,11 +339,13 @@ searchByEmail() {
         parsedTermekek: typeof r.termekek === 'string' ? JSON.parse(r.termekek) : r.termekek
       }));
       this.searchedEmail = true;
+      this.cdr.markForCheck();
     },
     error: (err) => {
       console.error("Hiba a keresésben:", err);
       this.foundOrdersByEmail = [];
       this.searchedEmail = true;
+      this.cdr.markForCheck();
     }
   });
 }
@@ -326,7 +355,10 @@ foundFoglalasok: any[] = [];
 searchedFoglalas: boolean = false;
 
 searchFoglalas() {
-  if (!this.searchNameFoglalas) return;
+  if (!this.searchNameFoglalas || this.searchNameFoglalas.trim() === '') {
+    alert('Kérlek adj meg egy nevet!');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -338,11 +370,13 @@ searchFoglalas() {
     next: (res) => {
       this.foundFoglalasok = res.foglalas || [];
       this.searchedFoglalas = true;
+      this.cdr.markForCheck();
     },
     error: (err) => {
       console.error("Hiba a foglalás keresésben:", err);
       this.foundFoglalasok = [];
       this.searchedFoglalas = true;
+      this.cdr.markForCheck();
     }
   });
 }
@@ -352,7 +386,10 @@ foundFoglalasokByEmail: any[] = [];
 searchedEmailFoglalas: boolean = false;
 
 searchFoglalasByEmail() {
-  if (!this.searchEmailFoglalas) return;
+  if (!this.searchEmailFoglalas || this.searchEmailFoglalas.trim() === '') {
+    alert('Kérlek adj meg egy email címet!');
+    return;
+  }
 
   const token = localStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -364,11 +401,13 @@ searchFoglalasByEmail() {
     next: (res) => {
       this.foundFoglalasokByEmail = res.foglalas || [];
       this.searchedEmailFoglalas = true;
+      this.cdr.markForCheck();
     },
     error: (err) => {
       console.error("Hiba a foglalás keresésben:", err);
       this.foundFoglalasokByEmail = [];
       this.searchedEmailFoglalas = true;
+      this.cdr.markForCheck();
     }
   });
 }
